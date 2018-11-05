@@ -34,12 +34,13 @@ function Rock(descr) {
 };
 
 Rock.prototype = new Entity();
-
+var n = 30;
 Rock.prototype.randomisePosition = function () {
     // Rock randomisation defaults (if nothing otherwise specified)
-    this.cx = this.cx || Math.random() * g_canvas.width;
-    this.cy = this.cy || Math.random() * g_canvas.height;
+    this.cx = 1000 - n;//this.cx || Math.random() * g_canvas.width;
+    this.cy = 200 + n;//this.cy || Math.random() * g_canvas.height;
     this.rotation = this.rotation || 0;
+    n+=30;
 };
 
 Rock.prototype.randomiseVelocity = function () {
@@ -50,7 +51,7 @@ Rock.prototype.randomiseVelocity = function () {
     var dirn = Math.random() * consts.FULL_CIRCLE;
 
     this.velX = this.velX || speed * Math.cos(dirn);
-    this.velY = this.velY || speed * Math.sin(dirn);
+    this.velY = 3;//this.velY || speed * Math.sin(dirn);
 
     var MIN_ROT_SPEED = 0.5,
         MAX_ROT_SPEED = 2.5;
@@ -58,7 +59,7 @@ Rock.prototype.randomiseVelocity = function () {
     this.velRot = this.velRot ||
         util.randRange(MIN_ROT_SPEED, MAX_ROT_SPEED) / SECS_TO_NOMINALS;
 };
-
+var velYY = 2;
 Rock.prototype.update = function (du) {
 
     // TODO: YOUR STUFF HERE! --- Unregister and check for death
@@ -69,8 +70,15 @@ Rock.prototype.update = function (du) {
         return entityManager.KILL_ME_NOW;
     }
 
-    this.cx += this.velX * du;
-    this.cy += this.velY * du;
+    //this.cx += this.velX * du;
+    //this.cy += this.velY * du;
+    if(this.cy < 100)
+        this.velY*=-1
+    if(this.cy > 600)
+        this.velY*=-1
+
+    this.cx -= 1 * du;
+    this.cy += this.velY*du;
 
     this.rotation += 1 * this.velRot;
     this.rotation = util.wrapRange(this.rotation,
@@ -95,15 +103,16 @@ Rock.prototype.evaporateSound = new Audio(
 
 Rock.prototype.takeBulletHit = function () {
     this.kill();
-    
+    /*
     if (this.scale > 0.25) {
         this._spawnFragment();
         this._spawnFragment();
         
         this.splitSound.play();
     } else {
+        */
         this.evaporateSound.play();
-    }
+    //}
 };
 
 Rock.prototype._spawnFragment = function () {

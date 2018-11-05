@@ -45,7 +45,7 @@ Ship.prototype.KEY_RIGHT  = 'D'.charCodeAt(0);
 Ship.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 
 // Initial, inheritable, default values
-Ship.prototype.rotation = Math.PI/2;
+Ship.prototype.rotation = 0;
 Ship.prototype.cx = 200;
 Ship.prototype.cy = 200;
 Ship.prototype.velX = 0;
@@ -270,7 +270,7 @@ Ship.prototype.maybeFireBullet = function () {
         var relVelY = dY * relVel;
 
         entityManager.fireBullet(
-           this.cx + dX * launchDist, this.cy + dY * launchDist,
+           this.cx + 90 + dX * launchDist, this.cy + dY/2-10 * launchDist,
            12, 0,
            this.rotation);
            

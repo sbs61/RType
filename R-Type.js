@@ -177,9 +177,10 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        ship   : "https://notendur.hi.is/~pk/308G/images/ship.png",
+        ship   : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/ship2.png",
         ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
         rock   : "https://notendur.hi.is/~pk/308G/images/rock.png"
+        //bullet : ""
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -193,7 +194,7 @@ function preloadDone() {
     g_sprites.ship2 = new Sprite(g_images.ship2);
     g_sprites.rock  = new Sprite(g_images.rock);
 
-    g_sprites.bullet = new Sprite(g_images.ship);
+    g_sprites.bullet = new Sprite(g_images.ship2);
     g_sprites.bullet.scale = 0.25;
 
     entityManager.init();
