@@ -44,8 +44,6 @@ Rock.prototype.randomisePosition = function () {
 };
 
 Rock.prototype.randomiseVelocity = function () {
-    var MIN_SPEED = 20,
-        MAX_SPEED = 70;
 
     var speed = util.randRange(MIN_SPEED, MAX_SPEED) / SECS_TO_NOMINALS;
     var dirn = Math.random() * consts.FULL_CIRCLE;
@@ -115,13 +113,7 @@ Rock.prototype.takeBulletHit = function () {
     //}
 };
 
-Rock.prototype._spawnFragment = function () {
-    entityManager.generateRock({
-        cx : this.cx,
-        cy : this.cy,
-        scale : this.scale /2
-    });
-};
+
 
 Rock.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
