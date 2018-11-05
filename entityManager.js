@@ -37,7 +37,7 @@ _bShowRocks : true,
 
 _generateRocks : function() {
     var i,
-        NUM_ROCKS = 4;
+        NUM_ROCKS = 1;
 
     for (i = 0; i < NUM_ROCKS; ++i) {
         this.generateRock();

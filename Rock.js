@@ -37,26 +37,14 @@ Rock.prototype = new Entity();
 
 Rock.prototype.randomisePosition = function () {
     // Rock randomisation defaults (if nothing otherwise specified)
-    this.cx = this.cx || Math.random() * g_canvas.width;
-    this.cy = this.cy || Math.random() * g_canvas.height;
-    this.rotation = this.rotation || 0;
+    this.cx = this.cx || g_canvas.width-50;
+    this.cy = this.cy || Math.random()*g_canvas.height; // Gera þetta random?
 };
 
 Rock.prototype.randomiseVelocity = function () {
-    var MIN_SPEED = 20,
-        MAX_SPEED = 70;
 
-    var speed = util.randRange(MIN_SPEED, MAX_SPEED) / SECS_TO_NOMINALS;
-    var dirn = Math.random() * consts.FULL_CIRCLE;
-
-    this.velX = this.velX || speed * Math.cos(dirn);
-    this.velY = this.velY || speed * Math.sin(dirn);
-
-    var MIN_ROT_SPEED = 0.5,
-        MAX_ROT_SPEED = 2.5;
-
-    this.velRot = this.velRot ||
-        util.randRange(MIN_ROT_SPEED, MAX_ROT_SPEED) / SECS_TO_NOMINALS;
+    this.velX = this.velX || -2;
+    this.velY = this.velY || 0;
 };
 
 Rock.prototype.update = function (du) {
@@ -95,24 +83,11 @@ Rock.prototype.evaporateSound = new Audio(
 
 Rock.prototype.takeBulletHit = function () {
     this.kill();
+    this.evaporateSound.play();
     
-    if (this.scale > 0.25) {
-        this._spawnFragment();
-        this._spawnFragment();
-        
-        this.splitSound.play();
-    } else {
-        this.evaporateSound.play();
-    }
 };
 
-Rock.prototype._spawnFragment = function () {
-    entityManager.generateRock({
-        cx : this.cx,
-        cy : this.cy,
-        scale : this.scale /2
-    });
-};
+
 
 Rock.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;

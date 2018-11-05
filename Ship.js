@@ -37,8 +37,8 @@ Ship.prototype.rememberResets = function () {
     this.reset_rotation = this.rotation;
 };
 
-Ship.prototype.KEY_THRUST = 'W'.charCodeAt(0);
-Ship.prototype.KEY_RETRO = 'S'.charCodeAt(0);
+Ship.prototype.KEY_UP = 'W'.charCodeAt(0);
+Ship.prototype.KEY_DOWN = 'S'.charCodeAt(0);
 Ship.prototype.KEY_LEFT   = 'A'.charCodeAt(0);
 Ship.prototype.KEY_RIGHT  = 'D'.charCodeAt(0);
 
@@ -147,16 +147,17 @@ Ship.prototype.update = function (du) {
         this.computeSubStep(dStep);
     }
     */
-    if (keys[this.KEY_THRUST]) {
+    if (keys[this.KEY_UP] && this.cy>this.sprite.height/2) {
         this.cy -= 4 * du;
     }
-    if (keys[this.KEY_RETRO]) {
+    // Í rauninni þá á skipið að springa ef það fer í botninn en það kemur seinna
+    if (keys[this.KEY_DOWN] && this.cy<g_canvas.height-this.sprite.height/2) {
         this.cy += 4 * du;
     }
-    if (keys[this.KEY_LEFT]) {
+    if (keys[this.KEY_LEFT] && this.cx>this.sprite.width/2) {
         this.cx -= 3 * du;
     }
-    if (keys[this.KEY_RIGHT]) {
+    if (keys[this.KEY_RIGHT]&& this.cx<g_canvas.width-this.sprite.width/2) {
         this.cx += 3 * du;
     }
 
