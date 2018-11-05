@@ -44,6 +44,8 @@ Rock.prototype.randomisePosition = function () {
 };
 
 Rock.prototype.randomiseVelocity = function () {
+    var MIN_SPEED = 20,
+        MAX_SPEED = 70;
 
     var speed = util.randRange(MIN_SPEED, MAX_SPEED) / SECS_TO_NOMINALS;
     var dirn = Math.random() * consts.FULL_CIRCLE;
