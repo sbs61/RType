@@ -24,7 +24,7 @@ function Ship(descr) {
     this.sprite = this.sprite || g_sprites.ship;
     
     // Set normal drawing scale, and warp state off
-    this._scale = 1;
+    this._scale = 3;
     this._isWarping = false;
 
     this.fire = false;
@@ -280,14 +280,14 @@ Ship.prototype.maybeFireBullet = function () {
         var TimeHeld = (timeEnd-this.time)/1000;
    
         if (TimeHeld<1){
-            entityManager.fireBullet(this.cx + 90, 
-                this.cy, 12, 0, false);
+            entityManager.fireBullet(this.cx + 50, 
+                this.cy+10, 12, 0, false);
             g_sprites.bullet = new Sprite(g_images.bullet);
             g_sprites.bullet.scale = 2;
         }
         else{
-            entityManager.fireBullet(this.cx + 90, 
-                this.cy, 12, 0, true);
+            entityManager.fireBullet(this.cx + 50, 
+                this.cy+10, 12, 0, true);
             g_sprites.bullet = new Sprite(g_images.bigBullet);
             g_sprites.bullet.scale = 2;
         }
