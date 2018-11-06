@@ -58,6 +58,8 @@ function gatherInputs() {
 function updateSimulation(du) {
     
     processDiagnostics();
+
+    environmentManager.update(du);
     
     entityManager.update(du);
 
@@ -138,6 +140,8 @@ function processDiagnostics() {
 
 function renderSimulation(ctx) {
 
+    environmentManager.render(ctx);
+
     entityManager.render(ctx);
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
@@ -157,7 +161,8 @@ function requestPreloads() {
         ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
         rock   : "https://notendur.hi.is/~pk/308G/images/rock.png",
         bullet : "https://notendur.hi.is/phh4/Tolvuleikjaforritun/bullet.png",
-        bigBullet : "https://notendur.hi.is/phh4/Tolvuleikjaforritun/bigBullet.png"
+        bigBullet : "https://notendur.hi.is/phh4/Tolvuleikjaforritun/bigBullet.png",
+        background : "images/farback2.png",
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -174,7 +179,10 @@ function preloadDone() {
     g_sprites.bullet = new Sprite(g_images.bullet);
     g_sprites.bullet.scale = 2;
 
+    g_sprites.background = new Sprite(g_images.background);
+
     entityManager.init();
+    environmentManager.init();
     createInitialShips();
 
     main.init();
