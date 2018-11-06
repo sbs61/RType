@@ -24,7 +24,7 @@ function Ship(descr) {
     this.sprite = this.sprite || g_sprites.ship;
 
     // Set normal drawing scale, and warp state off
-    this._scale = 1;
+    this._scale = 3;
     this._isWarping = false;
 
     this.fire = false;

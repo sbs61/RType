@@ -157,11 +157,11 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        ship   : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/ship2.png",
+        ship   : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/ship.png",
         ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        rock   : "https://notendur.hi.is/~pk/308G/images/rock.png",
+        rock   : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/enemy1s.png",
         bullet : "https://notendur.hi.is/phh4/Tolvuleikjaforritun/bullet.png",
-        bigBullet : "https://notendur.hi.is/phh4/Tolvuleikjaforritun/bigBullet.png",
+        bigBullet : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/bigBullet.png",
         background : "images/farback2.png",
     };
 
