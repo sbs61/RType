@@ -20,7 +20,7 @@ function Bullet(descr) {
 
     // Make a noise when I am created (i.e. fired)
     this.fireSound.play();
-    
+
 /*
     // Diagnostics to check inheritance stuff
     this._bulletProperty = true;
@@ -36,7 +36,7 @@ Bullet.prototype.fireSound = new Audio(
     "sounds/bulletFire.ogg");
 Bullet.prototype.zappedSound = new Audio(
     "sounds/bulletZapped.ogg");
-    
+
 // Initial, inheritable, default values
 Bullet.prototype.cx = 200;
 Bullet.prototype.cy = 200;
@@ -65,7 +65,7 @@ Bullet.prototype.update = function (du) {
     this.cy += this.velY * du;
 
     this.wrapPosition();
-    
+
     // Handle collisions
     //
     var hitEntity = this.findHitEntity();
@@ -75,7 +75,7 @@ Bullet.prototype.update = function (du) {
         if (!this.big)
             return entityManager.KILL_ME_NOW;
     }
-    
+
     spatialManager.register(this);
 
 };
@@ -86,7 +86,7 @@ Bullet.prototype.getRadius = function () {
 
 Bullet.prototype.takeBulletHit = function () {
     this.kill();
-    
+
     // Make a noise when I am zapped by another bullet
     this.zappedSound.play();
 };
@@ -99,12 +99,20 @@ Bullet.prototype.render = function (ctx) {
         ctx.globalAlpha = this.lifeSpan / fadeThresh;
     }
 
+
+    if(this.big){
+      g_sprites.bullet = new Sprite(g_images.bigBullet);
+      g_sprites.bullet.scale = 2;
+    }
+    else{
+      g_sprites.bullet = new Sprite(g_images.bullet);
+      g_sprites.bullet.scale = 2;
+    }
+
+
     g_sprites.bullet.drawWrappedCentredAt(
         ctx, this.cx, this.cy
     );
 
     ctx.globalAlpha = 1;
 };
-
-
-
