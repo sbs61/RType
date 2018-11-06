@@ -28,7 +28,7 @@ function createInitialShips() {
         cx : 200,
         cy : 200
     });
-    
+
 }
 
 // =============
@@ -56,11 +56,11 @@ function gatherInputs() {
 // GAME-SPECIFIC UPDATE LOGIC
 
 function updateSimulation(du) {
-    
+
     processDiagnostics();
 
     environmentManager.update(du);
-    
+
     entityManager.update(du);
 
     // Prevent perpetual firing!
@@ -109,13 +109,13 @@ function processDiagnostics() {
     if (eatKey(KEY_1)) entityManager.generateShip({
         cx : g_mouseX,
         cy : g_mouseY,
-        
+
         sprite : g_sprites.ship});
 
     if (eatKey(KEY_2)) entityManager.generateShip({
         cx : g_mouseX,
         cy : g_mouseY,
-        
+
         sprite : g_sprites.ship2
         });
 
@@ -162,7 +162,7 @@ function requestPreloads() {
         rock   : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/enemy1s.png",
         bullet : "https://notendur.hi.is/phh4/Tolvuleikjaforritun/bullet.png",
         bigBullet : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/bigBullet.png",
-        background : "images/farback2.png",
+        background : "images/background_stars.png",
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -180,6 +180,7 @@ function preloadDone() {
     g_sprites.bullet.scale = 2;
 
     g_sprites.background = new Sprite(g_images.background);
+    g_sprites.background.scale = 1;
 
     entityManager.init();
     environmentManager.init();
