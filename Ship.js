@@ -26,6 +26,10 @@ function Ship(descr) {
     // Set normal drawing scale, and warp state off
     this._scale = 1;
     this._isWarping = false;
+
+    this.fire = false;
+    this.timeStarted = false;
+    this.time = performance.now();
 };
 
 Ship.prototype = new Entity();
@@ -259,24 +263,35 @@ Ship.prototype.applyAccel = function (accelX, accelY, du) {
 };
 
 Ship.prototype.maybeFireBullet = function () {
-
     if (keys[this.KEY_FIRE]) {
-    
-        var dX = +Math.sin(this.rotation);
-        var dY = -Math.cos(this.rotation);
-        var launchDist = this.getRadius() * 1.2;
+        this.fire = true;
         
-        var relVel = this.launchVel;
-        var relVelX = dX * relVel;
-        var relVelY = dY * relVel;
-
-        entityManager.fireBullet(
-           this.cx + 90 + dX * launchDist, this.cy + dY/2-10 * launchDist,
-           12, 0,
-           this.rotation);
-           
     }
-    
+
+    if (this.fire&&!this.timeStarted){
+        this.timeStarted = true;
+        this.time = performance.now();
+    }
+
+    if (!keys[this.KEY_FIRE]&&this.fire) {
+        this.fire = false;
+        this.timeStarted = false;
+        var timeEnd = performance.now();
+        var TimeHeld = (timeEnd-this.time)/1000;
+   
+        if (TimeHeld<1){
+            entityManager.fireBullet(this.cx + 90, 
+                this.cy, 12, 0, false);
+            g_sprites.bullet = new Sprite(g_images.bullet);
+            g_sprites.bullet.scale = 2;
+        }
+        else{
+            entityManager.fireBullet(this.cx + 90, 
+                this.cy, 12, 0, true);
+            g_sprites.bullet = new Sprite(g_images.bigBullet);
+            g_sprites.bullet.scale = 2;
+        }
+    }
 };
 
 Ship.prototype.getRadius = function () {

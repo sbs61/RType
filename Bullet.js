@@ -38,18 +38,17 @@ Bullet.prototype.zappedSound = new Audio(
     "sounds/bulletZapped.ogg");
     
 // Initial, inheritable, default values
-Bullet.prototype.rotation = 0;
 Bullet.prototype.cx = 200;
 Bullet.prototype.cy = 200;
 Bullet.prototype.velX = 1;
 Bullet.prototype.velY = 1;
+Bullet.prototype.big = false;
 
 // Convert times from milliseconds to "nominal" time units.
 Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
 
 Bullet.prototype.update = function (du) {
 
-    // TODO: YOUR STUFF HERE! --- Unregister and check for death
     spatialManager.unregister(this);
 
     //Check if the bullet is dead, if so return the KILL_ME_NOW to the entity manager
@@ -65,24 +64,18 @@ Bullet.prototype.update = function (du) {
     this.cx += this.velX * du;
     this.cy += this.velY * du;
 
-    this.rotation += 1 * du;
-    this.rotation = util.wrapRange(this.rotation,
-                                   0, consts.FULL_CIRCLE);
-
     this.wrapPosition();
     
-    // TODO? NO, ACTUALLY, I JUST DID THIS BIT FOR YOU! :-)
-    //
     // Handle collisions
     //
     var hitEntity = this.findHitEntity();
     if (hitEntity) {
         var canTakeHit = hitEntity.takeBulletHit;
-        if (canTakeHit) canTakeHit.call(hitEntity); 
-        return entityManager.KILL_ME_NOW;
+        if (canTakeHit) canTakeHit.call(hitEntity);
+        if (!this.big)
+            return entityManager.KILL_ME_NOW;
     }
     
-    // TODO: YOUR STUFF HERE! --- (Re-)Register
     spatialManager.register(this);
 
 };
@@ -107,8 +100,11 @@ Bullet.prototype.render = function (ctx) {
     }
 
     g_sprites.bullet.drawWrappedCentredAt(
-        ctx, this.cx, this.cy, this.rotation
+        ctx, this.cx, this.cy
     );
 
     ctx.globalAlpha = 1;
 };
+
+
+

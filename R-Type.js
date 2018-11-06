@@ -1,32 +1,8 @@
 // =========
-// ASTEROIDS
+// R-Type
 // =========
 /*
 
-A sort-of-playable version of the classic arcade game.
-
-
-HOMEWORK INSTRUCTIONS:
-
-You have some "TODO"s to fill in again, particularly in:
-
-spatialManager.js
-
-But also, to a lesser extent, in:
-
-Rock.js
-Bullet.js
-Ship.js
-
-
-...Basically, you need to implement the core of the spatialManager,
-and modify the Rock/Bullet/Ship to register (and unregister)
-with it correctly, so that they can participate in collisions.
-
-Be sure to test the diagnostic rendering for the spatialManager,
-as toggled by the 'X' key. We rely on that for marking. My default
-implementation will work for the "obvious" approach, but you might
-need to tweak it if you do something "non-obvious" in yours.
 */
 
 "use strict";
@@ -86,7 +62,7 @@ function updateSimulation(du) {
     entityManager.update(du);
 
     // Prevent perpetual firing!
-    eatKey(Ship.prototype.KEY_FIRE);
+    //eatKey(Ship.prototype.KEY_FIRE);
 }
 
 // GAME-SPECIFIC DIAGNOSTICS
@@ -179,8 +155,9 @@ function requestPreloads() {
     var requiredImages = {
         ship   : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/ship2.png",
         ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        rock   : "https://notendur.hi.is/~pk/308G/images/rock.png"
-        //bullet : ""
+        rock   : "https://notendur.hi.is/~pk/308G/images/rock.png",
+        bullet : "https://notendur.hi.is/phh4/Tolvuleikjaforritun/bullet.png",
+        bigBullet : "https://notendur.hi.is/phh4/Tolvuleikjaforritun/bigBullet.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -194,8 +171,8 @@ function preloadDone() {
     g_sprites.ship2 = new Sprite(g_images.ship2);
     g_sprites.rock  = new Sprite(g_images.rock);
 
-    g_sprites.bullet = new Sprite(g_images.ship2);
-    g_sprites.bullet.scale = 0.25;
+    g_sprites.bullet = new Sprite(g_images.bullet);
+    g_sprites.bullet.scale = 2;
 
     entityManager.init();
     createInitialShips();
