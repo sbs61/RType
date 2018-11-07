@@ -19,6 +19,8 @@ function Bullet(descr) {
     this.setup(descr);
 
     // Make a noise when I am created (i.e. fired)
+    this.fireSound.pause();
+    this.fireSound.currentTime = 0;
     this.fireSound.play();
 
 /*
