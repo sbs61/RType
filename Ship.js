@@ -21,7 +21,7 @@ function Ship(descr) {
     this.rememberResets();
 
     // Default sprite, if not otherwise specified
-    this.sprite = this.sprite || g_sprites.ship;
+    this.sprite = g_sprites.ship[2];
 
     // Set normal drawing scale, and warp state off
     this._scale = 3;
@@ -74,7 +74,7 @@ Ship.prototype.warp = function () {
 
 Ship.prototype._updateWarp = function (du) {
 
-    var SHRINK_RATE = 3 / SECS_TO_NOMINALS;
+    var SHRINK_RATE = 8 / SECS_TO_NOMINALS;
     this._scale += this._scaleDirn * SHRINK_RATE * du;
 
     if (this._scale < 0.2) {
@@ -83,9 +83,9 @@ Ship.prototype._updateWarp = function (du) {
         this.halt();
         this._scaleDirn = 1;
 
-    } else if (this._scale > 1) {
+    } else if (this._scale > 3) {
 
-        this._scale = 1;
+        this._scale = 3;
         this._isWarping = false;
 
         // Reregister me from my old posistion
@@ -127,7 +127,9 @@ Ship.prototype._moveToASafePlace = function () {
 
     }
 };
-
+Ship.prototype.cel = 2;
+var interval = 100 / NOMINAL_UPDATE_INTERVAL;
+Ship.prototype.interval = interval;
 Ship.prototype.update = function (du) {
 
     // Handle warping
@@ -153,17 +155,57 @@ Ship.prototype.update = function (du) {
     */
     if (keys[this.KEY_UP] && this.cy>this.sprite.height/2) {
         this.cy -= 4 * du;
+        if(this.cel < 4){
+            this.interval -= du;
+            if(this.interval < 0){
+                this.cel++;
+                this.interval = interval;
+            }
+        }
+        this.sprite = g_sprites.ship[this.cel];
     }
+    
+    
     // Í rauninni þá á skipið að springa ef það fer í botninn en það kemur seinna
     if (keys[this.KEY_DOWN] && this.cy<g_canvas.height-this.sprite.height/2) {
         this.cy += 4 * du;
+        if(this.cel > 0){
+            this.interval -= du;
+            if(this.interval < 0){
+                this.cel--;
+                this.interval = interval;
+            }
+        }
+        this.sprite = g_sprites.ship[this.cel];
     }
+
     if (keys[this.KEY_LEFT] && this.cx>this.sprite.width/2) {
         this.cx -= 3 * du;
     }
     if (keys[this.KEY_RIGHT]&& this.cx<g_canvas.width-this.sprite.width/2) {
         this.cx += 3 * du;
     }
+
+    if(this.cel !== 2 && !keys[this.KEY_DOWN] && !keys[this.KEY_UP]){
+        if(this.cel > 2){
+            this.interval -= du;
+            if(this.interval < 0){
+                this.cel--;
+                this.interval = interval;
+            }
+            this.sprite = g_sprites.ship[this.cel];
+        }
+        else{
+            this.interval -= du;
+            if(this.interval < 0){
+                this.cel++;
+                this.interval = 200 / NOMINAL_UPDATE_INTERVAL;
+            }
+            this.sprite = g_sprites.ship[this.cel];
+        }
+    }
+
+    //this.sprite = g_sprites.ship[2];
 
     // Handle firing
     this.maybeFireBullet();
@@ -327,8 +369,9 @@ Ship.prototype.render = function (ctx) {
     this.sprite.scale = this._scale;
 
 
-    this.sprite.drawWrappedCentredAt(
+    this.sprite.drawCentredAt(
 	ctx, this.cx, this.cy, this.rotation
     );
+
     this.sprite.scale = origScale;
 };

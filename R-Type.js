@@ -157,9 +157,8 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        ship   : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/ship.png",
-        ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        rock   : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/enemy1s.png",
+        ship   : "images/shipSprites.png",
+        rock   : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/enemy1.png",
         bullet : "https://notendur.hi.is/phh4/Tolvuleikjaforritun/bullet.png",
         bigBullet : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/bigBullet.png",
         background : "images/background_stars.png",
@@ -169,14 +168,25 @@ function requestPreloads() {
 }
 
 var g_sprites = {};
-
 function preloadDone() {
 
-    g_sprites.ship  = new Sprite(g_images.ship);
-    g_sprites.ship2 = new Sprite(g_images.ship2);
-    g_sprites.rock  = new Sprite(g_images.rock);
+    g_sprites.ship  = [];
+    for (var row = 0; row < 1; ++row) {
+        for (var col = 0; col < 5; ++col) {
+            g_sprites.ship.push(new Sprite(g_images.ship,col*33, row*17, 33, 17));
+        }
+    }
 
-    g_sprites.bullet = new Sprite(g_images.bullet);
+    g_sprites.rock  = [];
+    for (var row = 0; row < 1; ++row) {
+        for (var col = 0; col < 8; ++col) {
+            g_sprites.rock.push(new Sprite(g_images.rock,col*33, row*36, 33, 36));
+        }
+    }
+
+    
+
+    g_sprites.bullet = new Sprite(g_images.bullet, 0,0, g_images.bullet.width, g_images.bullet.height);
     g_sprites.bullet.scale = 2;
 
     g_sprites.background = new Sprite(g_images.background);

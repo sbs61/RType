@@ -11,7 +11,6 @@
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 */
 
-
 // A generic contructor which accepts an arbitrary descriptor object
 function Rock(descr) {
 
@@ -22,7 +21,7 @@ function Rock(descr) {
     this.randomiseVelocity();
       
     // Default sprite and scale, if not otherwise specified
-    this.sprite = this.sprite || g_sprites.rock;
+    this.sprite = g_sprites.rock[0];
     this.scale  = this.scale  || 2;
 
 /*
@@ -34,13 +33,13 @@ function Rock(descr) {
 };
 
 Rock.prototype = new Entity();
-var n = 30;
+var n = 40;
 Rock.prototype.randomisePosition = function () {
     // Rock randomisation defaults (if nothing otherwise specified)
     this.cx = 1000 - n;//this.cx || Math.random() * g_canvas.width;
     this.cy = 200 + n;//this.cy || Math.random() * g_canvas.height;
     this.rotation = 0;
-    n+=30;
+    n+=40;
 };
 
 Rock.prototype.randomiseVelocity = function () {
@@ -59,7 +58,12 @@ Rock.prototype.randomiseVelocity = function () {
     this.velRot = this.velRot ||
         util.randRange(MIN_ROT_SPEED, MAX_ROT_SPEED) / SECS_TO_NOMINALS;
 };
-var velYY = 2;
+
+Rock.prototype.interval = 200 / NOMINAL_UPDATE_INTERVAL;
+Rock.prototype.g_cel = 0;
+
+
+
 Rock.prototype.update = function (du) {
 
     // TODO: YOUR STUFF HERE! --- Unregister and check for death
@@ -84,11 +88,20 @@ Rock.prototype.update = function (du) {
     this.rotation = util.wrapRange(this.rotation,
                                    0, consts.FULL_CIRCLE);
 
-    this.wrapPosition();
-    
+    //this.wrapPosition();
+    this.interval -= du;
+    if(this.interval < 0){
+    this.g_cel++;
+ 
+    if (this.g_cel === 8) this.g_cel = 0;
+    this.sprite = g_sprites.rock[this.g_cel];    
+    this.interval = 200 / NOMINAL_UPDATE_INTERVAL;
+    }
+
     // TODO: YOUR STUFF HERE! --- (Re-)Register
     spatialManager.register(this);
 
+    
 };
 
 Rock.prototype.getRadius = function () {
@@ -121,7 +134,8 @@ Rock.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this.scale;
-    this.sprite.drawWrappedCentredAt(
-        ctx, this.cx, this.cy, this.rotation
+    this.sprite.drawCentredAt(
+       ctx, this.cx, this.cy, this.rotation
     );
+    
 };

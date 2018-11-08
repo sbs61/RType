@@ -103,18 +103,16 @@ Bullet.prototype.render = function (ctx) {
 
 
     if(this.big){
-      g_sprites.bullet = new Sprite(g_images.bigBullet);
+      g_sprites.bullet = new Sprite(g_images.bigBullet, 0,0, g_images.bigBullet.width, g_images.bigBullet.height);
       g_sprites.bullet.scale = 2;
     }
     else{
-      g_sprites.bullet = new Sprite(g_images.bullet);
+      g_sprites.bullet = new Sprite(g_images.bullet, 0,0, g_images.bullet.width, g_images.bullet.height);
       g_sprites.bullet.scale = 2;
     }
 
 
-    g_sprites.bullet.drawWrappedCentredAt(
-        ctx, this.cx, this.cy
-    );
+    g_sprites.bullet.drawCentredAt(ctx, this.cx, this.cy);
 
     ctx.globalAlpha = 1;
 };
