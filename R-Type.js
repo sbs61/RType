@@ -189,7 +189,7 @@ function preloadDone() {
     g_sprites.bullet = new Sprite(g_images.bullet, 0,0, g_images.bullet.width, g_images.bullet.height);
     g_sprites.bullet.scale = 2;
 
-    g_sprites.background = new Sprite(g_images.background);
+    g_sprites.background = new Sprite(g_images.background, 0,0, g_images.background.width, g_images.background.height);
     g_sprites.background.scale = 1;
 
     entityManager.init();

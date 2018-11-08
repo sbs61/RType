@@ -307,7 +307,7 @@ Ship.prototype.applyAccel = function (accelX, accelY, du) {
 Ship.prototype.maybeFireBullet = function () {
     if (keys[this.KEY_FIRE]) {
         this.fire = true;
-
+        
     }
 
     if (this.fire&&!this.timeStarted){
