@@ -204,7 +204,7 @@ Ship.prototype.update = function (du) {
             this.interval -= du;
             if(this.interval < 0){
                 this.cel++;
-                this.interval = 200 / NOMINAL_UPDATE_INTERVAL;
+                this.interval = interval;
             }
             this.sprite = g_sprites.ship[this.cel];
         }
