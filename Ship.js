@@ -32,6 +32,7 @@ function Ship(descr) {
     this.time = performance.now();
 };
 
+
 Ship.prototype = new Entity();
 
 Ship.prototype.rememberResets = function () {
@@ -130,6 +131,10 @@ Ship.prototype._moveToASafePlace = function () {
 Ship.prototype.cel = 2;
 var interval = 100 / NOMINAL_UPDATE_INTERVAL;
 Ship.prototype.interval = interval;
+
+var chargeInterval = 70/NOMINAL_UPDATE_INTERVAL;
+var charge = 0;
+
 Ship.prototype.update = function (du) {
 
     // Handle warping
@@ -205,7 +210,14 @@ Ship.prototype.update = function (du) {
         }
     }
 
-    //this.sprite = g_sprites.ship[2];
+    chargeInterval -= du;
+    if(chargeInterval < 0){
+        charge++;
+        chargeInterval = 70/NOMINAL_UPDATE_INTERVAL;
+    } 
+    if(charge > 7)
+        charge = 0;
+
 
     // Handle firing
     this.maybeFireBullet();
@@ -322,12 +334,12 @@ Ship.prototype.maybeFireBullet = function () {
         var TimeHeld = (timeEnd-this.time)/1000;
 
         if (TimeHeld<1){
-            entityManager.fireBullet(this.cx + 90,
-                this.cy, 12, 0, false);
+            entityManager.fireBullet(this.cx + 70,
+                this.cy+7, 12, 0, false);
         }
         else{
-            entityManager.fireBullet(this.cx + 90,
-                this.cy, 12, 0, true);
+            entityManager.fireBullet(this.cx + 70,
+                this.cy+7, 12, 0, true);
         }
     }
 };
@@ -367,7 +379,10 @@ Ship.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this._scale;
-
+    if(this.fire){
+        g_sprites.charge[charge].scale = 2;
+        g_sprites.charge[charge].drawCentredAt(ctx, this.cx+78, this.cy+7, this.rotation);
+    }
 
     this.sprite.drawCentredAt(
 	ctx, this.cx, this.cy, this.rotation

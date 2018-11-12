@@ -162,6 +162,7 @@ function requestPreloads() {
         bullet : "https://notendur.hi.is/phh4/Tolvuleikjaforritun/bullet.png",
         bigBullet : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/bigBullet.png",
         background : "images/background_stars.png",
+        charge : "images/charge.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -181,6 +182,13 @@ function preloadDone() {
     for (var row = 0; row < 1; ++row) {
         for (var col = 0; col < 8; ++col) {
             g_sprites.rock.push(new Sprite(g_images.rock,col*33, row*36, 33, 36));
+        }
+    }
+
+    g_sprites.charge  = [];
+    for (var row = 0; row < 1; ++row) {
+        for (var col = 0; col < 8; ++col) {
+            g_sprites.charge.push(new Sprite(g_images.charge,col*32, row*34, 32, 34));
         }
     }
 
