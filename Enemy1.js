@@ -37,15 +37,18 @@ function Rock(descr) {
 Rock.prototype = new Entity();
 var n = 40;
 var spawnPoint = [];
+fill();
 var s = 0;
 var l = 0;
-for(var i = 0; i < 10; i++){
-    for(var j = 0; j < 5; j++){
-        spawnPoint.push(util.randRange(1000+s,1500+s));
-        console.log(spawnPoint[l]);
-        l++;
+function fill(){
+    for(var i = 0; i < 10; i++){
+        for(var j = 0; j < 5; j++){
+            spawnPoint.push(util.randRange(1000+s,1500+s));
+            console.log(spawnPoint[l]);
+            l++;
+        }
+        s+=500;
     }
-    s+=500;
 }
 
 Rock.prototype.randomisePosition = function () {
