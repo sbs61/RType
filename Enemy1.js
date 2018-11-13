@@ -86,8 +86,6 @@ Enemy1.prototype.update = function (du) {
     spatialManager.unregister(this);
     //Check if the Enemy1 is dead, if so return the KILL_ME_NOW to the entity manager
     if (this._isDeadNow || this.cx < 0) {
-        this.explode = true;
-        console.log(this.explode);
         return entityManager.KILL_ME_NOW;
     }
 
