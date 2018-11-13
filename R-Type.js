@@ -158,13 +158,15 @@ function requestPreloads() {
 
     var requiredImages = {
         ship   : "images/shipSprites.png",
-        rock   : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/enemy1.png",
+        enemy1   : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/enemy1.png",
+        enemy2 : "images/enemy2sheet.png",
         bullet : "https://notendur.hi.is/phh4/Tolvuleikjaforritun/bullet.png",
         bigBullet : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/bigBullet.png",
         background : "images/background_stars.png",
         charge : "images/charge.png",
         spaceDust : "images/spaceDust.png",
-        walls : "images/walls.png"
+        walls : "images/walls.png",
+        explode : "images/explode.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -182,11 +184,20 @@ function preloadDone() {
         }
     }
 
-    g_sprites.rock  = [];
+    g_sprites.enemy1  = [];
     for (var row = 0; row < 1; ++row) {
         for (var col = 0; col < 8; ++col) {
-            g_sprites.rock.push(
-                new Sprite(g_images.rock,col*33, row*36, 33, 36)
+            g_sprites.enemy1.push(
+                new Sprite(g_images.enemy1,col*33, row*36, 33, 36)
+            );
+        }
+    }
+
+    g_sprites.enemy2  = [];
+    for (var row = 0; row < 2; ++row) {
+        for (var col = 0; col < 8; ++col) {
+            g_sprites.enemy2.push(
+                new Sprite(g_images.enemy2,col*33.25, row*34, 33.25, 34)
             );
         }
     }
@@ -196,6 +207,15 @@ function preloadDone() {
         for (var col = 0; col < 8; ++col) {
             g_sprites.charge.push(
                 new Sprite(g_images.charge,col*32, row*34, 32, 34)
+            );
+        }
+    }
+    
+    g_sprites.explode  = [];
+    for (var row = 0; row < 1; ++row) {
+        for (var col = 0; col < 6; ++col) {
+            g_sprites.explode.push(
+                new Sprite(g_images.explode,col*33, row*34, 33, 34)
             );
         }
     }

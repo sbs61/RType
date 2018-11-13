@@ -1,5 +1,5 @@
 // ====
-// ROCK
+// Enemy1
 // ====
 
 "use strict";
@@ -11,39 +11,55 @@
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 */
 
-
 // A generic contructor which accepts an arbitrary descriptor object
-function Rock(descr) {
+function Enemy2(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
 
     this.randomisePosition();
-    this.randomiseVelocity();
+
       
     // Default sprite and scale, if not otherwise specified
-    this.sprite = this.sprite || g_sprites.rock;
-    this.scale  = this.scale  || 1;
+    this.sprite = g_sprites.enemy2[8];
+    this.scale  = this.scale  || 2;
 
 /*
     // Diagnostics to check inheritance stuff
-    this._rockProperty = true;
+    this._Enemy1Property = true;
     console.dir(this);
 */
 
 };
 
-Rock.prototype = new Entity();
-var n = 30;
-Rock.prototype.randomisePosition = function () {
-    // Rock randomisation defaults (if nothing otherwise specified)
-    this.cx = 1000 - n;//this.cx || Math.random() * g_canvas.width;
+
+
+Enemy2.prototype = new Entity();
+var n = 40;
+var spawnPoint = [];
+fill();
+var s = 0;
+var l = 0;
+function fill(){
+    for(var i = 0; i < 10; i++){
+        for(var j = 0; j < 5; j++){
+            spawnPoint.push(util.randRange(1000+s,1500+s));
+            console.log(spawnPoint[l]);
+            l++;
+        }
+        s+=500;
+    }
+}
+
+Enemy2.prototype.randomisePosition = function () {
+    // Enemy1 randomisation defaults (if nothing otherwise specified)
+    this.cx = 800;//this.cx || Math.random() * g_canvas.width;
     this.cy = 200 + n;//this.cy || Math.random() * g_canvas.height;
-    this.rotation = this.rotation || 0;
-    n+=30;
+    this.rotation = 0;
+    n++;
 };
 
-Rock.prototype.randomiseVelocity = function () {
+Enemy2.prototype.randomiseVelocity = function () {
     var MIN_SPEED = 20,
         MAX_SPEED = 70;
 
@@ -59,49 +75,80 @@ Rock.prototype.randomiseVelocity = function () {
     this.velRot = this.velRot ||
         util.randRange(MIN_ROT_SPEED, MAX_ROT_SPEED) / SECS_TO_NOMINALS;
 };
-var velYY = 2;
-Rock.prototype.update = function (du) {
 
+Enemy2.prototype.interval = 70 / NOMINAL_UPDATE_INTERVAL;
+Enemy2.prototype.g_cel = 8;
+
+
+
+Enemy2.prototype.update = function (du) {
     // TODO: YOUR STUFF HERE! --- Unregister and check for death
+    this.xVel = -3;
+    this.yVel = 4*Math.cos(this.cx/100);
+
+    var prevX = this.cx;
+    var prevY = this.cy;
+
+    var nextX = prevX + this.xVel*du;
+    var nextY = prevY + this.yVel*du;
+
+    this.interval -= du;
+    if(this.interval < 0){
+    if(nextY > this.cy){
+        if(this.g_cel > 5)
+            this.g_cel--;
+        this.sprite = g_sprites.enemy2[this.g_cel];
+    }
+    else{
+        if(this.g_cel < 11)
+            this.g_cel++;
+        this.sprite = g_sprites.enemy2[this.g_cel];
+    }
+    this.interval = 70 / NOMINAL_UPDATE_INTERVAL;
+}
+
     spatialManager.unregister(this);
 
-    //Check if the rock is dead, if so return the KILL_ME_NOW to the entity manager
-    if (this._isDeadNow) {
+    //Check if the Enemy2 is dead, if so return the KILL_ME_NOW to the entity manager
+    if (this._isDeadNow || this.cx < 0) {
         return entityManager.KILL_ME_NOW;
     }
 
-    //this.cx += this.velX * du;
-    //this.cy += this.velY * du;
-    if(this.cy < 100)
-        this.velY*=-1
-    if(this.cy > 600)
-        this.velY*=-1
 
-    this.cx -= 1 * du;
-    this.cy += this.velY*du;
+    this.cx += this.xVel * du;
+    this.cy += this.yVel*du;
 
-    this.rotation += 1 * this.velRot;
-    this.rotation = util.wrapRange(this.rotation,
-                                   0, consts.FULL_CIRCLE);
 
-    this.wrapPosition();
+    /*
+    this.interval -= du;
+    if(this.interval < 0){
+    //this.g_cel++;
+ 
     
+    if (this.g_cel === 8) this.g_cel = 0;
+    this.sprite = g_sprites.enemy2[this.g_cel];    
+    this.interval = 100 / NOMINAL_UPDATE_INTERVAL;
+    }
+    */
+
     // TODO: YOUR STUFF HERE! --- (Re-)Register
     spatialManager.register(this);
 
+  
+
 };
 
-Rock.prototype.getRadius = function () {
+Enemy2.prototype.getRadius = function () {
     return this.scale * (this.sprite.width / 2) * 0.9;
 };
 
 // HACKED-IN AUDIO (no preloading)
-Rock.prototype.splitSound = new Audio(
-  "sounds/rockSplit.ogg");
-Rock.prototype.evaporateSound = new Audio(
-  "sounds/rockEvaporate.ogg");
+Enemy2.prototype.splitSound = new Audio(
+  "sounds/Enemy1Split.ogg");
+Enemy2.prototype.evaporateSound = new Audio(
+  "sounds/Enemy1Evaporate.ogg");
 
-Rock.prototype.takeBulletHit = function () {
+Enemy2.prototype.takeBulletHit = function () {
     this.kill();
     /*
     if (this.scale > 0.25) {
@@ -117,11 +164,12 @@ Rock.prototype.takeBulletHit = function () {
 
 
 
-Rock.prototype.render = function (ctx) {
+Enemy2.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this.scale;
-    this.sprite.drawWrappedCentredAt(
-        ctx, this.cx, this.cy, this.rotation
+    this.sprite.drawCentredAt(
+       ctx, this.cx, this.cy, this.rotation
     );
+    
 };

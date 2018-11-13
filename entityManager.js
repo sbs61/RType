@@ -116,7 +116,8 @@ fireBigBullet: function(cx, cy, velX, velY, big) {
 },
 
 generateRock : function(descr) {
-    this._rocks.push(new Rock(descr));
+    this._rocks.push(new Enemy1(descr));
+    this._rocks.push(new Enemy2(descr));
 },
 
 generateShip : function(descr) {
