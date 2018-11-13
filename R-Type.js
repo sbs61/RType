@@ -162,7 +162,9 @@ function requestPreloads() {
         bullet : "https://notendur.hi.is/phh4/Tolvuleikjaforritun/bullet.png",
         bigBullet : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/bigBullet.png",
         background : "images/background_stars.png",
-        charge : "images/charge.png"
+        charge : "images/charge.png",
+        spaceDust : "images/spaceDust.png",
+        walls : "images/walls.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -174,30 +176,43 @@ function preloadDone() {
     g_sprites.ship  = [];
     for (var row = 0; row < 1; ++row) {
         for (var col = 0; col < 5; ++col) {
-            g_sprites.ship.push(new Sprite(g_images.ship,col*33, row*17, 33, 17));
+            g_sprites.ship.push(
+                new Sprite(g_images.ship,col*33, row*17, 33, 17)
+            );
         }
     }
 
     g_sprites.rock  = [];
     for (var row = 0; row < 1; ++row) {
         for (var col = 0; col < 8; ++col) {
-            g_sprites.rock.push(new Sprite(g_images.rock,col*33, row*36, 33, 36));
+            g_sprites.rock.push(
+                new Sprite(g_images.rock,col*33, row*36, 33, 36)
+            );
         }
     }
 
     g_sprites.charge  = [];
     for (var row = 0; row < 1; ++row) {
         for (var col = 0; col < 8; ++col) {
-            g_sprites.charge.push(new Sprite(g_images.charge,col*32, row*34, 32, 34));
+            g_sprites.charge.push(
+                new Sprite(g_images.charge,col*32, row*34, 32, 34)
+            );
         }
     }
 
-    
+    g_sprites.spaceDust = new Sprite(g_images.spaceDust, 0, 0,
+        g_images.spaceDust.width, g_images.spaceDust.height);
 
-    g_sprites.bullet = new Sprite(g_images.bullet, 0,0, g_images.bullet.width, g_images.bullet.height);
+    g_sprites.walls = new Sprite(g_images.walls, 0, 0, 
+        g_images.walls.width, g_images.walls.height);
+    g_sprites.walls.scale = 1;
+
+    g_sprites.bullet = new Sprite(g_images.bullet, 0, 0, 
+        g_images.bullet.width, g_images.bullet.height);
     g_sprites.bullet.scale = 2;
 
-    g_sprites.background = new Sprite(g_images.background, 0,0, g_images.background.width, g_images.background.height);
+    g_sprites.background = new Sprite(g_images.background, 0, 0, 
+        g_images.background.width, g_images.background.height);
     g_sprites.background.scale = 1;
 
     entityManager.init();

@@ -20,25 +20,57 @@ var environmentManager = {
 // "PRIVATE" DATA
 
 _particles : [],
-// _background
+_backgrounds : [],
+_dustTimer : 0,
+
+// this._categories : [],
 
 // "PRIVATE" METHODS
 
 _generateBackground : function() {
-    this._background = new Background();
+    this._backgrounds[0] = new Background();
+},
+
+_generateWalls : function() {
+    this._backgrounds[1] = new Background({
+        sprite : g_sprites.walls,
+        velX : 0.75,
+        x : 350
+    });
+},
+
+_generateDust : function (du) {
+    this._dustTimer -= du;
+
+	if (this._dustTimer <= 0) {
+        var cy = this._getDustY();
+        this._particles.push(new SpaceDust(cy));
+        this._dustTimer = Math.floor(Math.random()*4)*10 + 30;
+    }
+},
+
+_getDustY : function () {
+
+    var floor = g_canvas.height / 20;
+    var ceil = g_canvas.height - floor;
+
+    return floor + Math.random()*(ceil-floor);
 },
 
 // PUBLIC METHODS
+
+KILL_ME_NOW : -1,
 
 // Some things must be deferred until after initial construction
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._particles];
+    this._categories = [this._backgrounds,this._particles];
 },
 
 init: function() {
     this._generateBackground();
+    this._generateWalls();
 },
 
 toggleBgHalt : function() {
@@ -46,6 +78,10 @@ toggleBgHalt : function() {
 },
 
 update : function(du) {
+
+    // this._background.update(du);
+	
+	this._generateDust(du);
 
     for (var c = 0; c < this._categories.length; ++c) {
 
@@ -66,11 +102,13 @@ update : function(du) {
             }
         }
     }
-
-    this._background.update(du);
+    
 },
 
 render: function(ctx) {
+	
+	// Render background first
+	// this._background.render(ctx);
 
     for (var c = 0; c < this._categories.length; ++c) {
 
@@ -81,7 +119,6 @@ render: function(ctx) {
         }
     }
 
-    this._background.render(ctx);
 }
 
 }

@@ -132,3 +132,7 @@ main.init = function () {
 
     this._requestNextIteration();
 };
+
+main.getFrameTime = function () {
+    return this._frameTime_ms;
+};

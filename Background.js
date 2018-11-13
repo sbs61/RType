@@ -23,29 +23,35 @@ function Background(descr) {
 };
 
 // Initial, inheritable, default values
-Background.prototype.cx = 0;
-Background.prototype.cy = 0;
-Background.prototype.velX = 0.33;
+Background.prototype.x = 0;
+Background.prototype.y = 0;
+Background.prototype.velX = 0.25;
+Background.prototype.scale = 1;
 Background.prototype.halt = false;
     
 Background.prototype.update = function (du) {
     
     if (!this.halt) {
-        this.cx -= this.velX * du;
+        this.x -= this.velX * du;
     }
     
-    if (this.cx <= -this.sprite.width) {
-        this.cx +=  this.sprite.width; 
+    if (this.x <= -this.sprite.width) {
+        this.x +=  this.sprite.width; 
     }
 };
 
 Background.prototype.render = function (ctx) {
+    var origScale = this.sprite.scale;
+
+    this.sprite.scale = this.scale;
 
     this.sprite.drawAt(
-	    ctx, this.cx, 0
+	    ctx, this.x, this.y
     );
 
     this.sprite.drawAt(
-	    ctx, this.cx + this.sprite.width, 0
+	    ctx, this.x + this.sprite.width, this.y
     );
+
+    this.sprite.scale = origScale;
 };
