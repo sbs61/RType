@@ -132,6 +132,7 @@ Enemy1.prototype.evaporateSound = new Audio(
   "sounds/Enemy1Evaporate.ogg");
 
 Enemy1.prototype.takeBulletHit = function () {
+    entityManager._hud[0].incrementScore(25);
     this.kill();
     /*
     if (this.scale > 0.25) {

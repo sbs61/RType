@@ -237,8 +237,9 @@ function preloadDone() {
 
     entityManager.init();
     environmentManager.init();
+    entityManager.displayHud();
     createInitialShips();
-
+    
     main.init();
 }
 

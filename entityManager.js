@@ -30,7 +30,8 @@ var entityManager = {
 _rocks   : [],
 _bullets : [],
 _ships   : [],
-
+_hud     : [],
+  
 _bShowRocks : true,
 
 // "PRIVATE" METHODS
@@ -87,7 +88,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._rocks, this._bullets, this._ships];
+    this._categories = [this._rocks, this._bullets, this._ships, this._hud];
 },
 
 init: function() {
@@ -124,6 +125,10 @@ generateShip : function(descr) {
     this._ships.push(new Ship(descr));
 },
 
+displayHud : function(descr) {
+  this._hud.push(new Hud(descr));
+},
+  
 killNearestShip : function(xPos, yPos) {
     var theShip = this._findNearestShip(xPos, yPos).theShip;
     if (theShip) {
