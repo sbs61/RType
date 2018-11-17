@@ -160,8 +160,10 @@ function requestPreloads() {
         ship   : "images/shipSprites.png",
         enemy1   : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/enemy1.png",
         enemy2 : "images/enemy2sheet.png",
-        bullet : "https://notendur.hi.is/phh4/Tolvuleikjaforritun/bullet.png",
-        bigBullet : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/bigBullet.png",
+        bullet1 : "images/bullet1.png",
+        bullet2 : "images/bullet2.png",
+        bullet3 : "images/bullet3.png",
+        bullet4 : "images/bullet4.png",
         background : "images/background_stars.png",
         charge : "images/charge.png",
         spaceDust : "images/spaceDust.png",
@@ -227,9 +229,21 @@ function preloadDone() {
         g_images.walls.width, g_images.walls.height);
     g_sprites.walls.scale = 1;
 
-    g_sprites.bullet = new Sprite(g_images.bullet, 0, 0, 
-        g_images.bullet.width, g_images.bullet.height);
-    g_sprites.bullet.scale = 2;
+    g_sprites.bullet1 = new Sprite(g_images.bullet1, 0, 0, 
+        g_images.bullet1.width, g_images.bullet1.height);
+    g_sprites.bullet1.scale = 2;
+
+    g_sprites.bullet2 = new Sprite(g_images.bullet2, 0, 0, 
+        g_images.bullet2.width, g_images.bullet2.height);
+    g_sprites.bullet2.scale = 2;
+
+    g_sprites.bullet3 = new Sprite(g_images.bullet3, 0, 0, 
+        g_images.bullet3.width, g_images.bullet3.height);
+    g_sprites.bullet2.scale = 2;
+
+    g_sprites.bullet4 = new Sprite(g_images.bullet4, 0, 0, 
+        g_images.bullet4.width, g_images.bullet4.height);
+    g_sprites.bullet2.scale = 2;
 
     g_sprites.background = new Sprite(g_images.background, 0, 0, 
         g_images.background.width, g_images.background.height);

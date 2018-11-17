@@ -333,13 +333,21 @@ Ship.prototype.maybeFireBullet = function () {
         var timeEnd = performance.now();
         var TimeHeld = (timeEnd-this.time)/1000;
 
-        if (TimeHeld<1){
+        if (TimeHeld<0.5){
             entityManager.fireBullet(this.cx + 70,
-                this.cy+7, 12, 0, false);
+                this.cy+7, 12, 0, false, false, false);
+        }
+        else if(TimeHeld < 1){
+            entityManager.fireBullet(this.cx + 70,
+                this.cy+7, 12, 0, true, false, false);
+        }
+        else if(TimeHeld < 1.5){
+            entityManager.fireBullet(this.cx + 70,
+                this.cy+7, 12, 0, false, true, false);
         }
         else{
             entityManager.fireBullet(this.cx + 70,
-                this.cy+7, 12, 0, true);
+                this.cy+7, 12, 0, false, false, true);
         }
     }
 };
