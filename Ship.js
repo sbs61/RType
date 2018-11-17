@@ -131,6 +131,8 @@ Ship.prototype._moveToASafePlace = function () {
 Ship.prototype.cel = 2;
 var interval = 100 / NOMINAL_UPDATE_INTERVAL;
 Ship.prototype.interval = interval;
+Ship.prototype.startCharge = false;
+Ship.prototype.chargeTimer = 300/NOMINAL_UPDATE_INTERVAL;
 
 var chargeInterval = 70/NOMINAL_UPDATE_INTERVAL;
 var charge = 0;
@@ -210,6 +212,14 @@ Ship.prototype.update = function (du) {
         }
     }
 
+    if(this.fire){
+        this.chargeTimer -= du;
+    }
+    if(this.chargeTimer < 0){
+        this.startCharge = true;
+        this.chargeTimer = 300/NOMINAL_UPDATE_INTERVAL;
+    }
+
     chargeInterval -= du;
     if(chargeInterval < 0){
         charge++;
@@ -217,7 +227,7 @@ Ship.prototype.update = function (du) {
     } 
     if(charge > 7)
         charge = 0;
-
+    
 
     // Handle firing
     this.maybeFireBullet();
@@ -319,7 +329,6 @@ Ship.prototype.applyAccel = function (accelX, accelY, du) {
 Ship.prototype.maybeFireBullet = function () {
     if (keys[this.KEY_FIRE]) {
         this.fire = true;
-        
     }
 
     if (this.fire&&!this.timeStarted){
@@ -329,19 +338,20 @@ Ship.prototype.maybeFireBullet = function () {
 
     if (!keys[this.KEY_FIRE]&&this.fire) {
         this.fire = false;
+        this.startCharge = false;
         this.timeStarted = false;
         var timeEnd = performance.now();
         var TimeHeld = (timeEnd-this.time)/1000;
 
-        if (TimeHeld<0.5){
+        if (TimeHeld<0.8){
             entityManager.fireBullet(this.cx + 70,
                 this.cy+7, 12, 0, false, false, false);
         }
-        else if(TimeHeld < 1){
+        else if(TimeHeld < 1.4){
             entityManager.fireBullet(this.cx + 70,
                 this.cy+7, 12, 0, true, false, false);
         }
-        else if(TimeHeld < 1.5){
+        else if(TimeHeld < 2){
             entityManager.fireBullet(this.cx + 70,
                 this.cy+7, 12, 0, false, true, false);
         }
@@ -387,7 +397,7 @@ Ship.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this._scale;
-    if(this.fire){
+    if(this.startCharge){
         g_sprites.charge[charge].scale = 2;
         g_sprites.charge[charge].drawCentredAt(ctx, this.cx+78, this.cy+7, this.rotation);
     }
