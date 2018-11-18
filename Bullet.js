@@ -59,7 +59,7 @@ Bullet.prototype.update = function (du) {
     if (this._isDeadNow) {
         return entityManager.KILL_ME_NOW;
     }
-    if(this.cx > 980)
+    if(this.cx > g_canvas.width-20)
         return entityManager.KILL_ME_NOW;
 
     this.lifeSpan -= du;

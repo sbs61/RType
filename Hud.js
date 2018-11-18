@@ -22,7 +22,7 @@ Hud.prototype.decrementLife = function () {
 }
 
 Hud.prototype.render = function () {
-  //util.fillBox(ctx, 0, g_canvas.height - 45, g_canvas.width, 62, 'black');
+ 
   g_ctx.font = "30px Courier New";
   
   g_ctx.save();  
@@ -35,12 +35,6 @@ Hud.prototype.render = function () {
   g_ctx.fillText("BEAM", g_canvas.width / 4, g_canvas.height - 35);
   g_ctx.restore();
   
-  //util.fillBox(ctx, g_canvas.width / 3.2, g_canvas.height - 40, this.MAX_CHARGE + 4.2, 16, 'white');
-  //util.fillBox(ctx, g_canvas.width / 3.2, g_canvas.height - 37, this.charge, 10, 'blue');
-
-  /*for (var i = 0; i < this.life; i++) {
-    g_sprites.life.drawCentredAt(ctx, 18 + i * 32, g_canvas.height - 33);
-  }*/
 }
 
 Hud.prototype.update = function () {
