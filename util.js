@@ -101,6 +101,19 @@ fillBox: function (ctx, x, y, w, h, style) {
     ctx.fillStyle = style;
     ctx.fillRect(x, y, w, h);
     ctx.fillStyle = oldStyle;
+},
+
+drawLives: function(ctx){
+    if(g_lives > 0)
+        g_sprites.ship[2].drawCentredAt(ctx, 870, 700, this.rotation);
+    if(g_lives > 1)
+        g_sprites.ship[2].drawCentredAt(ctx, 820, 700, this.rotation);
+    if(g_lives > 2)
+        g_sprites.ship[2].drawCentredAt(ctx, 770, 700, this.rotation);
+},
+
+gameOverScreen: function(ctx){
+    g_sprites.gameOver.drawCentredAt(ctx, 450, 360, this.rotation);
 }
 
 };

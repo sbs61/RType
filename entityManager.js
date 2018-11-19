@@ -22,7 +22,6 @@ with suitable 'data' and 'methods'.
 //
 /*jslint nomen: true, white: true, plusplus: true*/
 
-
 var entityManager = {
 
   // "PRIVATE" DATA
@@ -41,8 +40,15 @@ var entityManager = {
       NUM_ENEMIES = 1;
 
     for (i = 0; i < NUM_ENEMIES; ++i) {
-      this.generateEnemy();
+      this.generateEnemy1();
     }
+    for (i = 0; i < NUM_ENEMIES; ++i) {
+      this.generateEnemy2();
+    }
+  },
+
+  _generateShip: function(){
+    this.generateShip();
   },
 
   _findNearestShip: function (posX, posY) {
@@ -119,8 +125,11 @@ fireEnemyBullet: function (cx, cy, velX, velY){
 },
 
 
-  generateEnemy: function (descr) {
+  generateEnemy1: function (descr) {
     this._enemies.push(new Enemy1(descr));
+  },
+
+  generateEnemy2: function (descr) {
     this._enemies.push(new Enemy2(descr));
   },
 
@@ -174,6 +183,15 @@ fireEnemyBullet: function (cx, cy, velX, velY){
           ++i;
         }
       }
+    }
+
+    if(g_lives !== 0 && this._ships.length === 0) {
+      this._generateShip();
+    }
+
+    if(g_lives === 0){
+      g_isUpdatePaused = true;
+      
     }
 
     if (this._enemies.length === 0) this._generateEnemies();

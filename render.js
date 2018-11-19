@@ -67,6 +67,7 @@ function render(ctx) {
     // to illustrate flicker-proof double-buffering
     //
     if (g_undoBox) ctx.clearRect(200, 200, 50, 50);
+
     
     ++g_frameCounter;
 }

@@ -52,7 +52,7 @@ Ship.prototype.KEY_FIRE = ' '.charCodeAt(0);
 // Initial, inheritable, default values
 Ship.prototype.rotation = 0;
 Ship.prototype.cx = 200;
-Ship.prototype.cy = 200;
+Ship.prototype.cy = 360;
 Ship.prototype.velX = 0;
 Ship.prototype.velY = 0;
 Ship.prototype.launchVel = 2;
@@ -75,6 +75,7 @@ Ship.prototype.update = function (du) {
 
   if (this._isDeadNow || this.cx < 0) {
     //Hér viljum við líklega bæta við einhverju til að skipið hafi fleiri líf
+    g_lives--;
     return entityManager.KILL_ME_NOW;
   } else if (this.isExploding) {
     if(this.eInterval < 0){
@@ -167,6 +168,7 @@ Ship.prototype.update = function (du) {
       spatialManager.register(this);
     }
   }
+
 };
 
 Ship.prototype.maybeFireBullet = function () {
@@ -247,4 +249,5 @@ Ship.prototype.render = function (ctx) {
   );
 
   this.sprite.scale = origScale;
+
 };

@@ -145,6 +145,12 @@ function renderSimulation(ctx) {
     entityManager.render(ctx);
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
+
+    util.drawLives(ctx);
+
+    if(g_lives===0){
+        util.gameOverScreen(ctx);
+    }
 }
 
 
@@ -172,7 +178,8 @@ function requestPreloads() {
         walls : "images/walls.png",
         explode : "images/explode.png",
         beamBar : "images/UI_Beam_bar.png",
-        muzzleFlash : "images/muzzleflash.png"
+        muzzleFlash : "images/muzzleflash.png",
+        gameOver : "images/gameOver.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -264,6 +271,9 @@ function preloadDone() {
 
     g_sprites.background = new Sprite(g_images.background, 0, 0, 
         g_images.background.width, g_images.background.height);
+
+    g_sprites.gameOver = new Sprite(g_images.gameOver, 0, 0, 
+        g_images.gameOver.width, g_images.gameOver.height);
 
     g_sprites.beamBar = new Sprite(g_images.beamBar, 0, 0, 
         g_images.beamBar.width, g_images.beamBar.height);
