@@ -140,15 +140,18 @@ var charge = 0;
 Ship.prototype.update = function (du) {
 
     // Handle warping
-    if (this._isWarping) {
+    /*if (this._isWarping) {
         this._updateWarp(du);
         return;
-    }
+    }*/
 
     // TODO: YOUR STUFF HERE! --- Unregister and check for death
     spatialManager.unregister(this);
 
     if (this._isDeadNow) {
+        for(var i = 0; i < g_sprites.explode.length; i++) {
+          this.sprite = g_sprites.explode[i];
+        }
         return entityManager.KILL_ME_NOW;
     }
 
