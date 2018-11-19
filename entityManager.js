@@ -96,23 +96,27 @@ init: function() {
     //this._generateShip();
 },
 
-fireBullet: function(cx, cy, velX, velY, big) {
+fireBullet: function(cx, cy, velX, velY, big1, big2, big3) {
     this._bullets.push(new Bullet({
         cx   : cx,
         cy   : cy,
         velX : velX,
         velY : velY,
-        big  : big
+        big1  : big1,
+        big2 : big2,
+        big3 : big3
     }));
 },
 
-fireBigBullet: function(cx, cy, velX, velY, big) {
+fireBigBullet: function(cx, cy, velX, velY, big1, big2, big3) {
     this._bullets.push(new Bullet({
         cx   : cx,
         cy   : cy,
         velX : velX,
         velY : velY,
-        big  : big
+        big1  : big1,
+        big2 : big2,
+        big3 : big3
     }));
 },
 

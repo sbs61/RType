@@ -24,62 +24,75 @@ functions... shared data properties are potentially quite confusing.
 
 function Entity() {
 
-/*
-    // Diagnostics to check inheritance stuff
-    this._entityProperty = true;
-    console.dir(this);
-*/
+  /*
+      // Diagnostics to check inheritance stuff
+      this._entityProperty = true;
+      console.dir(this);
+  */
 
 };
 
 Entity.prototype.setup = function (descr) {
 
-    // Apply all setup properies from the (optional) descriptor
-    for (var property in descr) {
-        this[property] = descr[property];
-    }
-    
-    // Get my (unique) spatial ID
-    this._spatialID = spatialManager.getNewSpatialID();
-    
-    // I am not dead yet!
-    this._isDeadNow = false;
+  // Apply all setup properies from the (optional) descriptor
+  for (var property in descr) {
+    this[property] = descr[property];
+  }
+
+  // Get my (unique) spatial ID
+  this._spatialID = spatialManager.getNewSpatialID();
+
+  // I am not dead yet!
+  this._isDeadNow = false;
+  this.isExploding = false;
+  this.explodingSpriteIdx = 0;
 };
 
 Entity.prototype.setPos = function (cx, cy) {
-    this.cx = cx;
-    this.cy = cy;
+  this.cx = cx;
+  this.cy = cy;
 };
 
 Entity.prototype.getPos = function () {
-    return {posX : this.cx, posY : this.cy};
+  return {
+    posX: this.cx,
+    posY: this.cy
+  };
 };
 
 Entity.prototype.getRadius = function () {
-    return 0;
+  return 0;
 };
 
 Entity.prototype.getSpatialID = function () {
-    return this._spatialID;
+  return this._spatialID;
 };
 
 Entity.prototype.kill = function () {
-    this._isDeadNow = true;
+  this._isDeadNow = true;
 };
 
 Entity.prototype.findHitEntity = function () {
-    var pos = this.getPos();
-    return spatialManager.findEntityInRange(
-        pos.posX, pos.posY, this.getRadius()
-    );
+  var pos = this.getPos();
+  return spatialManager.findEntityInRange(
+    pos.posX, pos.posY, this.getRadius()
+  );
 };
+
+Entity.prototype.nextExplodingSprite = function () {
+  if (this.explodingSpriteIdx == g_sprites.explode.length) {
+    this.kill();
+  } else {
+    this.sprite = g_sprites.explode[this.explodingSpriteIdx++];
+  }
+}
 
 // This is just little "convenience wrapper"
 Entity.prototype.isColliding = function () {
-    return this.findHitEntity();
+  return this.findHitEntity();
 };
 
 Entity.prototype.wrapPosition = function () {
-    this.cx = util.wrapRange(this.cx, 0, g_canvas.width);
-    this.cy = util.wrapRange(this.cy, 0, g_canvas.height);
+  this.cx = util.wrapRange(this.cx, 0, g_canvas.width);
+  this.cy = util.wrapRange(this.cy, 0, g_canvas.height);
 };

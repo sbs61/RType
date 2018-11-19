@@ -25,7 +25,7 @@ Hud.prototype.decrementLife = function () {
 
 
 Hud.prototype.render = function () {
-  //util.fillBox(ctx, 0, g_canvas.height - 45, g_canvas.width, 62, 'black');
+ 
   g_ctx.font = "30px Courier New";
   
   g_ctx.save();  

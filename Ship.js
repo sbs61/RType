@@ -131,6 +131,8 @@ Ship.prototype._moveToASafePlace = function () {
 Ship.prototype.cel = 2;
 var interval = 100 / NOMINAL_UPDATE_INTERVAL;
 Ship.prototype.interval = interval;
+Ship.prototype.startCharge = false;
+Ship.prototype.chargeTimer = 300/NOMINAL_UPDATE_INTERVAL;
 
 var chargeInterval = 70/NOMINAL_UPDATE_INTERVAL;
 var charge = 0;
@@ -138,26 +140,20 @@ var charge = 0;
 Ship.prototype.update = function (du) {
 
     // Handle warping
-    if (this._isWarping) {
+    /*if (this._isWarping) {
         this._updateWarp(du);
         return;
-    }
+    }*/
 
     // TODO: YOUR STUFF HERE! --- Unregister and check for death
     spatialManager.unregister(this);
 
-    if (this._isDeadNow) {
-        return entityManager.KILL_ME_NOW;
-    }
+    if (this._isDeadNow || this.cx < 0) {
+    return entityManager.KILL_ME_NOW;
+  } else if (this.isExploding) {
+    this.nextExplodingSprite();
+  } else {
 
-    /*
-    // Perform movement substeps
-    var steps = this.numSubSteps;
-    var dStep = du / steps;
-    for (var i = 0; i < steps; ++i) {
-        this.computeSubStep(dStep);
-    }
-    */
     if (keys[this.KEY_UP] && this.cy>this.sprite.height/2) {
         this.cy -= 4 * du;
         if(this.cel < 4){
@@ -210,6 +206,14 @@ Ship.prototype.update = function (du) {
         }
     }
 
+    if(this.fire){
+        this.chargeTimer -= du;
+    }
+    if(this.chargeTimer < 0){
+        this.startCharge = true;
+        this.chargeTimer = 300/NOMINAL_UPDATE_INTERVAL;
+    }
+
     chargeInterval -= du;
     if(chargeInterval < 0){
         charge++;
@@ -217,17 +221,18 @@ Ship.prototype.update = function (du) {
     } 
     if(charge > 7)
         charge = 0;
-
+    
 
     // Handle firing
     this.maybeFireBullet();
 
     // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register
     if (this.isColliding())
-        this.warp();
-    else
-        spatialManager.register(this);
-
+        this.isExploding = true;
+    else {
+      spatialManager.register(this);
+    }
+  }
 };
 
 Ship.prototype.computeSubStep = function (du) {
@@ -332,14 +337,27 @@ Ship.prototype.maybeFireBullet = function () {
 
     if (!keys[this.KEY_FIRE]&&this.fire) {
         this.fire = false;
+        this.startCharge = false;
         this.timeStarted = false;
         var timeEnd = performance.now();
         var TimeHeld = (timeEnd-this.time)/1000;
         entityManager._hud[0].resetBeam();
 
-        if (TimeHeld>0.85){
+        if (TimeHeld<0.8){
             entityManager.fireBullet(this.cx + 70,
-                this.cy+7, 12, 0, true);
+                this.cy+7, 12, 0, false, false, false);
+        }
+        else if(TimeHeld < 1.4){
+            entityManager.fireBullet(this.cx + 70,
+                this.cy+7, 12, 0, true, false, false);
+        }
+        else if(TimeHeld < 2){
+            entityManager.fireBullet(this.cx + 70,
+                this.cy+7, 12, 0, false, true, false);
+        }
+        else{
+            entityManager.fireBullet(this.cx + 70,
+                this.cy+7, 12, 0, false, false, true);
         }
     }
 };
@@ -349,7 +367,7 @@ Ship.prototype.getRadius = function () {
 };
 
 Ship.prototype.takeBulletHit = function () {
-    this.warp();
+    this.isExploding = true;
 };
 
 Ship.prototype.reset = function () {
@@ -380,7 +398,7 @@ Ship.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this._scale;
-    if(this.fire){
+    if(this.startCharge){
         g_sprites.charge[charge].scale = 2;
         g_sprites.charge[charge].drawCentredAt(ctx, this.cx+78, this.cy+7, this.rotation);
     }

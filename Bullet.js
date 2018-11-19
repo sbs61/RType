@@ -44,7 +44,9 @@ Bullet.prototype.cx = 200;
 Bullet.prototype.cy = 200;
 Bullet.prototype.velX = 1;
 Bullet.prototype.velY = 1;
-Bullet.prototype.big = false;
+Bullet.prototype.big1 = false;
+Bullet.prototype.big2 = false;
+Bullet.prototype.big3 = false;
 
 // Convert times from milliseconds to "nominal" time units.
 Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
@@ -57,7 +59,7 @@ Bullet.prototype.update = function (du) {
     if (this._isDeadNow) {
         return entityManager.KILL_ME_NOW;
     }
-    if(this.cx > 980)
+    if(this.cx > g_canvas.width-20)
         return entityManager.KILL_ME_NOW;
 
     this.lifeSpan -= du;
@@ -74,7 +76,7 @@ Bullet.prototype.update = function (du) {
     if (hitEntity) {
         var canTakeHit = hitEntity.takeBulletHit;
         if (canTakeHit) canTakeHit.call(hitEntity);
-        if (!this.big)
+        if (!this.big1 && !this.big2 && !this.big3)
             return entityManager.KILL_ME_NOW;
     }
 
@@ -102,12 +104,20 @@ Bullet.prototype.render = function (ctx) {
     }
 
 
-    if(this.big){
-      g_sprites.bullet = new Sprite(g_images.bigBullet, 0,0, g_images.bigBullet.width, g_images.bigBullet.height);
+    if(this.big1){
+      g_sprites.bullet = new Sprite(g_images.bullet2, 0,0, g_images.bullet2.width, g_images.bullet2.height);
       g_sprites.bullet.scale = 2;
     }
+    else if(this.big2){
+        g_sprites.bullet = new Sprite(g_images.bullet3, 0,0, g_images.bullet3.width, g_images.bullet3.height);
+        g_sprites.bullet.scale = 2;
+      }
+    else if(this.big3){
+        g_sprites.bullet = new Sprite(g_images.bullet4, 0,0, g_images.bullet4.width, g_images.bullet4.height);
+        g_sprites.bullet.scale = 2;
+      }
     else{
-      g_sprites.bullet = new Sprite(g_images.bullet, 0,0, g_images.bullet.width, g_images.bullet.height);
+      g_sprites.bullet = new Sprite(g_images.bullet1, 0,0, g_images.bullet1.width, g_images.bullet1.height);
       g_sprites.bullet.scale = 2;
     }
 
