@@ -168,7 +168,8 @@ function requestPreloads() {
         charge : "images/charge.png",
         spaceDust : "images/spaceDust.png",
         walls : "images/walls.png",
-        explode : "images/explode.png"
+        explode : "images/explode.png",
+        beamBar : "images/UI_Beam_bar.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -248,6 +249,11 @@ function preloadDone() {
     g_sprites.background = new Sprite(g_images.background, 0, 0, 
         g_images.background.width, g_images.background.height);
     g_sprites.background.scale = 1;
+
+    g_sprites.beamBar = new Sprite(g_images.beamBar, 0, 0, 
+        g_images.beamBar.width, g_images.beamBar.height);
+    g_sprites.beamBar.scale = 0.5;
+    
 
     entityManager.init();
     environmentManager.init();

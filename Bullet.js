@@ -68,7 +68,7 @@ Bullet.prototype.update = function (du) {
     this.cx += this.velX * du;
     this.cy += this.velY * du;
 
-    this.wrapPosition();
+    //this.wrapPosition();
 
     // Handle collisions
     //
