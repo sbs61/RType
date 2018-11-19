@@ -67,7 +67,6 @@ var chargeInterval = 70 / NOMINAL_UPDATE_INTERVAL;
 var charge = 0;
 
 Ship.prototype.update = function (du) {
-
   // TODO: YOUR STUFF HERE! --- Unregister and check for death
   spatialManager.unregister(this);
 
@@ -151,7 +150,6 @@ Ship.prototype.update = function (du) {
     this.maybeFireBullet();
 
     if (this.isColliding()) {
-      console.log('collide');
       this.isExploding = true;
     } else {
       spatialManager.register(this);

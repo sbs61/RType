@@ -66,9 +66,10 @@ findEntityInRange: function(posX, posY, radius) {
     //For every ID in the spatial entities array, find an entity in range and return it
     for (var ID in this._entities) {
         var e = this._entities[ID];
-        var dist = util.wrappedDistSq(e.posX, e.posY, posX, posY, g_canvas.width, g_canvas.height);
-        if (util.square (radius + e.radius) > dist) 
+        var dist = util.distSq(e.posX, e.posY, posX, posY, g_canvas.width, g_canvas.height);
+        if (util.square(radius + e.radius) > dist) {
             return e; 
+        }
     }
 
 },
