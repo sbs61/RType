@@ -56,7 +56,7 @@ function fill() {
 
 Enemy1.prototype.randomisePosition = function () {
   // Enemy1 randomisation defaults (if nothing otherwise specified)
-  this.cx = 800; //this.cx || Math.random() * g_canvas.width;
+  this.cx = 1000; //this.cx || Math.random() * g_canvas.width;
   this.cy = 200 + n; //this.cy || Math.random() * g_canvas.height;
   this.rotation = 0;
   n++;
@@ -87,13 +87,10 @@ Enemy1.prototype.explode = false;
 Enemy1.prototype.update = function (du) {
   // TODO: YOUR STUFF HERE! --- Unregister and check for death
   spatialManager.unregister(this);
-  if (this.isExploding) {
-    if (this.explodingSpriteIdx == g_sprites.explode.length) {
-      return entityManager.KILL_ME_NOW;
-    }
-
-    this.sprite = g_sprites.explode[this.explodingSpriteIdx++];
-
+  if (this._isDeadNow || this.cx < 0) {
+    return entityManager.KILL_ME_NOW;
+  } else if (this.isExploding) {
+    this.nextExplodingSprite();
   } else {
 
     this.cx -= 3 * du;
@@ -123,17 +120,7 @@ Enemy1.prototype.evaporateSound = new Audio("sounds/Enemy1Evaporate.ogg");
 Enemy1.prototype.takeBulletHit = function () {
   entityManager._hud[0].incrementScore(25);
   this.isExploding = true;
-
-  /*
-  if (this.scale > 0.25) {
-      this._spawnFragment();
-      this._spawnFragment();
-      
-      this.splitSound.play();
-  } else {
-      */
   this.evaporateSound.play();
-  //}
 };
 
 
@@ -143,10 +130,5 @@ Enemy1.prototype.render = function (ctx) {
   // pass my scale into the sprite, for drawing
   this.sprite.scale = this.scale;
   this.sprite.drawCentredAt(ctx, this.cx, this.cy, this.rotation);
-
-  /*if (this.explode) {
-    g_sprites.explode[0].scale = 2;
-    g_sprites.explode[1].drawCentredAt(g_ctx, this.cx, this.cy, this.rotation);
-  }*/
 
 };

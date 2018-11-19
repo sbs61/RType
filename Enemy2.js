@@ -23,8 +23,7 @@ function Enemy2(descr) {
   // Default sprite and scale, if not otherwise specified
   this.sprite = g_sprites.enemy2[8];
   this.scale = this.scale || 2;
-  this.isExploding = false;
-  this.explodingSpriteIdx = 0;
+
   /*
       // Diagnostics to check inheritance stuff
       this._Enemy1Property = true;
@@ -55,8 +54,8 @@ function fill() {
 
 Enemy2.prototype.randomisePosition = function () {
   // Enemy1 randomisation defaults (if nothing otherwise specified)
-  this.cx = 800; //this.cx || Math.random() * g_canvas.width;
-  this.cy = 200 + n; //this.cy || Math.random() * g_canvas.height;
+  this.cx = 1000; //this.cx || Math.random() * g_canvas.width;
+  this.cy = 300 + n; //this.cy || Math.random() * g_canvas.height;
   this.rotation = 0;
   n++;
 };
@@ -84,15 +83,14 @@ Enemy2.prototype.g_cel = 8;
 
 
 Enemy2.prototype.update = function (du) {
+
   spatialManager.unregister(this);
-  
-  if (this.isExploding) {
-    if (this.explodingSpriteIdx == g_sprites.explode.length) {
-      return entityManager.KILL_ME_NOW;
-    }
-    this.sprite = g_sprites.explode[this.explodingSpriteIdx++];
+  if (this._isDeadNow || this.cx < 0) {
+    return entityManager.KILL_ME_NOW;
+  } else if (this.isExploding) {
+    this.nextExplodingSprite();
   } else {
-    
+
     this.xVel = -3;
     this.yVel = 4 * Math.cos(this.cx / 100);
 
@@ -115,28 +113,12 @@ Enemy2.prototype.update = function (du) {
       }
       this.interval = 70 / NOMINAL_UPDATE_INTERVAL;
     }
-    
+
     this.cx += this.xVel * du;
     this.cy += this.yVel * du;
 
   }
-  /*
-    this.interval -= du;
-    if(this.interval < 0){
-    //this.g_cel++;
- 
-    
-    if (this.g_cel === 8) this.g_cel = 0;
-    this.sprite = g_sprites.enemy2[this.g_cel];    
-    this.interval = 100 / NOMINAL_UPDATE_INTERVAL;
-    }
-    */
-
-  // TODO: YOUR STUFF HERE! --- (Re-)Register
   spatialManager.register(this);
-
-
-
 };
 
 Enemy2.prototype.getRadius = function () {
@@ -144,24 +126,13 @@ Enemy2.prototype.getRadius = function () {
 };
 
 // HACKED-IN AUDIO (no preloading)
-Enemy2.prototype.splitSound = new Audio(
-  "sounds/Enemy1Split.ogg");
-Enemy2.prototype.evaporateSound = new Audio(
-  "sounds/Enemy1Evaporate.ogg");
+Enemy2.prototype.splitSound = new Audio("sounds/Enemy1Split.ogg");
+Enemy2.prototype.evaporateSound = new Audio("sounds/Enemy1Evaporate.ogg");
 
 Enemy2.prototype.takeBulletHit = function () {
   entityManager._hud[0].incrementScore(50);
   this.isExploding = true;
-  /*
-  if (this.scale > 0.25) {
-      this._spawnFragment();
-      this._spawnFragment();
-      
-      this.splitSound.play();
-  } else {
-      */
   this.evaporateSound.play();
-  //}
 };
 
 

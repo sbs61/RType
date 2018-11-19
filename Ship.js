@@ -148,21 +148,12 @@ Ship.prototype.update = function (du) {
     // TODO: YOUR STUFF HERE! --- Unregister and check for death
     spatialManager.unregister(this);
 
-    if (this._isDeadNow) {
-        for(var i = 0; i < g_sprites.explode.length; i++) {
-          this.sprite = g_sprites.explode[i];
-        }
-        return entityManager.KILL_ME_NOW;
-    }
+    if (this._isDeadNow || this.cx < 0) {
+    return entityManager.KILL_ME_NOW;
+  } else if (this.isExploding) {
+    this.nextExplodingSprite();
+  } else {
 
-    /*
-    // Perform movement substeps
-    var steps = this.numSubSteps;
-    var dStep = du / steps;
-    for (var i = 0; i < steps; ++i) {
-        this.computeSubStep(dStep);
-    }
-    */
     if (keys[this.KEY_UP] && this.cy>this.sprite.height/2) {
         this.cy -= 4 * du;
         if(this.cel < 4){
@@ -237,10 +228,11 @@ Ship.prototype.update = function (du) {
 
     // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register
     if (this.isColliding())
-        this.warp();
-    else
-        spatialManager.register(this);
-
+        this.isExploding = true;
+    else {
+      spatialManager.register(this);
+    }
+  }
 };
 
 Ship.prototype.computeSubStep = function (du) {
@@ -370,7 +362,7 @@ Ship.prototype.getRadius = function () {
 };
 
 Ship.prototype.takeBulletHit = function () {
-    this.warp();
+    this.isExploding = true;
 };
 
 Ship.prototype.reset = function () {
