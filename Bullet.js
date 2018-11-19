@@ -47,6 +47,7 @@ Bullet.prototype.velY = 1;
 Bullet.prototype.big1 = false;
 Bullet.prototype.big2 = false;
 Bullet.prototype.big3 = false;
+Bullet.prototype.big4 = false;
 
 // Convert times from milliseconds to "nominal" time units.
 Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
@@ -76,7 +77,7 @@ Bullet.prototype.update = function (du) {
     if (hitEntity) {
         var canTakeHit = hitEntity.takeBulletHit;
         if (canTakeHit) canTakeHit.call(hitEntity);
-        if (!this.big1 && !this.big2 && !this.big3)
+        if (!this.big1 && !this.big2 && !this.big3 && !this.big4)
             return entityManager.KILL_ME_NOW;
     }
 
@@ -114,6 +115,10 @@ Bullet.prototype.render = function (ctx) {
       }
     else if(this.big3){
         g_sprites.bullet = new Sprite(g_images.bullet4, 0,0, g_images.bullet4.width, g_images.bullet4.height);
+        g_sprites.bullet.scale = 2;
+      }
+    else if(this.big4){
+        g_sprites.bullet = new Sprite(g_images.bullet5, 0,0, g_images.bullet5.width, g_images.bullet5.height);
         g_sprites.bullet.scale = 2;
       }
     else{

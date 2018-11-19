@@ -164,6 +164,7 @@ function requestPreloads() {
         bullet2 : "images/bullet2.png",
         bullet3 : "images/bullet3.png",
         bullet4 : "images/bullet4.png",
+        bullet5 : "images/bullet5.png",
         background : "images/background_stars.png",
         charge : "images/charge.png",
         spaceDust : "images/spaceDust.png",
@@ -236,19 +237,19 @@ function preloadDone() {
 
     g_sprites.bullet2 = new Sprite(g_images.bullet2, 0, 0, 
         g_images.bullet2.width, g_images.bullet2.height);
-    g_sprites.bullet2.scale = 2;
 
     g_sprites.bullet3 = new Sprite(g_images.bullet3, 0, 0, 
         g_images.bullet3.width, g_images.bullet3.height);
-    g_sprites.bullet2.scale = 2;
 
     g_sprites.bullet4 = new Sprite(g_images.bullet4, 0, 0, 
         g_images.bullet4.width, g_images.bullet4.height);
-    g_sprites.bullet2.scale = 2;
+
+    g_sprites.bullet5 = new Sprite(g_images.bullet5, 0, 0, 
+        g_images.bullet5.width, g_images.bullet5.height);
+
 
     g_sprites.background = new Sprite(g_images.background, 0, 0, 
         g_images.background.width, g_images.background.height);
-    g_sprites.background.scale = 1;
 
     g_sprites.beamBar = new Sprite(g_images.beamBar, 0, 0, 
         g_images.beamBar.width, g_images.beamBar.height);
