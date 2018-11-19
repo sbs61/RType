@@ -67,8 +67,10 @@ findEntityInRange: function(posX, posY, radius) {
     for (var ID in this._entities) {
         var e = this._entities[ID];
         var dist = util.wrappedDistSq(e.posX, e.posY, posX, posY, g_canvas.width, g_canvas.height);
-        if (util.square (radius + e.radius) > dist) 
+        if (util.square(radius + e.radius) > dist) {
+          console.log(e);
             return e; 
+        }
     }
 
 },

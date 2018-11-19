@@ -105,8 +105,8 @@ Enemy1.prototype.update = function (du) {
 
       this.interval = 100 / NOMINAL_UPDATE_INTERVAL;
     }
+    spatialManager.register(this);
   }
-  spatialManager.register(this);
 };
 
 Enemy1.prototype.getRadius = function () {
