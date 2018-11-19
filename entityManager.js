@@ -25,180 +25,170 @@ with suitable 'data' and 'methods'.
 
 var entityManager = {
 
-// "PRIVATE" DATA
+  // "PRIVATE" DATA
 
-_rocks   : [],
-_bullets : [],
-_ships   : [],
-_hud     : [],
-  
-_bShowRocks : true,
+  _enemies: [],
+  _bullets: [],
+  _ships: [],
+  _hud: [],
 
-// "PRIVATE" METHODS
 
-_generateRocks : function() {
+  // "PRIVATE" METHODS
+
+  _generateEnemies: function () {
     var i,
-        NUM_ROCKS = 1;
+      NUM_ENEMIES = 1;
 
-    for (i = 0; i < NUM_ROCKS; ++i) {
-        this.generateRock();
+    for (i = 0; i < NUM_ENEMIES; ++i) {
+      this.generateEnemy();
     }
-},
+  },
 
-_findNearestShip : function(posX, posY) {
+  _findNearestShip: function (posX, posY) {
     var closestShip = null,
-        closestIndex = -1,
-        closestSq = 1000 * 1000;
+      closestIndex = -1,
+      closestSq = 1000 * 1000;
 
     for (var i = 0; i < this._ships.length; ++i) {
 
-        var thisShip = this._ships[i];
-        var shipPos = thisShip.getPos();
-        var distSq = util.wrappedDistSq(
-            shipPos.posX, shipPos.posY, 
-            posX, posY,
-            g_canvas.width, g_canvas.height);
+      var thisShip = this._ships[i];
+      var shipPos = thisShip.getPos();
+      var distSq = util.wrappedDistSq(
+        shipPos.posX, shipPos.posY,
+        posX, posY,
+        g_canvas.width, g_canvas.height);
 
-        if (distSq < closestSq) {
-            closestShip = thisShip;
-            closestIndex = i;
-            closestSq = distSq;
-        }
+      if (distSq < closestSq) {
+        closestShip = thisShip;
+        closestIndex = i;
+        closestSq = distSq;
+      }
     }
     return {
-        theShip : closestShip,
-        theIndex: closestIndex
+      theShip: closestShip,
+      theIndex: closestIndex
     };
-},
+  },
 
-_forEachOf: function(aCategory, fn) {
+  _forEachOf: function (aCategory, fn) {
     for (var i = 0; i < aCategory.length; ++i) {
-        fn.call(aCategory[i]);
+      fn.call(aCategory[i]);
     }
-},
+  },
 
-// PUBLIC METHODS
+  // PUBLIC METHODS
 
-// A special return value, used by other objects,
-// to request the blessed release of death!
-//
-KILL_ME_NOW : -1,
+  // A special return value, used by other objects,
+  // to request the blessed release of death!
+  //
+  KILL_ME_NOW: -1,
 
-// Some things must be deferred until after initial construction
-// i.e. thing which need `this` to be defined.
-//
-deferredSetup : function () {
-    this._categories = [this._rocks, this._bullets, this._ships, this._hud];
-},
+  // Some things must be deferred until after initial construction
+  // i.e. thing which need `this` to be defined.
+  //
+  deferredSetup: function () {
+    this._categories = [this._enemies, this._bullets, this._ships, this._hud];
+  },
 
-init: function() {
-    this._generateRocks();
+  init: function () {
+    //this._generateRocks();
     //this._generateShip();
-},
+  },
 
-fireBullet: function(cx, cy, velX, velY, big1, big2, big3, big4) {
+  fireBullet: function (cx, cy, velX, velY, big1, big2, big3, big4) {
     this._bullets.push(new Bullet({
-        cx   : cx,
-        cy   : cy,
-        velX : velX,
-        velY : velY,
-        big1  : big1,
-        big2 : big2,
-        big3 : big3,
-        big4 : big4
+      cx: cx,
+      cy: cy,
+      velX: velX,
+      velY: velY,
+      big1: big1,
+      big2: big2,
+      big3: big3,
+      big4: big4
     }));
-},
+  },
 
 
-generateRock : function(descr) {
-    this._rocks.push(new Enemy1(descr));
-    this._rocks.push(new Enemy2(descr));
-},
+  generateEnemy: function (descr) {
+    this._enemies.push(new Enemy1(descr));
+    this._enemies.push(new Enemy2(descr));
+  },
 
-generateShip : function(descr) {
+  generateShip: function (descr) {
     this._ships.push(new Ship(descr));
-},
+  },
 
-displayHud : function(descr) {
-  this._hud.push(new Hud(descr));
-},
-  
-killNearestShip : function(xPos, yPos) {
+  displayHud: function (descr) {
+    this._hud.push(new Hud(descr));
+  },
+
+  killNearestShip: function (xPos, yPos) {
     var theShip = this._findNearestShip(xPos, yPos).theShip;
     if (theShip) {
-        theShip.kill();
+      theShip.kill();
     }
-},
+  },
 
-yoinkNearestShip : function(xPos, yPos) {
+  yoinkNearestShip: function (xPos, yPos) {
     var theShip = this._findNearestShip(xPos, yPos).theShip;
     if (theShip) {
-        theShip.setPos(xPos, yPos);
+      theShip.setPos(xPos, yPos);
     }
-},
+  },
 
-resetShips: function() {
+  resetShips: function () {
     this._forEachOf(this._ships, Ship.prototype.reset);
-},
+  },
 
-haltShips: function() {
+  haltShips: function () {
     this._forEachOf(this._ships, Ship.prototype.halt);
-},	
+  },
 
-toggleRocks: function() {
-    this._bShowRocks = !this._bShowRocks;
-},
 
-update: function(du) {
+  update: function (du) {
 
     for (var c = 0; c < this._categories.length; ++c) {
 
-        var aCategory = this._categories[c];
-        var i = 0;
+      var aCategory = this._categories[c];
+      var i = 0;
 
-        while (i < aCategory.length) {
+      while (i < aCategory.length) {
 
-            var status = aCategory[i].update(du);
+        var status = aCategory[i].update(du);
 
-            if (status === this.KILL_ME_NOW) {
-                // remove the dead guy, and shuffle the others down to
-                // prevent a confusing gap from appearing in the array
-                aCategory.splice(i,1);
-            }
-            else {
-                ++i;
-            }
+        if (status === this.KILL_ME_NOW) {
+          // remove the dead guy, and shuffle the others down to
+          // prevent a confusing gap from appearing in the array
+          aCategory.splice(i, 1);
+        } else {
+          ++i;
         }
+      }
     }
-    
-    if (this._rocks.length === 0) this._generateRocks();
 
-},
+    if (this._enemies.length === 0) this._generateEnemies();
 
-render: function(ctx) {
+  },
 
-    var debugX = 10, debugY = 100;
+  render: function (ctx) {
+
+    var debugX = 10,
+      debugY = 100;
 
     for (var c = 0; c < this._categories.length; ++c) {
 
-        var aCategory = this._categories[c];
+      var aCategory = this._categories[c];
 
-        if (!this._bShowRocks && 
-            aCategory == this._rocks)
-            continue;
+      for (var i = 0; i < aCategory.length; ++i) {
 
-        for (var i = 0; i < aCategory.length; ++i) {
+        aCategory[i].render(ctx);
 
-            aCategory[i].render(ctx);
-            //debug.text(".", debugX + i * 10, debugY);
-
-        }
-        debugY += 10;
+      }
+      debugY += 10;
     }
-}
+  }
 
 }
 
 // Some deferred setup which needs the object to have been created first
 entityManager.deferredSetup();
-
