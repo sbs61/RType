@@ -122,8 +122,8 @@ Enemy2.prototype.update = function (du) {
     this.cx += this.xVel * du;
     this.cy += this.yVel * du;
 
+    spatialManager.register(this);
   }
-  spatialManager.register(this);
 };
 
 Enemy2.prototype.getRadius = function () {
