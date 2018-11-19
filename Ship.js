@@ -322,36 +322,25 @@ Ship.prototype.applyAccel = function (accelX, accelY, du) {
 };
 
 Ship.prototype.maybeFireBullet = function () {
+    var hud = entityManager._hud[0];
     if (keys[this.KEY_FIRE]) {
         this.fire = true;
-        entityManager._hud[0].incrementBeam();
-           
-    }
-
-    if (this.fire&&!this.timeStarted){
-        this.timeStarted = true;
-        this.time = performance.now();
-        entityManager.fireBullet(this.cx + 70,
-            this.cy+7, 12, 0, false);
+        hud.incrementBeam();
+        console.log(hud.charge);
     }
 
     if (!keys[this.KEY_FIRE]&&this.fire) {
         this.fire = false;
-        this.startCharge = false;
-        this.timeStarted = false;
-        var timeEnd = performance.now();
-        var TimeHeld = (timeEnd-this.time)/1000;
-        entityManager._hud[0].resetBeam();
 
-        if (TimeHeld<0.8){
+        if (hud.charge<62.5){
             entityManager.fireBullet(this.cx + 70,
                 this.cy+7, 12, 0, false, false, false);
         }
-        else if(TimeHeld < 1.4){
+        else if(hud.charge<125){
             entityManager.fireBullet(this.cx + 70,
                 this.cy+7, 12, 0, true, false, false);
         }
-        else if(TimeHeld < 2){
+        else if(hud.charge<240){
             entityManager.fireBullet(this.cx + 70,
                 this.cy+7, 12, 0, false, true, false);
         }
@@ -359,6 +348,7 @@ Ship.prototype.maybeFireBullet = function () {
             entityManager.fireBullet(this.cx + 70,
                 this.cy+7, 12, 0, false, false, true);
         }
+        hud.resetBeam();
     }
 };
 
