@@ -215,6 +215,7 @@ function preloadDone() {
     }
     
     g_sprites.explode  = [];
+    /*
     for (var row = 0; row < 1; ++row) {
         for (var col = 0; col < 6; ++col) {
             g_sprites.explode.push(
@@ -222,6 +223,13 @@ function preloadDone() {
             );
         }
     }
+    */
+   g_sprites.explode.push(new Sprite(g_images.explode,0, 0, 22, 34));
+   g_sprites.explode.push(new Sprite(g_images.explode,22, 0, 28, 34));
+   g_sprites.explode.push(new Sprite(g_images.explode,50, 0, 35, 34));
+   g_sprites.explode.push(new Sprite(g_images.explode,85, 0, 38, 34));
+   g_sprites.explode.push(new Sprite(g_images.explode,123, 0, 38, 34));
+   g_sprites.explode.push(new Sprite(g_images.explode,161, 0, 38, 34));
 
     g_sprites.spaceDust = new Sprite(g_images.spaceDust, 0, 0,
         g_images.spaceDust.width, g_images.spaceDust.height);
