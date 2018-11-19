@@ -226,6 +226,7 @@ function preloadDone() {
         }
     }
     */
+   
    g_sprites.explode.push(new Sprite(g_images.explode,0, 0, 22, 34));
    g_sprites.explode.push(new Sprite(g_images.explode,22, 0, 28, 34));
    g_sprites.explode.push(new Sprite(g_images.explode,50, 0, 35, 34));
