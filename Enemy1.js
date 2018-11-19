@@ -25,6 +25,8 @@ function Enemy1(descr) {
   this.scale = this.scale || 2;
   this.isExploding = false;
   this.explodingSpriteIdx = 0;
+  this.bulletVelX = 0;
+  this.bulletVelY = 0;
 
   /*
       // Diagnostics to check inheritance stuff
@@ -83,7 +85,7 @@ Enemy1.prototype.interval = 100 / NOMINAL_UPDATE_INTERVAL;
 Enemy1.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
 Enemy1.prototype.g_cel = 0;
 Enemy1.prototype.explode = false;
-Enemy1.prototype.fireInterval = 1000 / NOMINAL_UPDATE_INTERVAL;
+Enemy1.prototype.fireInterval = 10 / NOMINAL_UPDATE_INTERVAL;
 
 Enemy1.prototype.update = function (du) {
   // TODO: YOUR STUFF HERE! --- Unregister and check for death
@@ -115,7 +117,9 @@ Enemy1.prototype.update = function (du) {
     if(this.fireInterval < 0){
       var x = Math.floor(Math.random() * 4);
       if(x === 0){
-      entityManager.fireEnemyBullet(this.cx, this.cy);
+      this.bulletDirection();
+      entityManager.fireEnemyBullet(this.cx, this.cy,
+        this.bulletVelX, this.bulletVelY);
       }
       this.fireInterval = 1000 / NOMINAL_UPDATE_INTERVAL;
     }
@@ -137,7 +141,13 @@ Enemy1.prototype.takeBulletHit = function () {
   this.evaporateSound.play();
 };
 
+Enemy1.prototype.bulletDirection = function() {
 
+  var ship = entityManager._ships[0];
+
+  this.bulletVelX = (this.cx - ship.cx)/100;
+  this.bulletVelY = (this.cy - ship.cy)/100;
+}
 
 Enemy1.prototype.render = function (ctx) {
   var origScale = this.sprite.scale;
