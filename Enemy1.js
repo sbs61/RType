@@ -114,12 +114,12 @@ Enemy1.prototype.update = function (du) {
     this.fireInterval -= du;
     if(this.fireInterval < 0){
       var x = Math.floor(Math.random() * 4);
-      console.log(x);
       if(x === 0){
       entityManager.fireEnemyBullet(this.cx, this.cy);
       }
       this.fireInterval = 1000 / NOMINAL_UPDATE_INTERVAL;
     }
+    spatialManager.register(this);
   }
 };
 
