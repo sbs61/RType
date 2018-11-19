@@ -240,7 +240,7 @@ Ship.prototype.render = function (ctx) {
     g_sprites.charge[charge].drawCentredAt(ctx, this.cx + 78, this.cy + 7, this.rotation);
   }
   if(this.muzzle){
-    g_sprites.muzzleFlash.drawCentredAt(ctx, this.cx+62, this.cy+8)
+    g_sprites.muzzleFlash.drawCentredAt(ctx, this.cx+58, this.cy+8)
   }
   this.sprite.drawCentredAt(
     ctx, this.cx, this.cy, this.rotation
