@@ -5,6 +5,8 @@ var g_doBox = false;
 var g_undoBox = false;
 var g_doFlipFlop = false;
 var g_doRender = true;
+var g_showXTime = false;
+var g_showMouseCrd = false;
 
 var g_frameCounter = 1;
 
@@ -13,8 +15,11 @@ var TOGGLE_BOX = 'B'.charCodeAt(0);
 var TOGGLE_UNDO_BOX = 'U'.charCodeAt(0);
 var TOGGLE_FLIPFLOP = 'F'.charCodeAt(0);
 var TOGGLE_RENDER = 'R'.charCodeAt(0);
+var TOGGLE_XTIME = 'N'.charCodeAt(0);
+var TOGGLE_MouseCRD = 'M'.charCodeAt(0);
 
 function render(ctx) {
+    ctx.save();
     
     // Process various option toggles
     //
@@ -23,6 +28,8 @@ function render(ctx) {
     if (eatKey(TOGGLE_UNDO_BOX)) g_undoBox = !g_undoBox;
     if (eatKey(TOGGLE_FLIPFLOP)) g_doFlipFlop = !g_doFlipFlop;
     if (eatKey(TOGGLE_RENDER)) g_doRender = !g_doRender;
+    if (eatKey(TOGGLE_XTIME)) g_showXTime = !g_showXTime;
+    if (eatKey(TOGGLE_MouseCRD)) g_showMouseCrd = !g_showMouseCrd;
     
     // I've pulled the clear out of `renderSimulation()` and into
     // here, so that it becomes part of our "diagnostic" wrappers
@@ -68,6 +75,18 @@ function render(ctx) {
     //
     if (g_undoBox) ctx.clearRect(200, 200, 50, 50);
 
+
     
+    ctx.font = '20px sans-serif';
+    ctx.fillStyle = '#008F11'
+
+    if(g_showMouseCrd) ctx.fillText(Math.floor(g_mouseX) + ' : ' + 
+                                    Math.floor(g_mouseY), 10, 80);
+
+    if (g_showXTime) ctx.fillText('XTime : ' + Math.floor(g_XTime), 10, 50);
+    
+    
+    ctx.restore();
+
     ++g_frameCounter;
 }

@@ -13,6 +13,9 @@
 
 /*jslint nomen: true, white: true, plusplus: true*/
 
+var g_XTime = 0;
+var g_XVel = 0.75;
+
 /* Manager sem heldur utan um umhverfi; árekstrarumhverfi(kannski) og bakgrunn */
 
 var environmentManager = {
@@ -21,7 +24,9 @@ var environmentManager = {
 
 _particles : [],
 _backgrounds : [],
+_walls : [],
 _dustTimer : 0,
+_halt : false,
 
 // this._categories : [],
 
@@ -34,9 +39,18 @@ _generateBackground : function() {
 _generateWalls : function() {
     this._backgrounds[1] = new Background({
         sprite : g_sprites.walls,
-        velX : 0.75,
-        x : 350
+        velX : g_XVel,
+        x : 350,
+        scale : 0.8
     });
+
+    this._walls.push(new Wall({
+        x : 1080,
+        y : 0,
+        width : 155,
+        height : 170
+    }));
+
 },
 
 _generateDust : function (du) {
@@ -65,7 +79,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._backgrounds,this._particles];
+    this._categories = [this._backgrounds,this._walls,this._particles];
 },
 
 init: function() {
@@ -73,13 +87,11 @@ init: function() {
     this._generateWalls();
 },
 
-toggleBgHalt : function() {
-    this._background.halt = !this._background.halt;
+toggleHalt : function() {
+    this._halt = !this._halt;
 },
 
 update : function(du) {
-
-    // this._background.update(du);
 	
 	this._generateDust(du);
 
@@ -102,13 +114,15 @@ update : function(du) {
             }
         }
     }
+
+    // Update g_Xtime
+    if (!this._halt) {
+        g_XTime += g_XVel * du;
+    }
     
 },
 
 render: function(ctx) {
-	
-	// Render background first
-	// this._background.render(ctx);
 
     for (var c = 0; c < this._categories.length; ++c) {
 
