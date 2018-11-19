@@ -322,40 +322,43 @@ Ship.prototype.applyAccel = function (accelX, accelY, du) {
 };
 
 Ship.prototype.maybeFireBullet = function () {
-  if (keys[this.KEY_FIRE]) {
-    this.fire = true;
-  }
+    var hud = entityManager._hud[0];
+    if (keys[this.KEY_FIRE]) {
+        this.fire = true;
+        hud.incrementBeam();
+    }
 
-  if (this.fire && !this.timeStarted) {
-    this.timeStarted = true;
-    this.time = performance.now();
-  }
+    if (!keys[this.KEY_FIRE]&&this.fire) {
+        this.fire = false;
+        this.startCharge = false;
 
-  if (!keys[this.KEY_FIRE] && this.fire) {
-    this.fire = false;
-    this.startCharge = false;
-    this.timeStarted = false;
-    var timeEnd = performance.now();
-    var TimeHeld = (timeEnd - this.time) / 1000;
-
-    if (TimeHeld < 0.8) {
-      entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 12, 0, false, false, false);
-    } else if (TimeHeld < 1.4) {
-      entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 12, 0, true, false, false);
-    } else if (TimeHeld < 2) {
-      entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 12, 0, false, true, false);
-    } else {
-      entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 12, 0, false, false, true);
+        if (hud.charge<50){
+            entityManager.fireBullet(this.cx + 70,
+                this.cy+7, 25, 0, false, false, false, false);
+        }
+        else if(hud.charge<100){
+            entityManager.fireBullet(this.cx + 70,
+                this.cy+7, 15, 0, true, false, false, false);
+        }
+        else if(hud.charge<150){
+            entityManager.fireBullet(this.cx + 70,
+                this.cy+7, 15, 0, false, true, false, false);
+        }
+        else if(hud.charge<240){
+            entityManager.fireBullet(this.cx + 70,
+                this.cy+7, 15, 0, false, false, true, false);
+        }
+        else{
+            entityManager.fireBullet(this.cx + 70,
+                this.cy+7, 15, 0, false, false, false, true);
+        }
+        hud.resetBeam();
     }
   }
 };
 
 Ship.prototype.getRadius = function () {
-  return (this.sprite.width / 2) * 0.9;
+    return this.sprite.width;
 };
 
 Ship.prototype.takeBulletHit = function () {
@@ -365,7 +368,6 @@ Ship.prototype.takeBulletHit = function () {
 Ship.prototype.reset = function () {
   this.setPos(this.reset_cx, this.reset_cy);
   this.rotation = this.reset_rotation;
-
   this.halt();
 };
 

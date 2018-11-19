@@ -164,11 +164,13 @@ function requestPreloads() {
         bullet2 : "images/bullet2.png",
         bullet3 : "images/bullet3.png",
         bullet4 : "images/bullet4.png",
+        bullet5 : "images/bullet5.png",
         background : "images/background_stars.png",
         charge : "images/charge.png",
         spaceDust : "images/spaceDust.png",
         walls : "images/walls.png",
-        explode : "images/explode.png"
+        explode : "images/explode.png",
+        beamBar : "images/UI_Beam_bar.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -214,6 +216,7 @@ function preloadDone() {
     }
     
     g_sprites.explode  = [];
+    /*
     for (var row = 0; row < 1; ++row) {
         for (var col = 0; col < 6; ++col) {
             g_sprites.explode.push(
@@ -221,6 +224,14 @@ function preloadDone() {
             );
         }
     }
+    */
+   
+   g_sprites.explode.push(new Sprite(g_images.explode,0, 0, 22, 34));
+   g_sprites.explode.push(new Sprite(g_images.explode,22, 0, 28, 34));
+   g_sprites.explode.push(new Sprite(g_images.explode,50, 0, 35, 34));
+   g_sprites.explode.push(new Sprite(g_images.explode,85, 0, 38, 34));
+   g_sprites.explode.push(new Sprite(g_images.explode,123, 0, 38, 34));
+   g_sprites.explode.push(new Sprite(g_images.explode,161, 0, 38, 34));
 
     g_sprites.spaceDust = new Sprite(g_images.spaceDust, 0, 0,
         g_images.spaceDust.width, g_images.spaceDust.height);
@@ -235,19 +246,24 @@ function preloadDone() {
 
     g_sprites.bullet2 = new Sprite(g_images.bullet2, 0, 0, 
         g_images.bullet2.width, g_images.bullet2.height);
-    g_sprites.bullet2.scale = 2;
 
     g_sprites.bullet3 = new Sprite(g_images.bullet3, 0, 0, 
         g_images.bullet3.width, g_images.bullet3.height);
-    g_sprites.bullet2.scale = 2;
 
     g_sprites.bullet4 = new Sprite(g_images.bullet4, 0, 0, 
         g_images.bullet4.width, g_images.bullet4.height);
-    g_sprites.bullet2.scale = 2;
+
+    g_sprites.bullet5 = new Sprite(g_images.bullet5, 0, 0, 
+        g_images.bullet5.width, g_images.bullet5.height);
+
 
     g_sprites.background = new Sprite(g_images.background, 0, 0, 
         g_images.background.width, g_images.background.height);
-    g_sprites.background.scale = 1;
+
+    g_sprites.beamBar = new Sprite(g_images.beamBar, 0, 0, 
+        g_images.beamBar.width, g_images.beamBar.height);
+    g_sprites.beamBar.scale = 0.5;
+    
 
     entityManager.init();
     environmentManager.init();
