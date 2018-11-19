@@ -326,27 +326,27 @@ Ship.prototype.maybeFireBullet = function () {
     if (keys[this.KEY_FIRE]) {
         this.fire = true;
         hud.incrementBeam();
-        console.log(hud.charge);
     }
 
     if (!keys[this.KEY_FIRE]&&this.fire) {
         this.fire = false;
+        this.startCharge = false;
 
         if (hud.charge<62.5){
             entityManager.fireBullet(this.cx + 70,
-                this.cy+7, 12, 0, false, false, false);
+                this.cy+7, 25, 0, false, false, false);
         }
         else if(hud.charge<125){
             entityManager.fireBullet(this.cx + 70,
-                this.cy+7, 12, 0, true, false, false);
+                this.cy+7, 15, 0, true, false, false);
         }
         else if(hud.charge<240){
             entityManager.fireBullet(this.cx + 70,
-                this.cy+7, 12, 0, false, true, false);
+                this.cy+7, 15, 0, false, true, false);
         }
         else{
             entityManager.fireBullet(this.cx + 70,
-                this.cy+7, 12, 0, false, false, true);
+                this.cy+7, 15, 0, false, false, true);
         }
         hud.resetBeam();
     }
