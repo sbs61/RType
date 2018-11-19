@@ -13,7 +13,7 @@
 
 
 // A generic contructor which accepts an arbitrary descriptor object
-function Bullet(descr) {
+function Enemy1Bullet(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
@@ -31,27 +31,27 @@ function Bullet(descr) {
 
 }
 
-Bullet.prototype = new Entity();
+Enemy1Bullet.prototype = new Entity();
 
 // HACKED-IN AUDIO (no preloading)
-Bullet.prototype.fireSound = new Audio(
+Enemy1Bullet.prototype.fireSound = new Audio(
     "sounds/bulletFire.ogg");
-Bullet.prototype.zappedSound = new Audio(
+Enemy1Bullet.prototype.zappedSound = new Audio(
     "sounds/bulletZapped.ogg");
 
 // Initial, inheritable, default values
-Bullet.prototype.cx = 200;
-Bullet.prototype.cy = 200;
-Bullet.prototype.velX = 1;
-Bullet.prototype.velY = 1;
-Bullet.prototype.big1 = false;
-Bullet.prototype.big2 = false;
-Bullet.prototype.big3 = false;
+Enemy1Bullet.prototype.cx = 200;
+Enemy1Bullet.prototype.cy = 200;
+Enemy1Bullet.prototype.velX = 1;
+Enemy1Bullet.prototype.velY = 1;
+Enemy1Bullet.prototype.big1 = false;
+Enemy1Bullet.prototype.big2 = false;
+Enemy1Bullet.prototype.big3 = false;
 
 // Convert times from milliseconds to "nominal" time units.
-Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
+Enemy1Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
 
-Bullet.prototype.update = function (du) {
+Enemy1Bullet.prototype.update = function (du) {
 
     spatialManager.unregister(this);
 
@@ -84,20 +84,20 @@ Bullet.prototype.update = function (du) {
 
 };
 
-Bullet.prototype.getRadius = function () {
+Enemy1Bullet.prototype.getRadius = function () {
     return 4;
 };
 
-Bullet.prototype.takeBulletHit = function () {
+Enemy1Bullet.prototype.takeBulletHit = function () {
     this.kill();
 
     // Make a noise when I am zapped by another bullet
     this.zappedSound.play();
 };
 
-Bullet.prototype.render = function (ctx) {
+Enemy1Bullet.prototype.render = function (ctx) {
 
-    var fadeThresh = Bullet.prototype.lifeSpan / 3;
+    var fadeThresh = Enemy1Bullet.prototype.lifeSpan / 3;
 
     if (this.lifeSpan < fadeThresh) {
         ctx.globalAlpha = this.lifeSpan / fadeThresh;

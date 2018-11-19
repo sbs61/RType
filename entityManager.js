@@ -29,6 +29,7 @@ var entityManager = {
 
 _rocks   : [],
 _bullets : [],
+_enemy1bullets : [],
 _ships   : [],
 _hud     : [],
   
@@ -106,6 +107,13 @@ fireBullet: function(cx, cy, velX, velY, big1, big2, big3, big4) {
         big2 : big2,
         big3 : big3,
         big4 : big4
+    }));
+},
+
+fireEnemyBullet: function (cx, cy){
+    this._enemy1bullets.push(new Enemy1Bullet({
+        cx : cx,
+        cy : cy
     }));
 },
 
