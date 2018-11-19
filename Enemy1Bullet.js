@@ -42,6 +42,8 @@ Enemy1Bullet.prototype.zappedSound = new Audio(
 // Initial, inheritable, default values
 Enemy1Bullet.prototype.cx = 200;
 Enemy1Bullet.prototype.cy = 200;
+Enemy1Bullet.prototype.shipX = 200;
+Enemy1Bullet.prototype.shipY = 200;
 Enemy1Bullet.prototype.velX = 1;
 Enemy1Bullet.prototype.velY = 1;
 
@@ -61,9 +63,14 @@ Enemy1Bullet.prototype.update = function (du) {
     if(this.cx < 10)
         return entityManager.KILL_ME_NOW;
 
-    this.cx -= 4* du;
-    //this.cy += 2 * du;
-    //this.wrapPosition();
+    var d = util.distSq(this.shipX, this.shipY,this.cx,this.cy);
+    console.log(this.shipX);
+
+    this.velX = this.cx/d;
+    this.velY = this.cy/d;
+
+    this.cx += this.velX * du;
+    this.cy += this.velY * du;
 
     // Handle collisions
     //

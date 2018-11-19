@@ -202,6 +202,14 @@ Ship.prototype.takeBulletHit = function () {
   this.isExploding = true;
 };
 
+Ship.prototype.getPosX = function(){
+    return this.cx;
+}
+
+Ship.prototype.getPosY = function(){
+    return this.cy;
+}
+
 Ship.prototype.reset = function () {
   this.setPos(this.reset_cx, this.reset_cy);
   this.rotation = this.reset_rotation;

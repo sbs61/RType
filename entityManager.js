@@ -109,10 +109,12 @@ var entityManager = {
     }));
   },
 
-fireEnemyBullet: function (cx, cy){
+fireEnemyBullet: function (cx, cy){ 
     this._enemy1bullets.push(new Enemy1Bullet({
         cx : cx-35,
-        cy : cy
+        cy : cy,
+        shipX : this._ships[0].getPosX(),
+        shipY : this._ships[0].getPosY(),
     }));
 },
 
