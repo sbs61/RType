@@ -332,21 +332,25 @@ Ship.prototype.maybeFireBullet = function () {
         this.fire = false;
         this.startCharge = false;
 
-        if (hud.charge<62.5){
+        if (hud.charge<50){
             entityManager.fireBullet(this.cx + 70,
-                this.cy+7, 25, 0, false, false, false);
+                this.cy+7, 25, 0, false, false, false, false);
         }
-        else if(hud.charge<125){
+        else if(hud.charge<100){
             entityManager.fireBullet(this.cx + 70,
-                this.cy+7, 15, 0, true, false, false);
+                this.cy+7, 15, 0, true, false, false, false);
+        }
+        else if(hud.charge<150){
+            entityManager.fireBullet(this.cx + 70,
+                this.cy+7, 15, 0, false, true, false, false);
         }
         else if(hud.charge<240){
             entityManager.fireBullet(this.cx + 70,
-                this.cy+7, 15, 0, false, true, false);
+                this.cy+7, 15, 0, false, false, true, false);
         }
         else{
             entityManager.fireBullet(this.cx + 70,
-                this.cy+7, 15, 0, false, false, true);
+                this.cy+7, 15, 0, false, false, false, true);
         }
         hud.resetBeam();
     }

@@ -44,8 +44,9 @@ Hud.prototype.render = function () {
   g_canvas.height - 37+g_sprites.beamBar.height/4);
   util.fillBox(ctx, g_canvas.width / 3.2, g_canvas.height - 34, this.charge, 10, 'blue');
   util.fillBox(ctx, g_canvas.width / 3.2, g_canvas.height - 30, this.charge, 2, 'grey');
-  util.fillBox(ctx, g_canvas.width / 3.2+62, g_canvas.height - 37, 3, 14, 'grey');
-  util.fillBox(ctx, g_canvas.width / 3.2+124, g_canvas.height - 37, 3, 14, 'grey');
+  util.fillBox(ctx, g_canvas.width / 3.2+50, g_canvas.height - 37, 3, 14, 'grey');
+  util.fillBox(ctx, g_canvas.width / 3.2+110, g_canvas.height - 37, 3, 14, 'grey');
+  util.fillBox(ctx, g_canvas.width / 3.2+180, g_canvas.height - 37, 3, 14, 'grey');
   util.fillBox(ctx, g_canvas.width / 3.2+240, g_canvas.height - 37, 3, 14, 'grey');
   /*for (var i = 0; i < this.life; i++) {
     g_sprites.life.drawCentredAt(ctx, 18 + i * 32, g_canvas.height - 33);
