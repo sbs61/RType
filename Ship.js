@@ -319,12 +319,15 @@ Ship.prototype.applyAccel = function (accelX, accelY, du) {
 Ship.prototype.maybeFireBullet = function () {
     if (keys[this.KEY_FIRE]) {
         this.fire = true;
-        
+        entityManager._hud[0].incrementBeam();
+           
     }
 
     if (this.fire&&!this.timeStarted){
         this.timeStarted = true;
         this.time = performance.now();
+        entityManager.fireBullet(this.cx + 70,
+            this.cy+7, 12, 0, false);
     }
 
     if (!keys[this.KEY_FIRE]&&this.fire) {
@@ -332,12 +335,9 @@ Ship.prototype.maybeFireBullet = function () {
         this.timeStarted = false;
         var timeEnd = performance.now();
         var TimeHeld = (timeEnd-this.time)/1000;
+        entityManager._hud[0].resetBeam();
 
-        if (TimeHeld<1){
-            entityManager.fireBullet(this.cx + 70,
-                this.cy+7, 12, 0, false);
-        }
-        else{
+        if (TimeHeld>0.85){
             entityManager.fireBullet(this.cx + 70,
                 this.cy+7, 12, 0, true);
         }
@@ -345,7 +345,7 @@ Ship.prototype.maybeFireBullet = function () {
 };
 
 Ship.prototype.getRadius = function () {
-    return (this.sprite.width / 2) * 0.9;
+    return this.sprite.width;
 };
 
 Ship.prototype.takeBulletHit = function () {
@@ -357,6 +357,7 @@ Ship.prototype.reset = function () {
     this.rotation = this.reset_rotation;
 
     this.halt();
+    
 };
 
 Ship.prototype.halt = function () {
