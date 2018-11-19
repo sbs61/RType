@@ -170,7 +170,8 @@ function requestPreloads() {
         spaceDust : "images/spaceDust.png",
         walls : "images/walls.png",
         explode : "images/explode.png",
-        beamBar : "images/UI_Beam_bar.png"
+        beamBar : "images/UI_Beam_bar.png",
+        muzzleFlash : "images/muzzleflash.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -263,6 +264,8 @@ function preloadDone() {
         g_images.beamBar.width, g_images.beamBar.height);
     g_sprites.beamBar.scale = 0.5;
     
+    g_sprites.muzzleFlash = new Sprite(g_images.muzzleFlash, 0, 0, 
+        g_images.muzzleFlash.width, g_images.muzzleFlash.height);
 
     entityManager.init();
     environmentManager.init();
