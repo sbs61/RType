@@ -66,6 +66,8 @@ Ship.prototype.chargeTimer = 300 / NOMINAL_UPDATE_INTERVAL;
 var chargeInterval = 70 / NOMINAL_UPDATE_INTERVAL;
 var charge = 0;
 Ship.prototype.eInterval = 50/NOMINAL_UPDATE_INTERVAL;
+Ship.prototype.muzzleTimer = 50/NOMINAL_UPDATE_INTERVAL;
+Ship.prototype.muzzle = false; 
 
 Ship.prototype.update = function (du) {
   spatialManager.unregister(this);
@@ -147,6 +149,14 @@ Ship.prototype.update = function (du) {
       charge = 0;
     }
 
+    if(this.muzzle){
+      this.muzzleTimer -= du;
+      if(this.muzzleTimer < 0){
+        this.muzzle = false;
+        this.muzzleTimer = 50/NOMINAL_UPDATE_INTERVAL;
+      }
+    }
+
 
     // Handle firing
     this.maybeFireBullet();
@@ -170,6 +180,7 @@ Ship.prototype.maybeFireBullet = function () {
     // When the spacebar is released it triggers a shot
     // The type of bullet shot depends on the time the spacebar was held down
     this.fire = false;
+    this.muzzle = true;
     this.startCharge = false;
 
     if (hud.charge < 50) { 
@@ -228,7 +239,9 @@ Ship.prototype.render = function (ctx) {
     g_sprites.charge[charge].scale = 2;
     g_sprites.charge[charge].drawCentredAt(ctx, this.cx + 78, this.cy + 7, this.rotation);
   }
-  g_sprites.muzzleFlash.drawCentredAt(g_ctx, 50, 50 )
+  if(this.muzzle){
+    g_sprites.muzzleFlash.drawCentredAt(ctx, this.cx+62, this.cy+8)
+  }
   this.sprite.drawCentredAt(
     ctx, this.cx, this.cy, this.rotation
   );
