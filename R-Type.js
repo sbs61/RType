@@ -267,6 +267,7 @@ function preloadDone() {
     
     g_sprites.muzzleFlash = new Sprite(g_images.muzzleFlash, 0, 0, 
         g_images.muzzleFlash.width, g_images.muzzleFlash.height);
+    g_sprites.muzzleFlash.scale = 2;
 
     entityManager.init();
     environmentManager.init();

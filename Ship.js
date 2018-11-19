@@ -67,7 +67,6 @@ var chargeInterval = 70 / NOMINAL_UPDATE_INTERVAL;
 var charge = 0;
 
 Ship.prototype.update = function (du) {
-  // TODO: YOUR STUFF HERE! --- Unregister and check for death
   spatialManager.unregister(this);
 
   if (this._isDeadNow || this.cx < 0) {
@@ -89,8 +88,6 @@ Ship.prototype.update = function (du) {
       this.sprite = g_sprites.ship[this.cel];
     }
 
-
-    // Í rauninni þá á skipið að springa ef það fer í botninn en það kemur seinna
     if (keys[this.KEY_DOWN] && this.cy < g_canvas.height - this.sprite.height / 2) {
       this.cy += 4 * du;
       if (this.cel > 0) {
@@ -165,10 +162,12 @@ Ship.prototype.maybeFireBullet = function () {
   }
 
   if (!keys[this.KEY_FIRE] && this.fire) {
+    // When the spacebar is released it triggers a shot
+    // The type of bullet shot depends on the time the spacebar was held down
     this.fire = false;
     this.startCharge = false;
 
-    if (hud.charge < 50) {
+    if (hud.charge < 50) { 
       entityManager.fireBullet(this.cx + 70,
         this.cy + 7, 25, 0, false, false, false, false);
     } else if (hud.charge < 100) {
@@ -184,7 +183,7 @@ Ship.prototype.maybeFireBullet = function () {
       entityManager.fireBullet(this.cx + 70,
         this.cy + 7, 15, 0, false, false, false, true);
     }
-    hud.resetBeam();
+    hud.resetBeam(); 
   }
 
 };
@@ -216,7 +215,7 @@ Ship.prototype.render = function (ctx) {
     g_sprites.charge[charge].scale = 2;
     g_sprites.charge[charge].drawCentredAt(ctx, this.cx + 78, this.cy + 7, this.rotation);
   }
-
+  g_sprites.muzzleFlash.drawCentredAt(g_ctx, 50, 50 )
   this.sprite.drawCentredAt(
     ctx, this.cx, this.cy, this.rotation
   );
