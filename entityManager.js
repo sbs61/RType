@@ -29,6 +29,7 @@ var entityManager = {
 
   _enemies: [],
   _bullets: [],
+  _enemy1bullets: [],
   _ships: [],
   _hud: [],
 
@@ -87,7 +88,7 @@ var entityManager = {
   // i.e. thing which need `this` to be defined.
   //
   deferredSetup: function () {
-    this._categories = [this._enemies, this._bullets, this._ships, this._hud];
+    this._categories = [this._enemies, this._enemy1bullets, this._bullets, this._ships, this._hud];
   },
 
   init: function () {
@@ -110,7 +111,7 @@ var entityManager = {
 
 fireEnemyBullet: function (cx, cy){
     this._enemy1bullets.push(new Enemy1Bullet({
-        cx : cx,
+        cx : cx-35,
         cy : cy
     }));
 },

@@ -79,16 +79,21 @@ Enemy2.prototype.randomiseVelocity = function () {
 
 Enemy2.prototype.interval = 70 / NOMINAL_UPDATE_INTERVAL;
 Enemy2.prototype.g_cel = 8;
-
+Enemy2.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
 
 
 Enemy2.prototype.update = function (du) {
+  
+  this.eInterval -= du;
 
   spatialManager.unregister(this);
   if (this._isDeadNow || this.cx < 0) {
     return entityManager.KILL_ME_NOW;
   } else if (this.isExploding) {
-    this.nextExplodingSprite();
+    if(this.eInterval < 0){
+      this.nextExplodingSprite();
+      this.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
+      }
   } else {
 
     this.xVel = -3;

@@ -44,34 +44,30 @@ Enemy1Bullet.prototype.cx = 200;
 Enemy1Bullet.prototype.cy = 200;
 Enemy1Bullet.prototype.velX = 1;
 Enemy1Bullet.prototype.velY = 1;
-Enemy1Bullet.prototype.big1 = false;
-Enemy1Bullet.prototype.big2 = false;
-Enemy1Bullet.prototype.big3 = false;
 
 // Convert times from milliseconds to "nominal" time units.
 Enemy1Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
 
 Enemy1Bullet.prototype.update = function (du) {
 
+
     spatialManager.unregister(this);
 
     //Check if the bullet is dead, if so return the KILL_ME_NOW to the entity manager
+
     if (this._isDeadNow) {
         return entityManager.KILL_ME_NOW;
     }
-    if(this.cx > g_canvas.width-20)
+    if(this.cx < 10)
         return entityManager.KILL_ME_NOW;
 
-    this.lifeSpan -= du;
-    if (this.lifeSpan < 0) return entityManager.KILL_ME_NOW;
-
-    this.cx += this.velX * du;
-    this.cy += this.velY * du;
-
+    this.cx -= 4* du;
+    //this.cy += 2 * du;
     //this.wrapPosition();
 
     // Handle collisions
     //
+    
     var hitEntity = this.findHitEntity();
     if (hitEntity) {
         var canTakeHit = hitEntity.takeBulletHit;
@@ -79,6 +75,7 @@ Enemy1Bullet.prototype.update = function (du) {
         if (!this.big1 && !this.big2 && !this.big3)
             return entityManager.KILL_ME_NOW;
     }
+    
 
     spatialManager.register(this);
 
@@ -92,37 +89,9 @@ Enemy1Bullet.prototype.takeBulletHit = function () {
     this.kill();
 
     // Make a noise when I am zapped by another bullet
-    this.zappedSound.play();
+    //this.zappedSound.play();
 };
 
 Enemy1Bullet.prototype.render = function (ctx) {
-
-    var fadeThresh = Enemy1Bullet.prototype.lifeSpan / 3;
-
-    if (this.lifeSpan < fadeThresh) {
-        ctx.globalAlpha = this.lifeSpan / fadeThresh;
-    }
-
-
-    if(this.big1){
-      g_sprites.bullet = new Sprite(g_images.bullet2, 0,0, g_images.bullet2.width, g_images.bullet2.height);
-      g_sprites.bullet.scale = 2;
-    }
-    else if(this.big2){
-        g_sprites.bullet = new Sprite(g_images.bullet3, 0,0, g_images.bullet3.width, g_images.bullet3.height);
-        g_sprites.bullet.scale = 2;
-      }
-    else if(this.big3){
-        g_sprites.bullet = new Sprite(g_images.bullet4, 0,0, g_images.bullet4.width, g_images.bullet4.height);
-        g_sprites.bullet.scale = 2;
-      }
-    else{
-      g_sprites.bullet = new Sprite(g_images.bullet1, 0,0, g_images.bullet1.width, g_images.bullet1.height);
-      g_sprites.bullet.scale = 2;
-    }
-
-
-    g_sprites.bullet.drawCentredAt(ctx, this.cx, this.cy);
-
-    ctx.globalAlpha = 1;
+    g_sprites.enemy1bullet.drawCentredAt(ctx, this.cx, this.cy);
 };
