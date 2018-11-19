@@ -65,15 +65,20 @@ Ship.prototype.chargeTimer = 300 / NOMINAL_UPDATE_INTERVAL;
 
 var chargeInterval = 70 / NOMINAL_UPDATE_INTERVAL;
 var charge = 0;
+Ship.prototype.eInterval = 50/NOMINAL_UPDATE_INTERVAL;
 
 Ship.prototype.update = function (du) {
   spatialManager.unregister(this);
+  this.eInterval -= du;
 
   if (this._isDeadNow || this.cx < 0) {
     //Hér viljum við líklega bæta við einhverju til að skipið hafi fleiri líf
     return entityManager.KILL_ME_NOW;
   } else if (this.isExploding) {
-    this.nextExplodingSprite();
+    if(this.eInterval < 0){
+        this.nextExplodingSprite();
+        this.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
+        }
   } else {
 
     if (keys[this.KEY_UP] && this.cy > this.sprite.height / 2) {

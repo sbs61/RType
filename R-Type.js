@@ -159,6 +159,7 @@ function requestPreloads() {
     var requiredImages = {
         ship   : "images/shipSprites.png",
         enemy1   : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/enemy1.png",
+        enemy1bullet : "images/enemy1bullet.png",
         enemy2 : "images/enemy2sheet.png",
         bullet1 : "images/bullet1.png",
         bullet2 : "images/bullet2.png",
@@ -256,6 +257,9 @@ function preloadDone() {
 
     g_sprites.bullet5 = new Sprite(g_images.bullet5, 0, 0, 
         g_images.bullet5.width, g_images.bullet5.height);
+    
+    g_sprites.enemy1bullet = new Sprite(g_images.enemy1bullet, 0, 0, 
+        g_images.enemy1bullet.width, g_images.enemy1bullet.height);
 
 
     g_sprites.background = new Sprite(g_images.background, 0, 0, 

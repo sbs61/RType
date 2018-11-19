@@ -80,17 +80,22 @@ Enemy1.prototype.randomiseVelocity = function () {
 };
 
 Enemy1.prototype.interval = 100 / NOMINAL_UPDATE_INTERVAL;
-Enemy1.prototype.eInterval = 100 / NOMINAL_UPDATE_INTERVAL;
+Enemy1.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
 Enemy1.prototype.g_cel = 0;
 Enemy1.prototype.explode = false;
+Enemy1.prototype.fireInterval = 1000 / NOMINAL_UPDATE_INTERVAL;
 
 Enemy1.prototype.update = function (du) {
   // TODO: YOUR STUFF HERE! --- Unregister and check for death
   spatialManager.unregister(this);
+  this.eInterval -= du;
   if (this._isDeadNow || this.cx < 0) {
     return entityManager.KILL_ME_NOW;
   } else if (this.isExploding) {
+    if(this.eInterval < 0){
     this.nextExplodingSprite();
+    this.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
+    }
   } else {
 
     this.cx -= 3 * du;
@@ -104,6 +109,15 @@ Enemy1.prototype.update = function (du) {
       this.sprite = g_sprites.enemy1[this.g_cel];
 
       this.interval = 100 / NOMINAL_UPDATE_INTERVAL;
+    }
+
+    this.fireInterval -= du;
+    if(this.fireInterval < 0){
+      var x = Math.floor(Math.random() * 4);
+      if(x === 0){
+      entityManager.fireEnemyBullet(this.cx, this.cy);
+      }
+      this.fireInterval = 1000 / NOMINAL_UPDATE_INTERVAL;
     }
     spatialManager.register(this);
   }
