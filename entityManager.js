@@ -191,6 +191,9 @@ fireEnemyBullet: function (cx, cy, velX, velY){
     }
 
     if(g_lives !== 0 && this._ships.length === 0) {
+      this._enemies.splice(0,this._enemies.length);
+      this._enemy1bullets.splice(0,this._enemy1bullets.length);
+      g_enemy1WaveInterval = 3000/NOMINAL_UPDATE_INTERVAL;
       this._generateShip();
     }
 
