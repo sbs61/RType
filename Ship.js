@@ -66,7 +66,7 @@ var chargeInterval = 70 / NOMINAL_UPDATE_INTERVAL;
 var charge = 0;
 Ship.prototype.eInterval = 50/NOMINAL_UPDATE_INTERVAL;
 Ship.prototype.muzzleTimer = 50/NOMINAL_UPDATE_INTERVAL;
-Ship.prototype.muzzle = false; 
+Ship.prototype.muzzle = false;
 
 Ship.prototype.update = function (du) {
   spatialManager.unregister(this);
@@ -75,7 +75,9 @@ Ship.prototype.update = function (du) {
   if (this._isDeadNow || this.cx < 0) {
     //Hér viljum við líklega bæta við einhverju til að skipið hafi fleiri líf
     g_lives--;
+    entityManager._hud[0].resetBeam();
     return entityManager.KILL_ME_NOW;
+
   } else if (this.isExploding) {
     if(this.eInterval < 0){
         this.nextExplodingSprite();
@@ -191,7 +193,7 @@ Ship.prototype.maybeFireBullet = function () {
     this.chargeSound.currentTime = 0;
     this.chargeSound.pause();
 
-    if (hud.charge < 50) { 
+    if (hud.charge < 50) {
       entityManager.fireBullet(this.cx + 70,
         this.cy + 7, 4, 25, 0, false, false, false, false);
     } else if (hud.charge < 100) {
@@ -207,7 +209,7 @@ Ship.prototype.maybeFireBullet = function () {
       entityManager.fireBullet(this.cx + 70,
         this.cy + 7, 22, 15, 0, false, false, false, true);
     }
-    hud.resetBeam(); 
+    hud.resetBeam();
   }
 
 };
