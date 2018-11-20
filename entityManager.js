@@ -35,13 +35,18 @@ var entityManager = {
 
   // "PRIVATE" METHODS
 
-  _generateEnemies: function () {
+  _generateEnemies1: function () {
     var i,
-      NUM_ENEMIES = 1;
+      NUM_ENEMIES = Math.floor(Math.random() * 10) + 3;
 
     for (i = 0; i < NUM_ENEMIES; ++i) {
       this.generateEnemy1();
     }
+  },
+
+  _generateEnemies2: function () {
+    var i,
+      NUM_ENEMIES = 0;
     for (i = 0; i < NUM_ENEMIES; ++i) {
       this.generateEnemy2();
     }
@@ -130,7 +135,7 @@ fireEnemyBullet: function (cx, cy, velX, velY){
   },
 
   generateEnemy2: function (descr) {
-    this._enemies.push(new Enemy2(descr));
+    this._enemies.push(new Enemy2([descr]));
   },
 
   generateShip: function (descr) {
@@ -193,8 +198,14 @@ fireEnemyBullet: function (cx, cy, velX, velY){
       g_isUpdatePaused = true;
       
     }
+    
+    g_enemy1WaveInterval -= du;
 
-    if (this._enemies.length === 0) this._generateEnemies();
+    if(g_enemy1WaveInterval < 0){
+      this._generateEnemies1();
+      g_enemy1WaveInterval = 3000/NOMINAL_UPDATE_INTERVAL;
+    }
+   
 
   },
 
