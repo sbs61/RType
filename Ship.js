@@ -137,6 +137,7 @@ Ship.prototype.update = function (du) {
     }
     if (this.chargeTimer < 0) {
       this.startCharge = true;
+      this.chargeSound.play();
       this.chargeTimer = 300 / NOMINAL_UPDATE_INTERVAL;
     }
 
@@ -163,6 +164,10 @@ Ship.prototype.update = function (du) {
 
     if (this.isColliding()) {
       this.isExploding = true;
+
+      this.evaporateSound.pause();
+      this.evaporateSound.currentTime = 0;
+      this.evaporateSound.play();
     } else {
       spatialManager.register(this);
     }
@@ -183,6 +188,8 @@ Ship.prototype.maybeFireBullet = function () {
     this.fire = false;
     this.muzzle = true;
     this.startCharge = false;
+    this.chargeSound.currentTime = 0;
+    this.chargeSound.pause();
 
     if (hud.charge < 50) { 
       entityManager.fireBullet(this.cx + 70,
@@ -204,6 +211,9 @@ Ship.prototype.maybeFireBullet = function () {
   }
 
 };
+
+Ship.prototype.evaporateSound = new Audio("sounds/explosion.mp3");
+Ship.prototype.chargeSound = new Audio("sounds/charge.mp3");
 
 Ship.prototype.getRadius = function () {
   return this.sprite.width;

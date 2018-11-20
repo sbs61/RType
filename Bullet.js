@@ -23,6 +23,12 @@ function Bullet(descr) {
     this.fireSound.currentTime = 0;
     this.fireSound.play();
 
+    if(this.big4){
+        this.bigBulletSound.pause();
+        this.bigBulletSound.currentTime = 0;
+        this.bigBulletSound.play();
+    }
+
 /*
     // Diagnostics to check inheritance stuff
     this._bulletProperty = true;
@@ -35,9 +41,9 @@ Bullet.prototype = new Entity();
 
 // HACKED-IN AUDIO (no preloading)
 Bullet.prototype.fireSound = new Audio(
-    "sounds/bulletFire.ogg");
-Bullet.prototype.zappedSound = new Audio(
-    "sounds/bulletZapped.ogg");
+    "sounds/shot.mp3");
+Bullet.prototype.bigBulletSound = new Audio(
+    "sounds/bigShot.mp3");
 
 // Initial, inheritable, default values
 Bullet.prototype.cx = 200;

@@ -101,14 +101,16 @@ Enemy1.prototype.getRadius = function () {
 };
 
 // HACKED-IN AUDIO (no preloading)
-//Enemy1.prototype.splitSound = new Audio("sounds/Enemy1Split.ogg");
-Enemy1.prototype.evaporateSound = new Audio("sounds/Enemy1Evaporate.ogg");
+Enemy1.prototype.evaporateSound = new Audio("sounds/explosion.mp3");
 
 //function for when the enemy is hit by a bullet, if you hit an enemy with a bullet increase the score
 //and trigger the animation for the explosion
 Enemy1.prototype.takeBulletHit = function () {
   entityManager._hud[0].incrementScore(25);
   this.isExploding = true;
+  
+  this.evaporateSound.pause();
+  this.evaporateSound.currentTime = 0;
   this.evaporateSound.play();
 };
 

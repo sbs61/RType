@@ -100,13 +100,15 @@ Enemy2.prototype.getRadius = function () {
 };
 
 // HACKED-IN AUDIO (no preloading)
-Enemy2.prototype.splitSound = new Audio("sounds/Enemy1Split.ogg");
-Enemy2.prototype.evaporateSound = new Audio("sounds/Enemy1Evaporate.ogg");
+Enemy2.prototype.evaporateSound = new Audio("sounds/explosion.mp3");
 
 //function for taking a bullet hit, increment the score and trigger the explosion
 Enemy2.prototype.takeBulletHit = function () {
   entityManager._hud[0].incrementScore(50);
   this.isExploding = true;
+
+  this.evaporateSound.pause();
+  this.evaporateSound.currentTime = 0;
   this.evaporateSound.play();
 };
 
