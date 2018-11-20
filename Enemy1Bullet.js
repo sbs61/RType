@@ -51,6 +51,10 @@ Enemy1Bullet.prototype.update = function (du) {
     spatialManager.register(this);
 };
 
+Enemy1Bullet.prototype.takeBulletHit = function () {
+    this._isDeadNow = true;
+  };
+
 //get the radius of the enemy bullet
 Enemy1Bullet.prototype.getRadius = function () {
     return 4;
