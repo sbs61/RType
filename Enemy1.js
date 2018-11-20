@@ -18,7 +18,6 @@ function Enemy1(descr) {
   this.setup(descr);
 
   this.randomisePosition();
-  this.randomiseVelocity();
 
   // Default sprite and scale, if not otherwise specified
   this.sprite = g_sprites.explode[0];
@@ -27,105 +26,80 @@ function Enemy1(descr) {
   this.explodingSpriteIdx = 0;
   this.bulletVelX = 0;
   this.bulletVelY = 0;
-  this.ID = 1;
-
-  /*
-      // Diagnostics to check inheritance stuff
-      this._Enemy1Property = true;
-      console.dir(this);
-  */
 
 };
 
 
 
 Enemy1.prototype = new Entity();
-var n = 40;
-var spawnPoint = [];
-fill();
-var s = 0;
-var l = 0;
-
-function fill() {
-  for (var i = 0; i < 10; i++) {
-    for (var j = 0; j < 5; j++) {
-      spawnPoint.push(util.randRange(1000 + s, 1500 + s));
-      console.log(spawnPoint[l]);
-      l++;
-    }
-    s += 500;
-  }
-}
 
 Enemy1.prototype.randomisePosition = function () {
   // Enemy1 randomisation defaults (if nothing otherwise specified)
-  this.cx = util.randRange(900,1400); //this.cx || Math.random() * g_canvas.width;
-  this.cy = util.randRange(120,600); //this.cy || Math.random() * g_canvas.height;
+  this.cx = util.randRange(900,1400); //Spawn the enemy outside the canvas between 900 and 1400 px
+  this.cy = util.randRange(120,600); //Spawn the enemy within 120 and 600 px on the y axis
 };
 
-Enemy1.prototype.randomiseVelocity = function () {
-  var MIN_SPEED = 20,
-    MAX_SPEED = 70;
-
-  var speed = util.randRange(MIN_SPEED, MAX_SPEED) / SECS_TO_NOMINALS;
-  var dirn = Math.random() * consts.FULL_CIRCLE;
-
-  this.velX = this.velX || speed * Math.cos(dirn);
-  this.velY = 3; //this.velY || speed * Math.sin(dirn);
-
-  var MIN_ROT_SPEED = 0.5,
-    MAX_ROT_SPEED = 2.5;
-
-  this.velRot = this.velRot ||
-    util.randRange(MIN_ROT_SPEED, MAX_ROT_SPEED) / SECS_TO_NOMINALS;
-};
-
-Enemy1.prototype.interval = 100 / NOMINAL_UPDATE_INTERVAL;
-Enemy1.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
-Enemy1.prototype.g_cel = 0;
-Enemy1.prototype.explode = false;
-Enemy1.prototype.fireInterval = 10 / NOMINAL_UPDATE_INTERVAL;
+Enemy1.prototype.interval = 100 / NOMINAL_UPDATE_INTERVAL; //update interval for the animation
+Enemy1.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL; //update interval for the explosion animation
+Enemy1.prototype.cel = 0; //store the sprite cell
+Enemy1.prototype.explode = false; //check if the enemy is exploding
+Enemy1.prototype.fireInterval = 1000 / NOMINAL_UPDATE_INTERVAL; //interval for firing the enemy bullets
 
 Enemy1.prototype.update = function (du) {
   // TODO: YOUR STUFF HERE! --- Unregister and check for death
   spatialManager.unregister(this);
-  this.eInterval -= du;
+
+  //check if the enemy is dead
   if (this._isDeadNow || this.cx < 0) {
     return entityManager.KILL_ME_NOW;
+
+    //check if the enemy is exploding
   } else if (this.isExploding) {
+    //trigger the interval for the explosion animation, when it goes below zero then change the sprite and reset the interval
+    this.eInterval -= du;
     if(this.eInterval < 0){
     this.nextExplodingSprite();
     this.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
     }
+
+    //else if the enemy is alive
   } else {
 
+    //move the enemy in a wave like motion
     this.cx -= 3 * du;
     this.cy += 3 * Math.cos(this.cx / 40) * du;
 
+    //lower the animation interval, when it reaches zero, reset it and change the sprite cell
     this.interval -= du;
     if (this.interval < 0) {
-      this.g_cel++;
+      this.cel++;
 
-      if (this.g_cel === 8) this.g_cel = 0;
-      this.sprite = g_sprites.enemy1[this.g_cel];
+      if (this.cel === 8) this.cel = 0;
+      this.sprite = g_sprites.enemy1[this.cel];
 
       this.interval = 100 / NOMINAL_UPDATE_INTERVAL;
     }
 
+    //lower the fire bullet interval, when it reaches zero there is a 1/10 chance to fire a bullet
     this.fireInterval -= du;
     if(this.fireInterval < 0){
       var x = Math.floor(Math.random() * 10);
+      //if x === 0 then fire a bullet
       if(x === 0){
+      //get the direction of where to shoot it
       this.bulletDirection();
+      //then make the entitymanager fire a new bullet in that direction
       entityManager.fireEnemyBullet(this.cx, this.cy,
         this.bulletVelX, this.bulletVelY);
       }
+      //reset the fire interval
       this.fireInterval = 1000 / NOMINAL_UPDATE_INTERVAL;
     }
     spatialManager.register(this);
   }
 };
 
+//function to get the radius of the enemy
 Enemy1.prototype.getRadius = function () {
   return this.scale * (this.sprite.width / 2) * 0.9;
 };
@@ -134,12 +108,15 @@ Enemy1.prototype.getRadius = function () {
 Enemy1.prototype.splitSound = new Audio("sounds/Enemy1Split.ogg");
 Enemy1.prototype.evaporateSound = new Audio("sounds/Enemy1Evaporate.ogg");
 
+//function for when the enemy is hit by a bullet, if you hit an enemy with a bullet increase the score
+//and trigger the animation for the explosion
 Enemy1.prototype.takeBulletHit = function () {
   entityManager._hud[0].incrementScore(25);
   this.isExploding = true;
   this.evaporateSound.play();
 };
 
+//calculate the direction of the enemy bullet
 Enemy1.prototype.bulletDirection = function() {
 
   var ship = entityManager._ships[0];
@@ -161,10 +138,8 @@ Enemy1.prototype.bulletDirection = function() {
   }
 }
 
+//render the enemy
 Enemy1.prototype.render = function (ctx) {
-  var origScale = this.sprite.scale;
-  // pass my scale into the sprite, for drawing
   this.sprite.scale = this.scale;
   this.sprite.drawCentredAt(ctx, this.cx, this.cy, this.rotation);
-
 };

@@ -17,7 +17,6 @@ function Enemy2(descr) {
   // Common inherited setup logic from Entity
   this.setup(descr);
 
-  this.randomisePosition();
 
 
   // Default sprite and scale, if not otherwise specified
@@ -32,76 +31,63 @@ function Enemy2(descr) {
 
 };
 
-
-
 Enemy2.prototype = new Entity();
 
-Enemy2.prototype.randomisePosition = function () {
-  // Enemy1 randomisation defaults (if nothing otherwise specified)
-  this.cx;
-  this.cy;
-  this.rotation = 0;
-};
-
-Enemy2.prototype.randomiseVelocity = function () {
-  var MIN_SPEED = 20,
-    MAX_SPEED = 70;
-
-  var speed = util.randRange(MIN_SPEED, MAX_SPEED) / SECS_TO_NOMINALS;
-  var dirn = Math.random() * consts.FULL_CIRCLE;
-
-  this.velX = this.velX || speed * Math.cos(dirn);
-  this.velY = 3; //this.velY || speed * Math.sin(dirn);
-
-  var MIN_ROT_SPEED = 0.5,
-    MAX_ROT_SPEED = 2.5;
-
-  this.velRot = this.velRot ||
-    util.randRange(MIN_ROT_SPEED, MAX_ROT_SPEED) / SECS_TO_NOMINALS;
-};
-
-Enemy2.prototype.interval = 70 / NOMINAL_UPDATE_INTERVAL;
-Enemy2.prototype.g_cel = 8;
-Enemy2.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
+Enemy2.prototype.interval = 70 / NOMINAL_UPDATE_INTERVAL; //interval for the animation 
+Enemy2.prototype.cel = 8; //sprite cells
+Enemy2.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL; //explosion animation interval
 
 
 Enemy2.prototype.update = function (du) {
   
-  this.eInterval -= du;
-
   spatialManager.unregister(this);
+
+  //check if the enemy is dead
   if (this._isDeadNow || this.cx < 0) {
     return entityManager.KILL_ME_NOW;
+
+  //trigger explosion
+  //when the interval for the explosion animation goes below zero then change the sprite and reset the interval  
   } else if (this.isExploding) {
+    this.eInterval -= du;
     if(this.eInterval < 0){
       this.nextExplodingSprite();
       this.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
       }
+
+  //enemy is alive
   } else {
 
+    //update the enemy 2 velocity and make it move in a wave like motion
     this.xVel = -3;
     this.yVel = 4 * Math.cos(this.cx / 100);
 
+    //get previous position
     var prevX = this.cx;
     var prevY = this.cy;
 
+    //calculate next position
     var nextX = prevX + this.xVel * du;
     var nextY = prevY + this.yVel * du;
 
+    //animate enemy 2
     this.interval -= du;
     if (this.interval < 0) {
+      //if the next position is above the previous position, animate the enemy to go up
       if (nextY > this.cy) {
-        if (this.g_cel > 5)
-          this.g_cel--;
-        this.sprite = g_sprites.enemy2[this.g_cel];
+        if (this.cel > 5)
+          this.cel--;
+        this.sprite = g_sprites.enemy2[this.cel];
       } else {
-        if (this.g_cel < 11)
-          this.g_cel++;
-        this.sprite = g_sprites.enemy2[this.g_cel];
+        //if the next position is below the previous position, animate the enemy to go down
+        if (this.cel < 11)
+          this.cel++;
+        this.sprite = g_sprites.enemy2[this.cel];
       }
       this.interval = 70 / NOMINAL_UPDATE_INTERVAL;
     }
 
+    //actually move enemy 2 according to the velocity
     this.cx += this.xVel * du;
     this.cy += this.yVel * du;
 
@@ -117,17 +103,15 @@ Enemy2.prototype.getRadius = function () {
 Enemy2.prototype.splitSound = new Audio("sounds/Enemy1Split.ogg");
 Enemy2.prototype.evaporateSound = new Audio("sounds/Enemy1Evaporate.ogg");
 
+//function for taking a bullet hit, increment the score and trigger the explosion
 Enemy2.prototype.takeBulletHit = function () {
   entityManager._hud[0].incrementScore(50);
   this.isExploding = true;
   this.evaporateSound.play();
 };
 
-
-
+//render enemy 2
 Enemy2.prototype.render = function (ctx) {
-  var origScale = this.sprite.scale;
-  // pass my scale into the sprite, for drawing
   this.sprite.scale = this.scale;
   this.sprite.drawCentredAt(
     ctx, this.cx, this.cy, this.rotation
