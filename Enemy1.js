@@ -114,7 +114,7 @@ Enemy1.prototype.update = function (du) {
 
     this.fireInterval -= du;
     if(this.fireInterval < 0){
-      var x = Math.floor(Math.random() * 4);
+      var x = Math.floor(Math.random() * 10);
       if(x === 0){
       this.bulletDirection();
       entityManager.fireEnemyBullet(this.cx, this.cy,
