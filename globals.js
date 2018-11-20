@@ -27,3 +27,9 @@ var g_lives = 3;
 var g_enemy1WaveInterval = 5000 / NOMINAL_UPDATE_INTERVAL;
 
 var g_enemy2WaveInterval = 7000 / NOMINAL_UPDATE_INTERVAL;
+
+var g_enemy1amount = 0;
+
+var g_enemy2amount = 0;
+
+var g_increaseDifficultyInterval = 15000 / NOMINAL_UPDATE_INTERVAL;

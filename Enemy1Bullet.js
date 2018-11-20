@@ -72,7 +72,6 @@ Enemy1Bullet.prototype.update = function (du) {
     
     var hitEntity = this.findHitEntity();
     if (hitEntity) {
-        console.log(hitEntity);
         var canTakeHit = hitEntity.takeBulletHit;
         if (canTakeHit) canTakeHit.call(hitEntity);
             return entityManager.KILL_ME_NOW;

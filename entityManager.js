@@ -37,7 +37,7 @@ var entityManager = {
 
   _generateEnemies1: function () {
     var i,
-      NUM_ENEMIES = Math.floor(Math.random() * 10) + 3;
+      NUM_ENEMIES = Math.floor(Math.random() * 5) + 2 + g_enemy1amount;
 
     for (i = 0; i < NUM_ENEMIES; ++i) {
       this.generateEnemy1();
@@ -46,7 +46,7 @@ var entityManager = {
 
   _generateEnemies2: function () {
     var i,
-      NUM_ENEMIES = Math.floor(Math.random() * 5) + 5;
+      NUM_ENEMIES = Math.floor(Math.random() * 3) + 3 + g_enemy2amount;
 
     var base_cx = util.randRange(900, 1400);
     var base_cy = util.randRange(300,500);
@@ -242,6 +242,14 @@ fireEnemyBullet: function (cx, cy, velX, velY){
     if(g_enemy2WaveInterval < 0){
       this._generateEnemies2();
       g_enemy2WaveInterval = 5000/NOMINAL_UPDATE_INTERVAL;
+    }
+
+    g_increaseDifficultyInterval -= du;
+
+    if(g_increaseDifficultyInterval < 0){
+      g_increaseDifficultyInterval = 15000 / NOMINAL_UPDATE_INTERVAL;
+      g_enemy1amount++;
+      g_enemy2amount++;
     }
    
 
