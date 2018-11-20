@@ -108,14 +108,14 @@ var entityManager = {
     }));
   },
 
-fireEnemyBullet: function (cx, cy, velX, velY){
+  fireEnemyBullet: function (cx, cy, velX, velY) {
     this._enemy1bullets.push(new Enemy1Bullet({
-        cx : cx-35,
-        cy : cy,
-        velX : velX,
-        velY : velY
+      cx: cx - 35,
+      cy: cy,
+      velX: velX,
+      velY: velY
     }));
-},
+  },
 
 
   generateEnemy1: function (descr) {
@@ -215,8 +215,6 @@ fireEnemyBullet: function (cx, cy, velX, velY){
       g_enemy2amount++;
     }
    
-    //----------------------------------------------
-
   },
 
   render: function (ctx) {

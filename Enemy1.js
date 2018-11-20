@@ -22,14 +22,10 @@ function Enemy1(descr) {
   // Default sprite and scale, if not otherwise specified
   this.sprite = g_sprites.enemy1[0];
   this.scale = this.scale || 2;
-  this.isExploding = false;
-  this.explodingSpriteIdx = 0;
   this.bulletVelX = 0;
   this.bulletVelY = 0;
 
 };
-
-
 
 Enemy1.prototype = new Entity();
 
@@ -105,7 +101,7 @@ Enemy1.prototype.getRadius = function () {
 };
 
 // HACKED-IN AUDIO (no preloading)
-Enemy1.prototype.splitSound = new Audio("sounds/Enemy1Split.ogg");
+//Enemy1.prototype.splitSound = new Audio("sounds/Enemy1Split.ogg");
 Enemy1.prototype.evaporateSound = new Audio("sounds/Enemy1Evaporate.ogg");
 
 //function for when the enemy is hit by a bullet, if you hit an enemy with a bullet increase the score

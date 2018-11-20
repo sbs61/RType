@@ -46,7 +46,6 @@ Ship.prototype.KEY_UP = 'W'.charCodeAt(0);
 Ship.prototype.KEY_DOWN = 'S'.charCodeAt(0);
 Ship.prototype.KEY_LEFT = 'A'.charCodeAt(0);
 Ship.prototype.KEY_RIGHT = 'D'.charCodeAt(0);
-
 Ship.prototype.KEY_FIRE = ' '.charCodeAt(0);
 
 // Initial, inheritable, default values
