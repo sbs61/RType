@@ -26,11 +26,14 @@ Hud.prototype.updateHighscore = function() {
   // Saves highscore using localStorage
 
   if(this.highscore !== null){
+    // If there's a defined highscore and the current score is higher;
+    // set highscore to current score
     if (this.score > this.highscore) {
         localStorage.setItem("highscore", this.score);
     }
   }
   else{
+    // If there's no defined highscore, set current score as highscore
     localStorage.setItem("highscore", this.score);
   }
     this.highscore = localStorage.getItem("highscore");

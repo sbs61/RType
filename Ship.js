@@ -46,7 +46,6 @@ Ship.prototype.KEY_UP = 'W'.charCodeAt(0);
 Ship.prototype.KEY_DOWN = 'S'.charCodeAt(0);
 Ship.prototype.KEY_LEFT = 'A'.charCodeAt(0);
 Ship.prototype.KEY_RIGHT = 'D'.charCodeAt(0);
-
 Ship.prototype.KEY_FIRE = ' '.charCodeAt(0);
 
 // Initial, inheritable, default values
@@ -138,6 +137,7 @@ Ship.prototype.update = function (du) {
     }
     if (this.chargeTimer < 0) {
       this.startCharge = true;
+      this.chargeSound.play();
       this.chargeTimer = 300 / NOMINAL_UPDATE_INTERVAL;
     }
 
@@ -164,6 +164,10 @@ Ship.prototype.update = function (du) {
 
     if (this.isColliding()) {
       this.isExploding = true;
+
+      this.evaporateSound.pause();
+      this.evaporateSound.currentTime = 0;
+      this.evaporateSound.play();
     } else {
       spatialManager.register(this);
     }
@@ -184,27 +188,32 @@ Ship.prototype.maybeFireBullet = function () {
     this.fire = false;
     this.muzzle = true;
     this.startCharge = false;
+    this.chargeSound.currentTime = 0;
+    this.chargeSound.pause();
 
     if (hud.charge < 50) { 
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 25, 0, false, false, false, false);
+        this.cy + 7, 4, 25, 0, false, false, false, false);
     } else if (hud.charge < 100) {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 15, 0, true, false, false, false);
+        this.cy + 7, 8, 15, 0, true, false, false, false);
     } else if (hud.charge < 150) {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 15, 0, false, true, false, false);
+        this.cy + 7, 12, 15, 0, false, true, false, false);
     } else if (hud.charge < 240) {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 15, 0, false, false, true, false);
+        this.cy + 7, 15, 15, 0, false, false, true, false);
     } else {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 15, 0, false, false, false, true);
+        this.cy + 7, 22, 15, 0, false, false, false, true);
     }
     hud.resetBeam(); 
   }
 
 };
+
+Ship.prototype.evaporateSound = new Audio("sounds/explosion.mp3");
+Ship.prototype.chargeSound = new Audio("sounds/charge.mp3");
 
 Ship.prototype.getRadius = function () {
   return this.sprite.width;

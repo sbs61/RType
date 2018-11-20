@@ -19,16 +19,7 @@ function Enemy1Bullet(descr) {
     this.setup(descr);
 
     // Make a noise when I am created (i.e. fired)
-    this.fireSound.pause();
-    this.fireSound.currentTime = 0;
     this.fireSound.play();
-
-/*
-    // Diagnostics to check inheritance stuff
-    this._bulletProperty = true;
-    console.dir(this);
-*/
-
 }
 
 Enemy1Bullet.prototype = new Entity();
@@ -36,8 +27,6 @@ Enemy1Bullet.prototype = new Entity();
 // HACKED-IN AUDIO (no preloading)
 Enemy1Bullet.prototype.fireSound = new Audio(
     "sounds/bulletFire.ogg");
-Enemy1Bullet.prototype.zappedSound = new Audio(
-    "sounds/bulletZapped.ogg");
 
 // Initial, inheritable, default values
 Enemy1Bullet.prototype.cx = 200;
@@ -45,46 +34,33 @@ Enemy1Bullet.prototype.cy = 200;
 Enemy1Bullet.prototype.velX = 1;
 Enemy1Bullet.prototype.velY = 1;
 
-// Convert times from milliseconds to "nominal" time units.
-Enemy1Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
-
+//update the enemy bullet
 Enemy1Bullet.prototype.update = function (du) {
-
 
     spatialManager.unregister(this);
 
-    //Check if the bullet is dead, if so return the KILL_ME_NOW to the entity manager
-
-    if (this._isDeadNow) {
+    //Check if the bullet is dead or outside the canvas, if so return the KILL_ME_NOW to the entity manager
+    if (this._isDeadNow || this.cx < 0) {
         return entityManager.KILL_ME_NOW;
     }
-    if(this.cx < 10)
-        return entityManager.KILL_ME_NOW;
 
+    //update the enemy bullet position
     this.cx -= this.velX* du;
     this.cy -= this.velY* du;
-    
-    //this.cy += 2 * du;
-    //this.wrapPosition();
-
-    // Handle collisions
-    //
 
     spatialManager.register(this);
-
 };
 
+Enemy1Bullet.prototype.takeBulletHit = function () {
+    this._isDeadNow = true;
+  };
+
+//get the radius of the enemy bullet
 Enemy1Bullet.prototype.getRadius = function () {
     return 4;
 };
 
-Enemy1Bullet.prototype.takeBulletHit = function () {
-    this.kill();
-
-    // Make a noise when I am zapped by another bullet
-    //this.zappedSound.play();
-};
-
+//render the enemy bullet
 Enemy1Bullet.prototype.render = function (ctx) {
     g_sprites.enemy1bullet.drawCentredAt(ctx, this.cx, this.cy);
 };
