@@ -118,10 +118,11 @@ var entityManager = {
     //this._generateShip();
   },
 
-  fireBullet: function (cx, cy, velX, velY, big1, big2, big3, big4) {
+  fireBullet: function (cx, cy, radius, velX, velY, big1, big2, big3, big4) {
     this._bullets.push(new Bullet({
       cx: cx,
       cy: cy,
+      radius: radius,
       velX: velX,
       velY: velY,
       big1: big1,
