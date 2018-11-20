@@ -78,7 +78,7 @@ Hud.prototype.update = function () {
 
 Hud.prototype.incrementBeam = function() {
   if (this.charge < 250)
-    this.charge += 3;
+    this.charge += 2;
 }
 
 Hud.prototype.resetBeam = function() {
