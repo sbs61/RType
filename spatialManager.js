@@ -109,7 +109,7 @@ render: function(ctx) {
     }
 
     var oldWidth = ctx.lineWidth;
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2;
 
     for (var ID2 in this._entitiesSq) {
         var e2 = this._entitiesSq[ID2];

@@ -25,6 +25,8 @@ var environmentManager = {
 _particles : [],
 _backgrounds : [],
 _walls : [],
+_wallCmbs : [],
+//_wallTimer : 0,
 _dustTimer : 0,
 _halt : false,
 
@@ -37,20 +39,63 @@ _generateBackground : function() {
 },
 
 _generateWalls : function() {
-    this._backgrounds[1] = new Background({
-        sprite : g_sprites.walls,
-        velX : g_XVel,
-        x : 350,
-        scale : 0.8
+    var cw = g_canvas.width
+
+    var Bckgr1 = this._createWallBckgr(1);
+    var collisionSet1 = [];
+    collisionSet1.push(new Wall(300+cw,0,181,199));
+    collisionSet1.push(new Wall(300+cw,521,181,199));
+    collisionSet1.push(new Wall(842+cw,0,118,58));
+    collisionSet1.push(new Wall(842+cw,662,118,58));
+    this._wallCmbs.push({
+        Background : Bckgr1,
+        Walls : collisionSet1,
+        hasSpawned : false
     });
 
-    this._walls.push(new Wall({
-        x : 1080,
-        y : 0,
-        width : 155,
-        height : 170
-    }));
+    
+   
+},
 
+_spawnWall : function() {
+    if (g_XTime >= 0 && !this._wallCmbs[0].hasSpawned) {
+        var eWall = this._wallCmbs[0];
+        this._backgrounds.push(eWall.Background);
+        for (var i = 0; i < eWall.Walls.length; i++) {
+            this._walls.push(eWall.Walls[i]);
+        };
+        eWall.hasSpawned = true;
+    };
+},
+
+_createWallBckgr : function(wallNumber) {
+    var wallUpdate = function (du) {
+        if (!this.halt) {
+            this.x -= this.velX * du;
+        };
+        if (this.x + this.sprite.width <= 0) {
+            return environmentManager.KILL_ME_NOW;
+        };
+    };
+    var wallRender = function (ctx) {
+        var origScale = this.sprite.scale;
+
+        this.sprite.scale = this.scale;
+    
+        this.sprite.drawAt(
+            ctx, this.x, this.y
+        );
+    
+        this.sprite.scale = origScale;
+    };
+
+    return new Background({
+        sprite : g_sprites.walls[wallNumber],
+        x : g_canvas.width,
+        velX : g_XVel,
+        update : wallUpdate,
+        render : wallRender
+    });
 },
 
 _generateDust : function (du) {
@@ -93,7 +138,8 @@ toggleHalt : function() {
 
 update : function(du) {
 	
-	this._generateDust(du);
+    this._generateDust(du);
+    this._spawnWall(du);
 
     for (var c = 0; c < this._categories.length; ++c) {
 

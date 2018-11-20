@@ -13,33 +13,38 @@
 
 
 // A rectangle collision object for walls
-function Wall(descr) {
+function Wall(x,y,w,h) {
 
   // Common inherited setup logic from Entity
-  this.setup(descr);
+  this.setup();
+
+  this.cx = x;
+  this.cy = y;
+  this.width = w;
+  this.height = h;
 
   this.halt = false;
 };
 
 Wall.prototype = new Entity();
 
-Wall.prototype.x = 200; // Upper left corner
-Wall.prototype.y = 200; // upper left corner
+Wall.prototype.cx = 200; // Upper left corner
+Wall.prototype.cy = 0; // Upper left corner
 Wall.prototype.width = 100;
 Wall.prototype.height = 75;
-Wall.prototype.velX = 0.75;
+Wall.prototype.velX = g_XVel;
 
 Wall.prototype.getRadius = function() {
     return {
         width: this.width,
         height: this.height
     };
-}
+};
 
 Wall.prototype.update = function(du) {
     spatialManager.unregisterSq(this);
     
-    if((this.cx + this.width/2) < 0 || this._isDeadNow) {
+    if(this.cx + this.width <= 0) {
         return environmentManager.KILL_ME_NOW;
     };
 

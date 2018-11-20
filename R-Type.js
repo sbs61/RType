@@ -173,7 +173,10 @@ function requestPreloads() {
         background : "images/background_stars.png",
         charge : "images/charge.png",
         spaceDust : "images/spaceDust.png",
-        walls : "images/walls.png",
+        wall1 : "images/w1.png",
+        wall2 : "images/w2.png",
+        wall3 : "images/w3.png",
+        wall4 : "images/w4.png",
         explode : "images/explode.png",
         beamBar : "images/UI_Beam_bar.png",
         muzzleFlash : "images/muzzleflash.png",
@@ -242,10 +245,18 @@ function preloadDone() {
 
     g_sprites.spaceDust = new Sprite(g_images.spaceDust, 0, 0,
         g_images.spaceDust.width, g_images.spaceDust.height);
-
-    g_sprites.walls = new Sprite(g_images.walls, 0, 0,
-        g_images.walls.width, g_images.walls.height);
-    g_sprites.walls.scale = 1;
+    
+    // Walls
+    g_sprites.walls = [];
+    g_sprites.walls[1] = new Sprite(g_images.wall1, 0, 0,
+        g_images.wall1.width, g_images.wall1.height);
+    g_sprites.walls[2] = new Sprite(g_images.wall2, 0, 0,
+        g_images.wall2.width, g_images.wall2.height);
+    g_sprites.walls[3] = new Sprite(g_images.wall3, 0, 0,
+        g_images.wall3.width, g_images.wall3.height);
+    g_sprites.walls[4] = new Sprite(g_images.wall4, 0, 0,
+        g_images.wall4.width, g_images.wall4.height);
+    
 
     g_sprites.bullet1 = new Sprite(g_images.bullet1, 0, 0,
         g_images.bullet1.width, g_images.bullet1.height);
