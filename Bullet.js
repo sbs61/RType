@@ -90,13 +90,6 @@ Bullet.prototype.getRadius = function () {
     return this.radius;
 };
 
-Bullet.prototype.takeBulletHit = function () {
-    this.kill();
-
-    // Make a noise when I am zapped by another bullet
-    this.zappedSound.play();
-};
-
 Bullet.prototype.render = function (ctx) {
 
     var fadeThresh = Bullet.prototype.lifeSpan / 3;
