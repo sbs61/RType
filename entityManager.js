@@ -47,7 +47,7 @@ var entityManager = {
     }
   },
 
-  _generateShip: function(){
+  _generateShip: function () {
     this.generateShip();
   },
 
@@ -115,14 +115,14 @@ var entityManager = {
     }));
   },
 
-fireEnemyBullet: function (cx, cy, velX, velY){
+  fireEnemyBullet: function (cx, cy, velX, velY) {
     this._enemy1bullets.push(new Enemy1Bullet({
-        cx : cx-35,
-        cy : cy,
-        velX : velX,
-        velY : velY
+      cx: cx - 35,
+      cy: cy,
+      velX: velX,
+      velY: velY
     }));
-},
+  },
 
 
   generateEnemy1: function (descr) {
@@ -185,13 +185,13 @@ fireEnemyBullet: function (cx, cy, velX, velY){
       }
     }
 
-    if(g_lives !== 0 && this._ships.length === 0) {
+    if (g_lives !== 0 && this._ships.length === 0) {
       this._generateShip();
     }
 
-    if(g_lives === 0){
+    if (g_lives === 0) {
       g_isUpdatePaused = true;
-      
+
     }
 
     if (this._enemies.length === 0) this._generateEnemies();
