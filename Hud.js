@@ -25,36 +25,35 @@ Hud.prototype.decrementLife = function () {
 
 
 Hud.prototype.render = function () {
- 
+
   g_ctx.font = "30px Courier New";
-  
-  g_ctx.save();  
+
+  g_ctx.save();
   g_ctx.fillStyle = "white"
   g_ctx.shadowColor = "deepskyblue";
   g_ctx.shadowOffsetX = 3;
   g_ctx.shadowOffsetY = 3;
   g_ctx.textAlign = "center";
-  g_ctx.fillText(this.score, g_canvas.width / 4, g_canvas.height - 8);
-  g_ctx.fillText("BEAM", g_canvas.width / 4, g_canvas.height - 35);
+  g_ctx.fillText(this.score, g_canvas.width / 3+50, g_canvas.height - 8);
+  g_ctx.fillText(this.score, g_canvas.width / 3+50, g_canvas.height - 8);
+  g_ctx.fillText("BEAM", g_canvas.width / 3+50, g_canvas.height - 35);
   g_ctx.restore();
-  
 
-  g_sprites.beamBar.drawCentredAt(g_ctx, 
-  g_canvas.width / 3.2+g_sprites.beamBar.width/4-10, 
-  g_canvas.height - 37+g_sprites.beamBar.height/4);
-  util.fillBox(ctx, g_canvas.width / 3.2, g_canvas.height - 34, this.charge, 10, 'blue');
-  util.fillBox(ctx, g_canvas.width / 3.2, g_canvas.height - 30, this.charge, 2, 'grey');
-  util.fillBox(ctx, g_canvas.width / 3.2+50, g_canvas.height - 37, 3, 14, 'grey');
-  util.fillBox(ctx, g_canvas.width / 3.2+110, g_canvas.height - 37, 3, 14, 'grey');
-  util.fillBox(ctx, g_canvas.width / 3.2+180, g_canvas.height - 37, 3, 14, 'grey');
-  util.fillBox(ctx, g_canvas.width / 3.2+240, g_canvas.height - 37, 3, 14, 'grey');
-  /*for (var i = 0; i < this.life; i++) {
-    g_sprites.life.drawCentredAt(ctx, 18 + i * 32, g_canvas.height - 33);
-  }*/
+
+  g_sprites.beamBar.drawCentredAt(g_ctx,
+  g_canvas.width / 2.2+g_sprites.beamBar.width/4-10,
+  g_canvas.height - 50+g_sprites.beamBar.height/4);
+  util.fillBox(ctx, g_canvas.width / 2.2, g_canvas.height - 46, this.charge, 10, 'blue');
+  util.fillBox(ctx, g_canvas.width / 2.2+50, g_canvas.height - 50, 3, 14, 'grey');
+  util.fillBox(ctx, g_canvas.width / 2.2+110, g_canvas.height - 50, 3, 14, 'grey');
+  util.fillBox(ctx, g_canvas.width / 2.2+180, g_canvas.height - 50, 3, 14, 'grey');
+  util.fillBox(ctx, g_canvas.width / 2.2+240, g_canvas.height - 50, 3, 14, 'grey');
+
+  this.drawLives(g_ctx);
 }
 
 Hud.prototype.update = function () {
-  
+
 }
 
 Hud.prototype.incrementBeam = function() {
@@ -64,4 +63,14 @@ Hud.prototype.incrementBeam = function() {
 
 Hud.prototype.resetBeam = function() {
   this.charge = 0;
+}
+
+
+Hud.prototype.drawLives = function(ctx){
+    if(g_lives > 0)
+        g_sprites.ship[2].drawCentredAt(ctx, 30, 700, this.rotation);
+    if(g_lives > 1)
+        g_sprites.ship[2].drawCentredAt(ctx, 70, 700, this.rotation);
+    if(g_lives > 2)
+        g_sprites.ship[2].drawCentredAt(ctx, 110, 700, this.rotation);
 }

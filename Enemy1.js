@@ -159,10 +159,6 @@ Enemy1.prototype.bulletDirection = function() {
   if (this.bulletVelX < -6) {
     this.bulletVelX = -6;
   }
-
-
-  console.log(this.bulletVelX);
-  console.log(this.bulletVelY);
 }
 
 Enemy1.prototype.render = function (ctx) {
