@@ -20,7 +20,7 @@ function Enemy1(descr) {
   this.randomisePosition();
 
   // Default sprite and scale, if not otherwise specified
-  this.sprite = g_sprites.explode[0];
+  this.sprite = g_sprites.enemy1[0];
   this.scale = this.scale || 2;
   this.isExploding = false;
   this.explodingSpriteIdx = 0;
