@@ -146,6 +146,19 @@ Enemy1.prototype.bulletDirection = function() {
 
   this.bulletVelX = (this.cx - ship.cx)/100;
   this.bulletVelY = (this.cy - ship.cy)/100;
+
+  if (this.bulletVelX < 4 && this.bulletVelX > 0){
+      this.bulletVelX = 4;
+  }
+  if (this.bulletVelX > 6) {
+      this.bulletVelX = 6;
+  }
+  if (this.bulletVelX < 0 && this.bulletVelX > -4) {
+    this.bulletVelX = -4;
+  }
+  if (this.bulletVelX < -6) {
+    this.bulletVelX = -6;
+  }
 }
 
 Enemy1.prototype.render = function (ctx) {

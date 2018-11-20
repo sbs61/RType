@@ -145,9 +145,9 @@ function renderSimulation(ctx) {
     entityManager.render(ctx);
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
-
+    /*
     util.drawLives(ctx);
-
+    */
     if(g_lives===0){
         util.gameOverScreen(ctx);
     }
@@ -223,7 +223,7 @@ function preloadDone() {
             );
         }
     }
-    
+
     g_sprites.explode  = [];
     /*
     for (var row = 0; row < 1; ++row) {
@@ -234,7 +234,7 @@ function preloadDone() {
         }
     }
     */
-   
+
    g_sprites.explode.push(new Sprite(g_images.explode,0, 0, 22, 34));
    g_sprites.explode.push(new Sprite(g_images.explode,22, 0, 28, 34));
    g_sprites.explode.push(new Sprite(g_images.explode,50, 0, 35, 34));
@@ -245,41 +245,41 @@ function preloadDone() {
     g_sprites.spaceDust = new Sprite(g_images.spaceDust, 0, 0,
         g_images.spaceDust.width, g_images.spaceDust.height);
 
-    g_sprites.walls = new Sprite(g_images.walls, 0, 0, 
+    g_sprites.walls = new Sprite(g_images.walls, 0, 0,
         g_images.walls.width, g_images.walls.height);
     g_sprites.walls.scale = 1;
 
-    g_sprites.bullet1 = new Sprite(g_images.bullet1, 0, 0, 
+    g_sprites.bullet1 = new Sprite(g_images.bullet1, 0, 0,
         g_images.bullet1.width, g_images.bullet1.height);
     g_sprites.bullet1.scale = 2;
 
-    g_sprites.bullet2 = new Sprite(g_images.bullet2, 0, 0, 
+    g_sprites.bullet2 = new Sprite(g_images.bullet2, 0, 0,
         g_images.bullet2.width, g_images.bullet2.height);
 
-    g_sprites.bullet3 = new Sprite(g_images.bullet3, 0, 0, 
+    g_sprites.bullet3 = new Sprite(g_images.bullet3, 0, 0,
         g_images.bullet3.width, g_images.bullet3.height);
 
-    g_sprites.bullet4 = new Sprite(g_images.bullet4, 0, 0, 
+    g_sprites.bullet4 = new Sprite(g_images.bullet4, 0, 0,
         g_images.bullet4.width, g_images.bullet4.height);
 
-    g_sprites.bullet5 = new Sprite(g_images.bullet5, 0, 0, 
+    g_sprites.bullet5 = new Sprite(g_images.bullet5, 0, 0,
         g_images.bullet5.width, g_images.bullet5.height);
-    
-    g_sprites.enemy1bullet = new Sprite(g_images.enemy1bullet, 0, 0, 
+
+    g_sprites.enemy1bullet = new Sprite(g_images.enemy1bullet, 0, 0,
         g_images.enemy1bullet.width, g_images.enemy1bullet.height);
 
 
-    g_sprites.background = new Sprite(g_images.background, 0, 0, 
+    g_sprites.background = new Sprite(g_images.background, 0, 0,
         g_images.background.width, g_images.background.height);
 
-    g_sprites.gameOver = new Sprite(g_images.gameOver, 0, 0, 
+    g_sprites.gameOver = new Sprite(g_images.gameOver, 0, 0,
         g_images.gameOver.width, g_images.gameOver.height);
 
-    g_sprites.beamBar = new Sprite(g_images.beamBar, 0, 0, 
+    g_sprites.beamBar = new Sprite(g_images.beamBar, 0, 0,
         g_images.beamBar.width, g_images.beamBar.height);
     g_sprites.beamBar.scale = 0.5;
-    
-    g_sprites.muzzleFlash = new Sprite(g_images.muzzleFlash, 0, 0, 
+
+    g_sprites.muzzleFlash = new Sprite(g_images.muzzleFlash, 0, 0,
         g_images.muzzleFlash.width, g_images.muzzleFlash.height);
     g_sprites.muzzleFlash.scale = 2;
 
@@ -287,7 +287,7 @@ function preloadDone() {
     environmentManager.init();
     entityManager.displayHud();
     createInitialShips();
-    
+
     main.init();
 }
 
