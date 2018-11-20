@@ -191,6 +191,12 @@ fireEnemyBullet: function (cx, cy, velX, velY){
     }
 
     if(g_lives !== 0 && this._ships.length === 0) {
+      for(var k = 0; k < this._enemies.length; k++){
+        spatialManager.unregister(this._enemies[k]);
+      }
+      for(var k = 0; k < this._enemy1bullets.length; k++){
+        spatialManager.unregister(this._enemy1bullets[k]);
+      }
       this._enemies.splice(0,this._enemies.length);
       this._enemy1bullets.splice(0,this._enemy1bullets.length);
       g_enemy1WaveInterval = 3000/NOMINAL_UPDATE_INTERVAL;
