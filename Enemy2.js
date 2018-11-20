@@ -35,29 +35,12 @@ function Enemy2(descr) {
 
 
 Enemy2.prototype = new Entity();
-var n = 40;
-var spawnPoint = [];
-fill();
-var s = 0;
-var l = 0;
-
-function fill() {
-  for (var i = 0; i < 10; i++) {
-    for (var j = 0; j < 5; j++) {
-      spawnPoint.push(util.randRange(1000 + s, 1500 + s));
-      console.log(spawnPoint[l]);
-      l++;
-    }
-    s += 500;
-  }
-}
 
 Enemy2.prototype.randomisePosition = function () {
   // Enemy1 randomisation defaults (if nothing otherwise specified)
-  this.cx = 1000; //this.cx || Math.random() * g_canvas.width;
-  this.cy = 300 + n; //this.cy || Math.random() * g_canvas.height;
+  this.cx;
+  this.cy;
   this.rotation = 0;
-  n++;
 };
 
 Enemy2.prototype.randomiseVelocity = function () {

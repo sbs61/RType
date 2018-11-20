@@ -25,3 +25,5 @@ var SECS_TO_NOMINALS = 1000 / NOMINAL_UPDATE_INTERVAL;
 var g_lives = 3;
 
 var g_enemy1WaveInterval = 5000 / NOMINAL_UPDATE_INTERVAL;
+
+var g_enemy2WaveInterval = 7000 / NOMINAL_UPDATE_INTERVAL;

@@ -46,9 +46,20 @@ var entityManager = {
 
   _generateEnemies2: function () {
     var i,
-      NUM_ENEMIES = 0;
+      NUM_ENEMIES = Math.floor(Math.random() * 5) + 5;
+
+    var base_cx = util.randRange(900, 1400);
+    var base_cy = util.randRange(300,500);
+
+    this.generateEnemy2(base_cx, base_cy);
+
+    var space_x = 0, space_y = 0;
+
     for (i = 0; i < NUM_ENEMIES; ++i) {
-      this.generateEnemy2();
+      this.generateEnemy2(base_cx+space_x, base_cy+space_y);
+      space_x += 30;
+      space_y += 10;
+
     }
   },
 
@@ -134,8 +145,11 @@ fireEnemyBullet: function (cx, cy, velX, velY){
     this._enemies.push(new Enemy1(descr));
   },
 
-  generateEnemy2: function (descr) {
-    this._enemies.push(new Enemy2([descr]));
+  generateEnemy2: function (cx, cy) {
+    this._enemies.push(new Enemy2({
+      cx : cx,
+      cy : cy
+    }));
   },
 
   generateShip: function (descr) {
@@ -191,15 +205,23 @@ fireEnemyBullet: function (cx, cy, velX, velY){
     }
 
     if(g_lives !== 0 && this._ships.length === 0) {
+      //unregister all enemies from spatial manager
       for(var k = 0; k < this._enemies.length; k++){
         spatialManager.unregister(this._enemies[k]);
       }
+      //unregister all enemy1 bullets from spatial manager
       for(var k = 0; k < this._enemy1bullets.length; k++){
         spatialManager.unregister(this._enemy1bullets[k]);
       }
+
+      //remove all enemies and enemy bullets
       this._enemies.splice(0,this._enemies.length);
       this._enemy1bullets.splice(0,this._enemy1bullets.length);
+
+      //reset next wave of enemy 1 to start in 3 seconds
       g_enemy1WaveInterval = 3000/NOMINAL_UPDATE_INTERVAL;
+
+      //generate a new ship
       this._generateShip();
     }
 
@@ -209,10 +231,17 @@ fireEnemyBullet: function (cx, cy, velX, velY){
     }
     
     g_enemy1WaveInterval -= du;
-
+    
     if(g_enemy1WaveInterval < 0){
       this._generateEnemies1();
       g_enemy1WaveInterval = 3000/NOMINAL_UPDATE_INTERVAL;
+    }
+
+    g_enemy2WaveInterval -= du;
+
+    if(g_enemy2WaveInterval < 0){
+      this._generateEnemies2();
+      g_enemy2WaveInterval = 5000/NOMINAL_UPDATE_INTERVAL;
     }
    
 
