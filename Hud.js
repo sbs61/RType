@@ -9,7 +9,7 @@ Hud.prototype.life = 2;
 Hud.prototype.gameOver = false;
 Hud.prototype.KEY_FIRE = ' '.charCodeAt(0);
 Hud.prototype.charge = 0;
-
+Hud.prototype.highscore = localStorage.getItem("highscore");
 
 Hud.prototype.incrementScore = function (scoreIncr) {
   this.score += scoreIncr;
@@ -21,6 +21,24 @@ Hud.prototype.decrementLife = function () {
     this.gameOver = true;
   }
 }
+
+Hud.prototype.updateHighscore = function() {
+  // Saves highscore using localStorage
+
+  if(this.highscore !== null){
+    // If there's a defined highscore and the current score is higher;
+    // set highscore to current score
+    if (this.score > this.highscore) {
+        localStorage.setItem("highscore", this.score);
+    }
+  }
+  else{
+    // If there's no defined highscore, set current score as highscore
+    localStorage.setItem("highscore", this.score);
+  }
+    this.highscore = localStorage.getItem("highscore");
+}
+
 
 
 
@@ -35,8 +53,10 @@ Hud.prototype.render = function () {
   g_ctx.shadowOffsetY = 3;
   g_ctx.textAlign = "center";
   g_ctx.fillText(this.score, g_canvas.width / 3+50, g_canvas.height - 8);
-  g_ctx.fillText(this.score, g_canvas.width / 3+50, g_canvas.height - 8);
   g_ctx.fillText("BEAM", g_canvas.width / 3+50, g_canvas.height - 35);
+  this.updateHighscore();
+  g_ctx.fillText("Highscore: ", g_canvas.width / 3+200, g_canvas.height - 8);
+  g_ctx.fillText(this.highscore, g_canvas.width / 3+330, g_canvas.height - 8);
   g_ctx.restore();
 
 
@@ -58,7 +78,7 @@ Hud.prototype.update = function () {
 
 Hud.prototype.incrementBeam = function() {
   if (this.charge < 250)
-    this.charge += 2;
+    this.charge += 3;
 }
 
 Hud.prototype.resetBeam = function() {

@@ -46,7 +46,7 @@ var entityManager = {
 
   _generateEnemies2: function () {
     var i,
-      NUM_ENEMIES = Math.floor(Math.random() * 3) + 3 + g_enemy2amount;
+      NUM_ENEMIES = Math.floor(Math.random() * 4) + 3 + g_enemy2amount;
 
     var base_cx = util.randRange(900, 1400);
     var base_cy = util.randRange(300,500);
@@ -118,10 +118,11 @@ var entityManager = {
     //this._generateShip();
   },
 
-  fireBullet: function (cx, cy, velX, velY, big1, big2, big3, big4) {
+  fireBullet: function (cx, cy, radius, velX, velY, big1, big2, big3, big4) {
     this._bullets.push(new Bullet({
       cx: cx,
       cy: cy,
+      radius: radius,
       velX: velX,
       velY: velY,
       big1: big1,

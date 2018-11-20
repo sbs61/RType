@@ -145,9 +145,7 @@ function renderSimulation(ctx) {
     entityManager.render(ctx);
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
-    /*
-    util.drawLives(ctx);
-    */
+
     if(g_lives===0){
         util.gameOverScreen(ctx);
     }

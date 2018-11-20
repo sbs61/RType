@@ -48,6 +48,7 @@ Bullet.prototype.big1 = false;
 Bullet.prototype.big2 = false;
 Bullet.prototype.big3 = false;
 Bullet.prototype.big4 = false;
+Bullet.prototype.radius = 4;
 
 // Convert times from milliseconds to "nominal" time units.
 Bullet.prototype.lifeSpan = 3000 / NOMINAL_UPDATE_INTERVAL;
@@ -86,14 +87,7 @@ Bullet.prototype.update = function (du) {
 };
 
 Bullet.prototype.getRadius = function () {
-    return 4;
-};
-
-Bullet.prototype.takeBulletHit = function () {
-    this.kill();
-
-    // Make a noise when I am zapped by another bullet
-    this.zappedSound.play();
+    return this.radius;
 };
 
 Bullet.prototype.render = function (ctx) {
