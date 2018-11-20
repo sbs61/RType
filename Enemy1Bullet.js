@@ -74,11 +74,8 @@ Enemy1Bullet.prototype.update = function (du) {
     if (hitEntity) {
         var canTakeHit = hitEntity.takeBulletHit;
         if (canTakeHit) canTakeHit.call(hitEntity);
-        if (!this.big1 && !this.big2 && !this.big3)
             return entityManager.KILL_ME_NOW;
     }
-    
-
     spatialManager.register(this);
 
 };

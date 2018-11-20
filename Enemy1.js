@@ -25,6 +25,14 @@ function Enemy1(descr) {
   this.scale = this.scale || 2;
   this.bulletVelX = 0;
   this.bulletVelY = 0;
+  this.ID = 1;
+
+  /*
+      // Diagnostics to check inheritance stuff
+      this._Enemy1Property = true;
+      console.dir(this);
+  */
+
 };
 
 Enemy1.prototype = new Entity();
@@ -47,10 +55,8 @@ function fill() {
 
 Enemy1.prototype.randomisePosition = function () {
   // Enemy1 randomisation defaults (if nothing otherwise specified)
-  this.cx = 1000; //this.cx || Math.random() * g_canvas.width;
-  this.cy = 200 + n; //this.cy || Math.random() * g_canvas.height;
-  this.rotation = 0;
-  n++;
+  this.cx = util.randRange(900,1400); //this.cx || Math.random() * g_canvas.width;
+  this.cy = util.randRange(120,600); //this.cy || Math.random() * g_canvas.height;
 };
 
 Enemy1.prototype.randomiseVelocity = function () {
@@ -136,6 +142,19 @@ Enemy1.prototype.bulletDirection = function() {
 
   this.bulletVelX = (this.cx - ship.cx)/100;
   this.bulletVelY = (this.cy - ship.cy)/100;
+
+  if (this.bulletVelX < 4 && this.bulletVelX > 0){
+      this.bulletVelX = 4;
+  }
+  if (this.bulletVelX > 6) {
+      this.bulletVelX = 6;
+  }
+  if (this.bulletVelX < 0 && this.bulletVelX > -4) {
+    this.bulletVelX = -4;
+  }
+  if (this.bulletVelX < -6) {
+    this.bulletVelX = -6;
+  }
 }
 
 Enemy1.prototype.render = function (ctx) {
