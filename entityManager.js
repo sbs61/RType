@@ -46,7 +46,7 @@ var entityManager = {
 
   _generateEnemies2: function () {
     var i,
-      NUM_ENEMIES = Math.floor(Math.random() * 3) + 3 + g_enemy2amount;
+      NUM_ENEMIES = Math.floor(Math.random() * 4) + 3 + g_enemy2amount;
 
     var base_cx = util.randRange(900, 1400);
     var base_cy = util.randRange(300,500);
