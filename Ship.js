@@ -30,6 +30,8 @@ function Ship(descr) {
   this.fire = false;
   this.timeStarted = false;
   this.time = performance.now();
+  this.multiGun = false;
+  this.powerUpTime = 10000 / NOMINAL_UPDATE_INTERVAL;
 };
 
 
@@ -151,7 +153,18 @@ Ship.prototype.update = function (du) {
     if (charge > 7) {
       charge = 0;
     }
-
+    
+    //Decreas power up time
+    if(this.multiGun) {
+      this.powerUpTime -= du;
+    }
+    
+    //Check if power up is over and reset
+    if(this.powerUpTime < 0) {
+      this.multiGun = false;
+      this.powerUpTime = 10000 / NOMINAL_UPDATE_INTERVAL;
+    }
+    
     if(this.muzzle){
       this.muzzleTimer -= du;
       if(this.muzzleTimer < 0){
@@ -173,6 +186,7 @@ Ship.prototype.update = function (du) {
         this.evaporateSound.play();
       } else {
         hitEntity.collideWithShip();
+        this.multiGun = true;
         spatialManager.register(this);
       }
     } else {
@@ -200,19 +214,49 @@ Ship.prototype.maybeFireBullet = function () {
 
     if (hud.charge < 50) {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 4, 25, 0, false, false, false, false);
+        this.cy + 7, 4, 25, 0, 0, false, false, false, false);
+      if(this.multiGun) {
+        entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 4, 15, 10, 120, false, false, false, false);
+        entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 4, 15, -10, -120, false, false, false, false);
+      }
     } else if (hud.charge < 100) {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 8, 15, 0, true, false, false, false);
+        this.cy + 7, 8, 15, 0, 0, true, false, false, false);
+      if(this.multiGun) {
+        entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 8, 15, 10, 120, true, false, false, false);
+        entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 8, 15, -10, -120, true, false, false, false);
+      }
     } else if (hud.charge < 150) {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 12, 15, 0, false, true, false, false);
+        this.cy + 7, 12, 15, 0, 0, false, true, false, false);
+      if(this.multiGun) {
+        entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 12, 15, 10, 120, false, true, false, false);
+        entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 12, 15, -10, -120, false, true, false, false);
+      }
     } else if (hud.charge < 240) {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 15, 15, 0, false, false, true, false);
+        this.cy + 7, 15, 15, 0, 0, false, false, true, false);
+      if(this.multiGun) {
+        entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 15, 15, 10, 120, false, false, true, false);
+        entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 15, 15, -10, -120, false, false, true, false);
+      }
     } else {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 22, 15, 0, false, false, false, true);
+        this.cy + 7, 22, 15, 0, 0, false, false, false, true);
+      if(this.multiGun) {
+        entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 22, 15, 10, 120, false, false, false, true);
+        entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 22, 15, -10, -120, false, false, false, true);
+      }
     }
     hud.resetBeam();
   }

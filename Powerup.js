@@ -51,8 +51,6 @@ Powerup.prototype.update = function (du) {
 };
 
 Powerup.prototype.collideWithShip = function () {
-  console.log('hit power');
-  //ship.multiGun = true;
   //Kill the powerup entity
   this.lifeSpan = 0;
 }

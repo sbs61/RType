@@ -78,7 +78,7 @@ Bullet.prototype.update = function (du) {
     if (hitEntity) {
         var canTakeHit = hitEntity.takeBulletHit;
         if (canTakeHit) canTakeHit.call(hitEntity);
-        if (!this.big1 && !this.big2 && !this.big3 && !this.big4)
+        if (!this.big1 && !this.big2 && !this.big3 && !this.big4 && hitEntity.typeOf !== 'powerup')
             return entityManager.KILL_ME_NOW;
     }
 
@@ -120,7 +120,7 @@ Bullet.prototype.render = function (ctx) {
     }
 
     //draw the bullet
-    g_sprites.bullet.drawCentredAt(ctx, this.cx, this.cy);
+    g_sprites.bullet.drawCentredAt(ctx, this.cx, this.cy, this.rotation);
 
     ctx.globalAlpha = 1;
 };
