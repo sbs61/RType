@@ -50,10 +50,7 @@ Bullet.prototype.cx = 200;
 Bullet.prototype.cy = 200;
 Bullet.prototype.velX = 1;
 Bullet.prototype.velY = 1;
-Bullet.prototype.big1 = false;
-Bullet.prototype.big2 = false;
-Bullet.prototype.big3 = false;
-Bullet.prototype.big4 = false;
+Bullet.prototype.big;
 Bullet.prototype.radius = 4;
 
 Bullet.prototype.update = function (du) {
@@ -78,7 +75,7 @@ Bullet.prototype.update = function (du) {
     if (hitEntity) {
         var canTakeHit = hitEntity.takeBulletHit;
         if (canTakeHit) canTakeHit.call(hitEntity);
-        if (!this.big1 && !this.big2 && !this.big3 && !this.big4 && hitEntity.typeOf !== 'powerup')
+        if (!this.big[0] && !this.big[1] && !this.big[2] && !this.big[3] && hitEntity.typeOf !== 'powerup')
             return entityManager.KILL_ME_NOW;
     }
 
@@ -94,22 +91,22 @@ Bullet.prototype.getRadius = function () {
 Bullet.prototype.render = function (ctx) {
 
     //Check if the bullet is big, if it is then push in the sprite for big bullet nr 1
-    if(this.big1){
+    if(this.big[0]){
       g_sprites.bullet = new Sprite(g_images.bullet2, 0,0, g_images.bullet2.width, g_images.bullet2.height);
       g_sprites.bullet.scale = 2;
     }
     //Check if the bullet is bigger, if it is then push in the sprite for big bullet nr 2
-    else if(this.big2){
+    else if(this.big[1]){
         g_sprites.bullet = new Sprite(g_images.bullet3, 0,0, g_images.bullet3.width, g_images.bullet3.height);
         g_sprites.bullet.scale = 2;
       }
     //Check if the bullet is even bigger, if it is then push in the sprite for big bullet nr 3
-    else if(this.big3){
+    else if(this.big[2]){
         g_sprites.bullet = new Sprite(g_images.bullet4, 0,0, g_images.bullet4.width, g_images.bullet4.height);
         g_sprites.bullet.scale = 2;
       }
     //Check if the bullet is the biggest, if it is then push in the sprite for big bullet nr 4
-    else if(this.big4){
+    else if(this.big[3]){
         g_sprites.bullet = new Sprite(g_images.bullet5, 0,0, g_images.bullet5.width, g_images.bullet5.height);
         g_sprites.bullet.scale = 2;
       }

@@ -95,7 +95,7 @@ var entityManager = {
   init: function () {
   },
 
-  fireBullet: function (cx, cy, radius, velX, velY, rotation, big1, big2, big3, big4) {
+  fireBullet: function (cx, cy, radius, velX, velY, rotation, big) {
     this._bullets.push(new Bullet({
       cx: cx,
       cy: cy,
@@ -103,10 +103,7 @@ var entityManager = {
       velX: velX,
       velY: velY,
       rotation: rotation,
-      big1: big1,
-      big2: big2,
-      big3: big3,
-      big4: big4
+      big: big
     }));
   },
 

@@ -213,51 +213,56 @@ Ship.prototype.maybeFireBullet = function () {
     this.startCharge = false;
     this.chargeSound.currentTime = 0;
     this.chargeSound.pause();
+    var bulletType = [0, 0, 0, 0];
 
     if (hud.charge < 50) {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 4, 25, 0, 0, false, false, false, false);
+        this.cy + 7, 4, 25, 0, 0, bulletType);
       if(this.multiGun) {
         entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 4, 15, 10, 120, false, false, false, false);
+        this.cy + 7, 4, 15, 10, 120, bulletType);
         entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 4, 15, -10, -120, false, false, false, false);
+        this.cy + 7, 4, 15, -10, -120, bulletType);
       }
     } else if (hud.charge < 100) {
+      bulletType[0] = 1;
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 8, 15, 0, 0, true, false, false, false);
+        this.cy + 7, 8, 15, 0, 0, bulletType);
       if(this.multiGun) {
         entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 8, 15, 10, 120, true, false, false, false);
+        this.cy + 7, 8, 15, 10, 120, [1, 0, 0, 0]);
         entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 8, 15, -10, -120, true, false, false, false);
+        this.cy + 7, 8, 15, -10, -120, bulletType);
       }
     } else if (hud.charge < 150) {
+      bulletType[1] = 1;
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 12, 15, 0, 0, false, true, false, false);
+        this.cy + 7, 12, 15, 0, 0, bulletType);
       if(this.multiGun) {
         entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 12, 15, 10, 120, false, true, false, false);
+        this.cy + 7, 12, 15, 10, 120, bulletType);
         entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 12, 15, -10, -120, false, true, false, false);
+        this.cy + 7, 12, 15, -10, -120, bulletType);
       }
     } else if (hud.charge < 240) {
+      bulletType[2] = 1;
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 15, 15, 0, 0, false, false, true, false);
+        this.cy + 7, 15, 15, 0, 0, bulletType);
       if(this.multiGun) {
         entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 15, 15, 10, 120, false, false, true, false);
+        this.cy + 7, 15, 15, 10, 120, bulletType);
         entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 15, 15, -10, -120, false, false, true, false);
+        this.cy + 7, 15, 15, -10, -120, bulletType);
       }
     } else {
+      bulletType[3] = 1;
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 22, 15, 0, 0, false, false, false, true);
+        this.cy + 7, 22, 15, 0, 0, bulletType);
       if(this.multiGun) {
         entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 22, 15, 10, 120, false, false, false, true);
+        this.cy + 7, 22, 15, 10, 120, bulletType);
         entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 22, 15, -10, -120, false, false, false, true);
+        this.cy + 7, 22, 15, -10, -120, bulletType);
       }
     }
     hud.resetBeam();
