@@ -21,7 +21,8 @@ function Ship(descr) {
   this.rememberResets();
 
   // Default sprite, if not otherwise specified
-  this.sprite = g_sprites.ship[2];
+  this.cel = g_baseShipCel;
+  this.sprite = g_sprites.ship[g_baseShipCel];
 
   // Set normal drawing scale, and warp state off
   this._scale = 3;
@@ -88,9 +89,22 @@ Ship.prototype.update = function (du) {
         }
   } else {
 
+	if(eatKey(this.KEY_COLOUR)){
+		if(g_baseShipCel === 22){
+			g_baseShipCel = 2;
+			this.cel = g_baseShipCel;
+			this.sprite = g_sprites.ship[this.cel];
+		}
+		else{
+		g_baseShipCel += 5;
+		this.cel = g_baseShipCel;
+		this.sprite = g_sprites.ship[this.cel];
+		}
+	}
+
     if (keys[this.KEY_UP] && this.cy > this.sprite.height / 2) {
       this.cy -= 4 * du;
-      if (this.cel < 4) {
+      if (this.cel < g_baseShipCel+2) {
         this.interval -= du;
         if (this.interval < 0) {
           this.cel++;
@@ -102,7 +116,7 @@ Ship.prototype.update = function (du) {
 
     if (keys[this.KEY_DOWN] && this.cy < g_canvas.height - this.sprite.height / 2) {
       this.cy += 4 * du;
-      if (this.cel > 0) {
+      if (this.cel > g_baseShipCel-2) {
         this.interval -= du;
         if (this.interval < 0) {
           this.cel--;
@@ -119,8 +133,8 @@ Ship.prototype.update = function (du) {
       this.cx += 3 * du;
     }
 
-    if (this.cel !== 2 && !keys[this.KEY_DOWN] && !keys[this.KEY_UP]) {
-      if (this.cel > 2) {
+    if (this.cel !== g_baseShipCel && !keys[this.KEY_DOWN] && !keys[this.KEY_UP]) {
+      if (this.cel > g_baseShipCel) {
         this.interval -= du;
         if (this.interval < 0) {
           this.cel--;
