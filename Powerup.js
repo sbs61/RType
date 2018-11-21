@@ -17,7 +17,7 @@ function Powerup(cx, cy) {
 
   // Common inherited setup logic from Entity
   this.setup();
-  this.sprite = g_sprites.bullet3;
+  this.sprite = g_sprites.multiPower;
   this.lifeSpan = 5000 / NOMINAL_UPDATE_INTERVAL;
   this.cx = cx;
   this.cy = cy;
@@ -29,8 +29,8 @@ Powerup.prototype.velX = 3;
 
 Powerup.prototype.getRadius = function () {
   return {
-    width: this.sprite.width,
-    height: this.sprite.height
+    width: this.sprite.width*1.5,
+    height: this.sprite.height*1.5
   };
 };
 
