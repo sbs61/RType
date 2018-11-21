@@ -28,6 +28,7 @@ var entityManager = {
 
   _enemies: [],
   _boss: [],
+  _bossBullets: [],
   _bullets: [],
   _enemy1bullets: [],
   _ships: [],
@@ -94,7 +95,7 @@ var entityManager = {
   // i.e. thing which need `this` to be defined.
   //
   deferredSetup: function () {
-    this._categories = [this._enemies, this._boss, this._enemy1bullets, this._bullets, this._ships, this._hud, this._powerups];
+    this._categories = [this._enemies, this._boss, this._bossBullets, this._enemy1bullets, this._bullets, this._ships, this._hud, this._powerups];
   },
 
   init: function () {
@@ -118,6 +119,14 @@ var entityManager = {
       cy: cy,
       velX: velX,
       velY: velY
+    }));
+  },
+
+
+  fireBossBullet: function(cx, cy){
+    this._bossBullets.push(new BossBullet({
+      cx: cx,
+      cy: cy
     }));
   },
 
@@ -180,10 +189,15 @@ var entityManager = {
       for(var k = 0; k < this._enemy1bullets.length; k++){
         spatialManager.unregister(this._enemy1bullets[k]);
       }
+      //unregister all enemy1 bullets from spatial manager
+      for(var k = 0; k < this._bossBullets.length; k++){
+        spatialManager.unregister(this._bossBullets[k]);
+      }
       spatialManager._entitiesSq = [];
       //remove all enemies and enemy bullets
       this._enemies.splice(0,this._enemies.length);
       this._enemy1bullets.splice(0,this._enemy1bullets.length);
+      this._bossBullets.splice(0,this._bossBullets.length);
       this._powerups.splice(0,this._powerups.length);
       this._hud[0].killCount = 0;
 

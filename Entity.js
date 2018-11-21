@@ -89,6 +89,14 @@ Entity.prototype.nextExplodingSprite = function () {
   }
 }
 
+Entity.prototype.nextExplodingBossSprite = function () {
+  if (this.explodingSpriteIdx == g_sprites.bossExplode.length) {
+    this.kill();
+  } else {
+    this.sprite = g_sprites.bossExplode[this.explodingSpriteIdx++];
+  }
+}
+
 // This is just little "convenience wrapper"
 Entity.prototype.isColliding = function () {
   return this.findHitEntity();

@@ -119,6 +119,10 @@ function requestPreloads() {
         enemy1bullet : "images/enemy1bullet.png",
         enemy2 : "images/enemy2sheet.png",
         boss : "images/boss.png",
+        bossHit : "images/bossHit.png",
+        bossBullet : "images/bossBullet.png",
+        bossExplode1 : "images/bossExplode1.png",
+        bossExplode2 : "images/bossExplode2.png",
         bullet1 : "images/bullet1.png",
         bullet2 : "images/bullet2.png",
         bullet3 : "images/bullet3.png",
@@ -180,11 +184,39 @@ function preloadDone() {
         }
     }
 
+    g_sprites.bossHit = [];
+    for (var row = 0; row < 1; ++row) {
+        for (var col = 0; col < 2; ++col) {
+            g_sprites.bossHit.push(
+                new Sprite(g_images.bossHit,col*57.5, row*57, 57.5, 57)
+            );
+        }
+    }
+
+    g_sprites.bossBullet = [];
+    g_sprites.bossBullet.push(new Sprite(g_images.bossBullet,16, 0, 64, 16));
+
     g_sprites.charge  = [];
     for (var row = 0; row < 1; ++row) {
         for (var col = 0; col < 8; ++col) {
             g_sprites.charge.push(
                 new Sprite(g_images.charge,col*32, row*34, 32, 34)
+            );
+        }
+    }
+
+    g_sprites.bossExplode  = [];
+    for (var row = 0; row < 1; ++row) {
+        for (var col = 0; col < 3; ++col) {
+            g_sprites.bossExplode.push(
+                new Sprite(g_images.bossExplode1,col*65.67, row*59, 65.67, 59)
+            );
+        }
+    }
+    for (var row = 0; row < 1; ++row) {
+        for (var col = 0; col < 5; ++col) {
+            g_sprites.bossExplode.push(
+                new Sprite(g_images.bossExplode2,col*65.4, row*67, 65.4, 67)
             );
         }
     }
