@@ -170,9 +170,9 @@ Ship.prototype.update = function (du) {
       this.evaporateSound.pause();
       this.evaporateSound.currentTime = 0;
       this.evaporateSound.play();
-    } else {
-      spatialManager.register(this);
-    }
+    } 
+    
+    spatialManager.register(this);
   }
 
 };
