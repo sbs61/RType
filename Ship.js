@@ -237,7 +237,7 @@ Ship.prototype.maybeFireBullet = function () {
 			this.handleMultiGun(bulletType);
 		}
 		hud.resetBeam();
-
+	}
 	};
 
 

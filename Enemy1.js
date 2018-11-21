@@ -120,12 +120,15 @@ Enemy1.prototype.takeBulletHit = function () {
 
 //calculate the direction of the enemy bullet
 Enemy1.prototype.bulletDirection = function() {
-
+  // Calculate a firing direction 
   var ship = entityManager._ships[0];
 
+  // Simply takes the distance between itself and the ship
   this.bulletVelX = (this.cx - ship.cx)/100;
   this.bulletVelY = (this.cy - ship.cy)/100;
 
+  // Prevent bullets being too fast when the ships are far away
+  // and prevent the bullets being too slow if theyre close
   if (this.bulletVelX < 4 && this.bulletVelX > 0){
       this.bulletVelX = 4;
   }

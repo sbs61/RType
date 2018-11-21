@@ -48,6 +48,7 @@ Hud.prototype.render = function () {
 
   g_ctx.font = "30px Courier New";
 
+  // Text in HUD
   g_ctx.save();
   g_ctx.fillStyle = "white"
   g_ctx.shadowColor = "deepskyblue";
@@ -61,11 +62,13 @@ Hud.prototype.render = function () {
   g_ctx.fillText(this.highscore, g_canvas.width / 3+330, g_canvas.height - 8);
   g_ctx.restore();
 
-
+  // Load texture for the beam bar
   g_sprites.beamBar.drawCentredAt(g_ctx,
   g_canvas.width / 2.2+g_sprites.beamBar.width/4-10,
   g_canvas.height - 50+g_sprites.beamBar.height/4);
+  // Beam based on this.charge
   util.fillBox(ctx, g_canvas.width / 2.2, g_canvas.height - 46, this.charge, 10, 'blue');
+  // Grey lines on beam bar to indicate where bullet type changes
   util.fillBox(ctx, g_canvas.width / 2.2+50, g_canvas.height - 50, 3, 14, 'grey');
   util.fillBox(ctx, g_canvas.width / 2.2+110, g_canvas.height - 50, 3, 14, 'grey');
   util.fillBox(ctx, g_canvas.width / 2.2+180, g_canvas.height - 50, 3, 14, 'grey');
@@ -79,11 +82,13 @@ Hud.prototype.update = function () {
 }
 
 Hud.prototype.incrementBeam = function() {
-  if (this.charge < 250)
+  // Gets called in Ship when the player holds down the space bar
+  if (this.charge < 250) // Max charge 
     this.charge += 2;
 }
 
 Hud.prototype.resetBeam = function() {
+  // When the player releases the space bar the charge gets reset (or if the player dies)
   this.charge = 0;
 }
 
