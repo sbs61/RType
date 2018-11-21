@@ -220,9 +220,10 @@ var entityManager = {
       console.log(this._boss.length);
     }
 
+    g_bossInterval -= du;
     if(g_bossInterval < 0){
       this._generateBoss();
-      g_bossInterval = 50000/NOMINAL_UPDATE_INTERVAL;
+      g_bossInterval = 60000/NOMINAL_UPDATE_INTERVAL;
     }
 
     //lower the difficulty interval

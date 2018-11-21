@@ -13,10 +13,7 @@
 
 /*jslint nomen: true, white: true, plusplus: true*/
 
-var g_XTime = 0;
-var g_XVel = 0.75;
-
-/* Manager sem heldur utan um umhverfi; árekstrarumhverfi(kannski) og bakgrunn */
+/* A Manager thta handles the enviroment, it's collision and backgrounds*/
 
 var environmentManager = {
 
@@ -39,7 +36,7 @@ _generateBackground : function() {
 },
 
 _generateWalls : function() {
-    var cw = g_canvas.width
+    var cw = g_canvas.width;
 
     var Bckgr1 = this._createWallBckgr(1);
     var collisionSet1 = [];
@@ -96,26 +93,40 @@ _timeline : function() {
             this._walls.push(eWall.Walls[i]);
         };
         eWall.hasSpawned = true;
+        return;
     };
 
-    if (g_XTime >= this._wallCmbs[0].Background.sprite.width - 20
-         && !this._wallCmbs[1].hasSpawned) {
+    var chk1 = this._wallCmbs[0].Background.sprite.width - 20;
+
+    if (g_XTime >= chk1 && !this._wallCmbs[1].hasSpawned) {
         var eWall = this._wallCmbs[1];
         this._backgrounds.push(eWall.Background);
         for (var i = 0; i < eWall.Walls.length; i++) {
             this._walls.push(eWall.Walls[i]);
         };
         eWall.hasSpawned = true;
+        return;
     };
 
-    if (g_XTime >= this._wallCmbs[1].Background.sprite.width - 100
-        && !this._wallCmbs[1].hasSpawned) {
+    var chk2 = chk1 + this._wallCmbs[1].Background.sprite.width - 100;
+
+    if (g_XTime >= chk2 && !this._wallCmbs[2].hasSpawned) {
        var eWall = this._wallCmbs[2];
        this._backgrounds.push(eWall.Background);
        for (var i = 0; i < eWall.Walls.length; i++) {
            this._walls.push(eWall.Walls[i]);
        };
        eWall.hasSpawned = true;
+       return;
+   };
+
+   var chk3 = chk2 + this._wallCmbs[2].Background.sprite.width + 50;
+
+   if (g_XTime >= chk3 + 750) {
+       g_XTime = 0;
+       for (var i = 0; i < _wallCmbs.length; i++) {
+        _wallCmbs[i].hasSpawned = false;
+       };
    };
 },
 
