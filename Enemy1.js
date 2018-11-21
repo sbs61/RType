@@ -107,8 +107,12 @@ Enemy1.prototype.evaporateSound = new Audio("sounds/explosion.mp3");
 //and trigger the animation for the explosion
 Enemy1.prototype.takeBulletHit = function () {
   entityManager._hud[0].incrementScore(25);
+  //Check if we should generate powerup
+  if(entityManager._hud[0].killCount % 2 == 0) {
+    console.log('power1');
+    entityManager.generatePowerup(this.cx, this.cy);
+  }
   this.isExploding = true;
-  
   this.evaporateSound.pause();
   this.evaporateSound.currentTime = 0;
   this.evaporateSound.play();

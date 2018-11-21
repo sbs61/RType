@@ -163,13 +163,18 @@ Ship.prototype.update = function (du) {
 
     // Handle firing
     this.maybeFireBullet();
+    var hitEntity = this.isColliding();
+    if (hitEntity) {
+      if (hitEntity.typeOf == 'entity') {
+        this.isExploding = true;
 
-    if (this.isColliding()) {
-      this.isExploding = true;
-
-      this.evaporateSound.pause();
-      this.evaporateSound.currentTime = 0;
-      this.evaporateSound.play();
+        this.evaporateSound.pause();
+        this.evaporateSound.currentTime = 0;
+        this.evaporateSound.play();
+      } else {
+        hitEntity.collideWithShip();
+        spatialManager.register(this);
+      }
     } else {
       spatialManager.register(this);
     }

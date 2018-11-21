@@ -1,6 +1,7 @@
 function Hud(descr) {
   // Common inherited setup logic from Entity
   this.setup(descr);
+  this.killCount = 0;
 };
 
 Hud.prototype = new Entity();
@@ -13,6 +14,7 @@ Hud.prototype.highscore = localStorage.getItem("highscore");
 
 Hud.prototype.incrementScore = function (scoreIncr) {
   this.score += scoreIncr;
+  this.killCount++;
 };
 
 Hud.prototype.decrementLife = function () {

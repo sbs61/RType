@@ -48,6 +48,8 @@ Entity.prototype.setup = function (descr) {
   this.explodingSpriteIdx = 0;
 };
 
+Entity.prototype.typeOf = 'entity';
+
 Entity.prototype.setPos = function (cx, cy) {
   this.cx = cx;
   this.cy = cy;

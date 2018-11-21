@@ -105,6 +105,12 @@ Enemy2.prototype.evaporateSound = new Audio("sounds/explosion.mp3");
 //function for taking a bullet hit, increment the score and trigger the explosion
 Enemy2.prototype.takeBulletHit = function () {
   entityManager._hud[0].incrementScore(50);
+  
+  //Check if we should generate powerup
+  if(entityManager._hud[0].killCount % 2 == 0) {
+    console.log('power2');
+    entityManager.generatePowerup(this.cx, this.cy);
+  }
   this.isExploding = true;
 
   this.evaporateSound.pause();

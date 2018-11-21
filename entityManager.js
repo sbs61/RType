@@ -31,6 +31,7 @@ var entityManager = {
   _enemy1bullets: [],
   _ships: [],
   _hud: [],
+  _powerups: [],
 
 
   // "PRIVATE" METHODS
@@ -88,7 +89,7 @@ var entityManager = {
   // i.e. thing which need `this` to be defined.
   //
   deferredSetup: function () {
-    this._categories = [this._enemies, this._enemy1bullets, this._bullets, this._ships, this._hud];
+    this._categories = [this._enemies, this._enemy1bullets, this._bullets, this._ships, this._hud, this._powerups];
   },
 
   init: function () {
@@ -133,6 +134,10 @@ var entityManager = {
     this._ships.push(new Ship(descr));
   },
 
+  generatePowerup: function (cx, cy) {
+    this._powerups.push(new Powerup(cx, cy));
+  },
+  
   displayHud: function (descr) {
     this._hud.push(new Hud(descr));
   },
