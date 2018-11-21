@@ -118,6 +118,7 @@ function requestPreloads() {
         enemy1   : "images/enemy1.png",
         enemy1bullet : "images/enemy1bullet.png",
         enemy2 : "images/enemy2sheet.png",
+        boss : "images/boss.png",
         bullet1 : "images/bullet1.png",
         bullet2 : "images/bullet2.png",
         bullet3 : "images/bullet3.png",
@@ -165,6 +166,15 @@ function preloadDone() {
         for (var col = 0; col < 8; ++col) {
             g_sprites.enemy2.push(
                 new Sprite(g_images.enemy2,col*33.25, row*34, 33.25, 34)
+            );
+        }
+    }
+
+    g_sprites.boss = [];
+    for (var row = 0; row < 1; ++row) {
+        for (var col = 0; col < 2; ++col) {
+            g_sprites.boss.push(
+                new Sprite(g_images.boss,col*57.5, row*57, 57.5, 57)
             );
         }
     }
