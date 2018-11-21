@@ -246,16 +246,17 @@ Ship.prototype.handleMultiGun = function(bulletType) {
     // Handle multiGun
     if (this.multiGun) {
         if (bulletType[0]){
-            entityManager.fireBullet(this.cx + 70,
-                this.cy + 7, 4, 15, 10, 120, bulletType);
-                entityManager.fireBullet(this.cx + 70,
-                this.cy + 7, 4, 15, -10, -120, bulletType);
+			entityManager.fireBullet(this.cx + 70,
+				this.cy + 7, 8, 15, 10, 120, bulletType);
+				entityManager.fireBullet(this.cx + 70,
+				this.cy + 7, 8, 15, -10, -120, bulletType);
         }
         else if (bulletType[1]) {
-            entityManager.fireBullet(this.cx + 70,
-                this.cy + 7, 12, 15, 10, 120, bulletType);
-                entityManager.fireBullet(this.cx + 70,
-                this.cy + 7, 12, 15, -10, -120, bulletType);
+			entityManager.fireBullet(this.cx + 70,
+				this.cy + 7, 12, 15, 10, 120, bulletType);
+				entityManager.fireBullet(this.cx + 70,
+				this.cy + 7, 12, 15, -10, -120, bulletType);
+		
         }
         else if (bulletType[2]) {
             entityManager.fireBullet(this.cx + 70,
