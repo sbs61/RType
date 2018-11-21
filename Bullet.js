@@ -75,7 +75,7 @@ Bullet.prototype.update = function (du) {
     if (hitEntity) {
         var canTakeHit = hitEntity.takeBulletHit;
         if (canTakeHit) canTakeHit.call(hitEntity);
-        if (!this.big[0] && !this.big[1] && !this.big[2] && !this.big[3] && hitEntity.typeOf !== 'powerup')
+        if (!this.big[0] && !this.big[1] && !this.big[2] && !this.big[3] && hitEntity.typeOf !== 'superGun' && hitEntity.typeOf !== 'multiGun')
             return entityManager.KILL_ME_NOW;
     }
 

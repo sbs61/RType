@@ -39,3 +39,6 @@ var g_bossInterval = 60000/NOMINAL_UPDATE_INTERVAL;
 var g_bossHealth = 50;
 
 var g_baseShipCel = 2;
+
+var g_XTime = 0;
+var g_XVel = 0.75;

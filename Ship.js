@@ -242,22 +242,23 @@ Ship.prototype.maybeFireBullet = function () {
 
 
     if (hud.charge < 50) {
+      bulletType = this.calculateBulletType(4);	
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 4, 25, 0, 0, bulletType);
+		this.cy + 7, 4, 25, 0, 0, bulletType);
     } else if (hud.charge < 100) {
-      bulletType[0] = 1;
+	  bulletType = this.calculateBulletType(0);
       entityManager.fireBullet(this.cx + 70,
         this.cy + 7, 8, 15, 0, 0, bulletType);
     } else if (hud.charge < 150) {
-      bulletType[1] = 1;
+      bulletType = this.calculateBulletType(1);
       entityManager.fireBullet(this.cx + 70,
         this.cy + 7, 12, 15, 0, 0, bulletType);
     } else if (hud.charge < 240) {
-      bulletType[2] = 1;
+	  bulletType = this.calculateBulletType(2);
       entityManager.fireBullet(this.cx + 70,
         this.cy + 7, 15, 15, 0, 0, bulletType);
     } else {
-      bulletType[3] = 1;
+	  bulletType = this.calculateBulletType(3);
       entityManager.fireBullet(this.cx + 70,
         this.cy + 7, 22, 15, 0, 0, bulletType);
     }
@@ -266,6 +267,29 @@ Ship.prototype.maybeFireBullet = function () {
   }
 
 };
+
+Ship.prototype.calculateBulletType = function(type) {
+	var bulletType = [0, 0, 0, 0];
+	if (this.superGun){
+		bulletType[3] = 1;
+	}
+	else{
+		if (type === 0 ){
+			bulletType[0] = 1;
+		}
+		else if (type === 1) {
+			bulletType[1] = 1;
+		}
+		else if (type === 2) {
+			bulletType[2] = 1;
+		}
+		else if (type === 3) {
+			bulletType[3] = 1;
+		}
+	}
+	return bulletType
+	
+}
 
 Ship.prototype.handleMultiGun = function (bulletType) {
   // Handle multiGun
