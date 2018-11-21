@@ -27,6 +27,7 @@ var entityManager = {
   // "PRIVATE" DATA
 
   _enemies: [],
+  _boss: [],
   _bullets: [],
   _enemy1bullets: [],
   _ships: [],
@@ -67,6 +68,10 @@ var entityManager = {
     }
   },
 
+  _generateBoss: function () {
+      this.generateBoss();
+  },
+
   //generate new ship
   _generateShip: function(){
     this.generateShip();
@@ -89,7 +94,7 @@ var entityManager = {
   // i.e. thing which need `this` to be defined.
   //
   deferredSetup: function () {
-    this._categories = [this._enemies, this._enemy1bullets, this._bullets, this._ships, this._hud, this._powerups];
+    this._categories = [this._enemies, this._boss, this._enemy1bullets, this._bullets, this._ships, this._hud, this._powerups];
   },
 
   init: function () {
@@ -128,12 +133,16 @@ var entityManager = {
     }));
   },
 
+  generateBoss: function (descr) {
+    this._boss.push(new Boss(descr));
+  },
+
   generateShip: function (descr) {
     this._ships.push(new Ship(descr));
   },
 
-  generatePowerup: function (cx, cy) {
-    this._powerups.push(new Powerup(cx, cy));
+  generatePowerup: function (cx, cy, typeOf) {
+    this._powerups.push(new Powerup(cx, cy, typeOf));
   },
   
   displayHud: function (descr) {
@@ -171,7 +180,7 @@ var entityManager = {
       for(var k = 0; k < this._enemy1bullets.length; k++){
         spatialManager.unregister(this._enemy1bullets[k]);
       }
-
+      spatialManager._entitiesSq = [];
       //remove all enemies and enemy bullets
       this._enemies.splice(0,this._enemies.length);
       this._enemy1bullets.splice(0,this._enemy1bullets.length);
@@ -196,7 +205,7 @@ var entityManager = {
     g_enemy1WaveInterval -= du;
     
     //when the interval reaches 0 then generate a new wave of enemy 1 and reset the interval
-    if(g_enemy1WaveInterval < 0){
+    if(g_enemy1WaveInterval < 0 && this._boss.length === 0){
       this._generateEnemies1();
       g_enemy1WaveInterval = 3000/NOMINAL_UPDATE_INTERVAL;
     }
@@ -205,9 +214,16 @@ var entityManager = {
     g_enemy2WaveInterval -= du;
 
     //when the interval reaches 0 generate a new wave of enemies 2 and reset the interval
-    if(g_enemy2WaveInterval < 0){
+    if(g_enemy2WaveInterval < 0 && this._boss.length === 0){
       this._generateEnemies2();
       g_enemy2WaveInterval = 5000/NOMINAL_UPDATE_INTERVAL;
+      console.log(this._boss.length);
+    }
+
+    g_bossInterval -= du;
+    if(g_bossInterval < 0){
+      this._generateBoss();
+      g_bossInterval = 60000/NOMINAL_UPDATE_INTERVAL;
     }
 
     //lower the difficulty interval
@@ -219,7 +235,8 @@ var entityManager = {
       g_enemy1amount++;
       g_enemy2amount++;
     }
-   
+
+
   },
 
   render: function (ctx) {

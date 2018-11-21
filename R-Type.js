@@ -118,6 +118,7 @@ function requestPreloads() {
         enemy1   : "images/enemy1.png",
         enemy1bullet : "images/enemy1bullet.png",
         enemy2 : "images/enemy2sheet.png",
+        boss : "images/boss.png",
         bullet1 : "images/bullet1.png",
         bullet2 : "images/bullet2.png",
         bullet3 : "images/bullet3.png",
@@ -133,6 +134,7 @@ function requestPreloads() {
         explode : "images/explode.png",
         beamBar : "images/UI_Beam_bar.png",
         muzzleFlash : "images/muzzleflash.png",
+        miscSprites : "images/miscSprites.png",
         gameOver : "images/gameOver.png"
     };
 
@@ -165,6 +167,15 @@ function preloadDone() {
         for (var col = 0; col < 8; ++col) {
             g_sprites.enemy2.push(
                 new Sprite(g_images.enemy2,col*33.25, row*34, 33.25, 34)
+            );
+        }
+    }
+
+    g_sprites.boss = [];
+    for (var row = 0; row < 1; ++row) {
+        for (var col = 0; col < 2; ++col) {
+            g_sprites.boss.push(
+                new Sprite(g_images.boss,col*57.5, row*57, 57.5, 57)
             );
         }
     }
@@ -235,7 +246,10 @@ function preloadDone() {
     g_sprites.muzzleFlash = new Sprite(g_images.muzzleFlash, 0, 0,
         g_images.muzzleFlash.width, g_images.muzzleFlash.height);
     g_sprites.muzzleFlash.scale = 2;
-
+    
+    g_sprites.multiPower = new Sprite(g_images.miscSprites, 39, 12, 57-39, 30-12);
+    g_sprites.multiPower.scale = 1.5;
+  
     entityManager.init();
     environmentManager.init();
     entityManager.displayHud();

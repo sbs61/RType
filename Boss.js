@@ -12,7 +12,7 @@
 */
 
 // A generic contructor which accepts an arbitrary descriptor object
-function Enemy2(descr) {
+function Boss(descr) {
 
   // Common inherited setup logic from Entity
   this.setup(descr);
@@ -20,8 +20,10 @@ function Enemy2(descr) {
 
 
   // Default sprite and scale, if not otherwise specified
-  this.sprite = g_sprites.enemy2[8];
+  this.sprite = g_sprites.boss[0];
   this.scale = this.scale || 2;
+  this.cx = 2000;
+  this.cy = 360;
 
   /*
       // Diagnostics to check inheritance stuff
@@ -31,14 +33,16 @@ function Enemy2(descr) {
 
 };
 
-Enemy2.prototype = new Entity();
+Boss.prototype = new Entity();
 
-Enemy2.prototype.interval = 70 / NOMINAL_UPDATE_INTERVAL; //interval for the animation 
-Enemy2.prototype.cel = 8; //sprite cells
-Enemy2.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL; //explosion animation interval
+Boss.prototype.interval = 70 / NOMINAL_UPDATE_INTERVAL; //interval for the animation 
+Boss.prototype.cel = 8; //sprite cells
+Boss.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL; //explosion animation interval
+Boss.prototype.cx = 700;
+Boss.prototype.cy = 360;
 
 
-Enemy2.prototype.update = function (du) {
+Boss.prototype.update = function (du) {
   
   spatialManager.unregister(this);
 
@@ -59,8 +63,11 @@ Enemy2.prototype.update = function (du) {
   } else {
 
     //update the enemy 2 velocity and make it move in a wave like motion
-    this.xVel = -3;
-    this.yVel = 4 * Math.cos(this.cx / 100);
+    if(this.cx < 750)
+        this.xVel = 0;
+    else   
+        this.xVel = -2;
+    this.yVel = 0;
 
     //get previous position
     var prevX = this.cx;
@@ -69,23 +76,7 @@ Enemy2.prototype.update = function (du) {
     //calculate next position
     var nextX = prevX + this.xVel * du;
     var nextY = prevY + this.yVel * du;
-
-    //animate enemy 2
-    this.interval -= du;
-    if (this.interval < 0) {
-      //if the next position is above the previous position, animate the enemy to go up
-      if (nextY > this.cy) {
-        if (this.cel > 5)
-          this.cel--;
-        this.sprite = g_sprites.enemy2[this.cel];
-      } else {
-        //if the next position is below the previous position, animate the enemy to go down
-        if (this.cel < 11)
-          this.cel++;
-        this.sprite = g_sprites.enemy2[this.cel];
-      }
-      this.interval = 70 / NOMINAL_UPDATE_INTERVAL;
-    }
+    
 
     //actually move enemy 2 according to the velocity
     this.cx += this.xVel * du;
@@ -95,20 +86,21 @@ Enemy2.prototype.update = function (du) {
   }
 };
 
-Enemy2.prototype.getRadius = function () {
+Boss.prototype.getRadius = function () {
   return this.scale * (this.sprite.width / 2) * 0.9;
 };
 
 // HACKED-IN AUDIO (no preloading)
-Enemy2.prototype.evaporateSound = new Audio("sounds/explosion.mp3");
+Boss.prototype.evaporateSound = new Audio("sounds/explosion.mp3");
 
 //function for taking a bullet hit, increment the score and trigger the explosion
-Enemy2.prototype.takeBulletHit = function () {
+Boss.prototype.takeBulletHit = function () {
   entityManager._hud[0].incrementScore(50);
   
   //Check if we should generate powerup
   if(entityManager._hud[0].killCount % 2 == 0) {
-    entityManager.generatePowerup(this.cx, this.cy, 'multiGun');
+    console.log('power2');
+    entityManager.generatePowerup(this.cx, this.cy);
   }
   this.isExploding = true;
 
@@ -118,7 +110,7 @@ Enemy2.prototype.takeBulletHit = function () {
 };
 
 //render enemy 2
-Enemy2.prototype.render = function (ctx) {
+Boss.prototype.render = function (ctx) {
   this.sprite.scale = this.scale;
   this.sprite.drawCentredAt(
     ctx, this.cx, this.cy, this.rotation

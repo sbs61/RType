@@ -34,6 +34,8 @@ var g_enemy2amount = 0;
 
 var g_increaseDifficultyInterval = 15000 / NOMINAL_UPDATE_INTERVAL;
 
+var g_bossInterval = 60000/NOMINAL_UPDATE_INTERVAL;
+
 var g_baseShipCel = 2;
 
 var g_XTime = 0;

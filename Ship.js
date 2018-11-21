@@ -32,6 +32,7 @@ function Ship(descr) {
   this.timeStarted = false;
   this.time = performance.now();
   this.multiGun = false;
+  this.superGun = false;
   this.powerUpTime = 10000 / NOMINAL_UPDATE_INTERVAL;
 };
 
@@ -175,7 +176,7 @@ Ship.prototype.update = function (du) {
 
     //Check if power up is over and reset
     if (this.powerUpTime < 0) {
-      this.disableMultiGun();
+      this.disablePowerUp();
     }
 
     if (this.muzzle) {
@@ -198,9 +199,14 @@ Ship.prototype.update = function (du) {
         this.evaporateSound.pause();
         this.evaporateSound.currentTime = 0;
         this.evaporateSound.play();
-      } else if (hitEntity.typeOf == 'powerup') {
+      } else if (hitEntity.typeOf == 'multiGun') {
         hitEntity.collideWithShip();
         this.multiGun = true;
+        this.powerUpTime = 10000 / NOMINAL_UPDATE_INTERVAL;
+        spatialManager.register(this);
+      } else if (hitEntity.typeOf == 'superGun') {
+        hitEntity.collideWithShip();
+        this.superGun = true;
         this.powerUpTime = 10000 / NOMINAL_UPDATE_INTERVAL;
         spatialManager.register(this);
       }
@@ -211,8 +217,9 @@ Ship.prototype.update = function (du) {
 
 };
 
-Ship.prototype.disableMultiGun = function () {
+Ship.prototype.disablePowerUp = function () {
   this.multiGun = false;
+  this.superGun = false;
   this.powerUpTime = 10000 / NOMINAL_UPDATE_INTERVAL;
 };
 
