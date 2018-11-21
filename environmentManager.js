@@ -53,11 +53,42 @@ _generateWalls : function() {
         hasSpawned : false
     });
 
-    
+    var Bckgr2 = this._createWallBckgr(2);
+    var collisionSet2 = [];
+    collisionSet2.push(new Wall(148+cw,0,475,56));
+    collisionSet2.push(new Wall(360+cw,523,179,197));
+    collisionSet2.push(new Wall(940+cw,0,671,135));
+    collisionSet2.push(new Wall(940+cw,135,176,59));
+    collisionSet2.push(new Wall(1493+cw,135,118,59));
+    collisionSet2.push(new Wall(1012+cw,621,120,99));
+    collisionSet2.push(new Wall(1448+cw,661,474,59));
+    this._wallCmbs.push({
+        Background : Bckgr2,
+        Walls : collisionSet2,
+        hasSpawned : false
+    });
+
+    var Bckgr3 = this._createWallBckgr(3);
+    var collisionSet3 = [];
+    collisionSet3.push(new Wall(416+cw,0,441,77));
+    collisionSet3.push(new Wall(416+cw,643,441,77));
+    collisionSet3.push(new Wall(857+cw,0,124,152));
+    collisionSet3.push(new Wall(857+cw,568,124,152));
+    collisionSet3.push(new Wall(981+cw,0,25,120));
+    collisionSet3.push(new Wall(981+cw,600,25,120));
+    collisionSet3.push(new Wall(1006+cw,0,25,98));
+    collisionSet3.push(new Wall(1006+cw,622,25,98));
+    collisionSet3.push(new Wall(1031+cw,0,23,75));
+    collisionSet3.push(new Wall(1031+cw,645,23,75));
+    this._wallCmbs.push({
+        Background : Bckgr3,
+        Walls : collisionSet3,
+        hasSpawned : false
+    });
    
 },
 
-_spawnWall : function() {
+_timeline : function() {
     if (g_XTime >= 0 && !this._wallCmbs[0].hasSpawned) {
         var eWall = this._wallCmbs[0];
         this._backgrounds.push(eWall.Background);
@@ -66,6 +97,26 @@ _spawnWall : function() {
         };
         eWall.hasSpawned = true;
     };
+
+    if (g_XTime >= this._wallCmbs[0].Background.sprite.width - 20
+         && !this._wallCmbs[1].hasSpawned) {
+        var eWall = this._wallCmbs[1];
+        this._backgrounds.push(eWall.Background);
+        for (var i = 0; i < eWall.Walls.length; i++) {
+            this._walls.push(eWall.Walls[i]);
+        };
+        eWall.hasSpawned = true;
+    };
+
+    if (g_XTime >= this._wallCmbs[1].Background.sprite.width - 100
+        && !this._wallCmbs[1].hasSpawned) {
+       var eWall = this._wallCmbs[2];
+       this._backgrounds.push(eWall.Background);
+       for (var i = 0; i < eWall.Walls.length; i++) {
+           this._walls.push(eWall.Walls[i]);
+       };
+       eWall.hasSpawned = true;
+   };
 },
 
 _createWallBckgr : function(wallNumber) {
@@ -139,7 +190,7 @@ toggleHalt : function() {
 update : function(du) {
 	
     this._generateDust(du);
-    this._spawnWall(du);
+    this._timeline();
 
     for (var c = 0; c < this._categories.length; ++c) {
 
