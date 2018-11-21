@@ -32,7 +32,7 @@ function render(ctx) {
     if (eatKey(TOGGLE_RENDER)) g_doRender = !g_doRender;
     if (eatKey(TOGGLE_XTIME)) g_showXTime = !g_showXTime;
     if (eatKey(TOGGLE_MouseCRD)) g_showMouseCrd = !g_showMouseCrd;
-    if (eatKey(TOGGLE_GRX)) g_pixelate = !g_pixelate;
+    if (eatKey(TOGGLE_GRX)) g_unPixelate = !g_unPixelate;
     
     // I've pulled the clear out of `renderSimulation()` and into
     // here, so that it becomes part of our "diagnostic" wrappers
