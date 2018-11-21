@@ -115,7 +115,7 @@ function requestPreloads() {
 
     var requiredImages = {
         ship   : "images/shipSprites.png",
-        enemy1   : "https://notendur.hi.is/sbs61/tolvuleikjaforritun/mynd/enemy1.png",
+        enemy1   : "images/enemy1.png",
         enemy1bullet : "images/enemy1bullet.png",
         enemy2 : "images/enemy2sheet.png",
         bullet1 : "images/bullet1.png",
@@ -143,7 +143,7 @@ var g_sprites = {};
 function preloadDone() {
 
     g_sprites.ship  = [];
-    for (var row = 0; row < 1; ++row) {
+    for (var row = 0; row < 5; ++row) {
         for (var col = 0; col < 5; ++col) {
             g_sprites.ship.push(
                 new Sprite(g_images.ship,col*33, row*17, 33, 17)
@@ -179,15 +179,6 @@ function preloadDone() {
     }
 
     g_sprites.explode  = [];
-    /*
-    for (var row = 0; row < 1; ++row) {
-        for (var col = 0; col < 6; ++col) {
-            g_sprites.explode.push(
-                new Sprite(g_images.explode,col*33, row*34, 33, 34)
-            );
-        }
-    }
-    */
 
    g_sprites.explode.push(new Sprite(g_images.explode,0, 0, 22, 34));
    g_sprites.explode.push(new Sprite(g_images.explode,22, 0, 28, 34));

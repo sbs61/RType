@@ -21,7 +21,7 @@ function Ship(descr) {
 	this.rememberResets();
 
 	// Default sprite, if not otherwise specified
-	this.sprite = g_sprites.ship[2];
+	this.sprite = g_sprites.ship[g_baseShipCel];
 
 	// Set normal drawing scale, and warp state off
 	this._scale = 3;
@@ -49,6 +49,7 @@ Ship.prototype.KEY_DOWN = 'S'.charCodeAt(0);
 Ship.prototype.KEY_LEFT = 'A'.charCodeAt(0);
 Ship.prototype.KEY_RIGHT = 'D'.charCodeAt(0);
 Ship.prototype.KEY_FIRE = ' '.charCodeAt(0);
+Ship.prototype.KEY_COLOUR = '1'.charCodeAt(0);
 
 // Initial, inheritable, default values
 Ship.prototype.rotation = 0;
@@ -58,7 +59,7 @@ Ship.prototype.velX = 0;
 Ship.prototype.velY = 0;
 Ship.prototype.launchVel = 2;
 Ship.prototype.numSubSteps = 1;
-Ship.prototype.cel = 2;
+Ship.prototype.cel = g_baseShipCel;
 var interval = 100 / NOMINAL_UPDATE_INTERVAL;
 Ship.prototype.interval = interval;
 Ship.prototype.startCharge = false;
@@ -89,7 +90,7 @@ Ship.prototype.update = function (du) {
 
 		if (keys[this.KEY_UP] && this.cy > this.sprite.height / 2) {
 			this.cy -= 4 * du;
-			if (this.cel < 4) {
+			if (this.cel < g_baseShipCel + 2) {
 				this.interval -= du;
 				if (this.interval < 0) {
 					this.cel++;
@@ -101,7 +102,7 @@ Ship.prototype.update = function (du) {
 
 		if (keys[this.KEY_DOWN] && this.cy < g_canvas.height - this.sprite.height / 2) {
 			this.cy += 4 * du;
-			if (this.cel > 0) {
+			if (this.cel > g_baseShipCel - 2) {
 				this.interval -= du;
 				if (this.interval < 0) {
 					this.cel--;
@@ -118,8 +119,8 @@ Ship.prototype.update = function (du) {
 			this.cx += 3 * du;
 		}
 
-		if (this.cel !== 2 && !keys[this.KEY_DOWN] && !keys[this.KEY_UP]) {
-			if (this.cel > 2) {
+		if (this.cel !== g_baseShipCel && !keys[this.KEY_DOWN] && !keys[this.KEY_UP]) {
+			if (this.cel > g_baseShipCel) {
 				this.interval -= du;
 				if (this.interval < 0) {
 					this.cel--;
@@ -134,6 +135,18 @@ Ship.prototype.update = function (du) {
 				}
 				this.sprite = g_sprites.ship[this.cel];
 			}
+		}
+
+		if (eatKey(this.KEY_COLOUR)){
+			if(g_baseShipCel === 22){
+				g_baseShipCel = 2;
+			}
+			else{
+			g_baseShipCel += 5;
+			this.cel = g_baseShipCel;
+			this.sprite = g_sprites.ship[this.cel];
+			}
+			
 		}
 
 		if (this.fire) {
