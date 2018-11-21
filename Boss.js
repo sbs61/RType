@@ -116,18 +116,13 @@ Boss.prototype.takeBulletHit = function () {
   this.sprite = g_sprites.bossHit[this.cel];
   console.log(this.health);
   if(this.health < 0){
-  entityManager._hud[0].incrementScore(50);
+  entityManager._hud[0].incrementScore(1000);
   
-  //Check if we should generate powerup
-  if(entityManager._hud[0].killCount % 2 == 0) {
-    console.log('power2');
-    entityManager.generatePowerup(this.cx, this.cy);
-  }
   this.isExploding = true;
 
   this.evaporateSound.play();
 
-  g_bossHealth += 80;
+  g_bossHealth += 100;
 }
 };
 
