@@ -68,8 +68,8 @@ Ship.prototype.chargeTimer = 300 / NOMINAL_UPDATE_INTERVAL;
 
 var chargeInterval = 70 / NOMINAL_UPDATE_INTERVAL;
 var charge = 0;
-Ship.prototype.eInterval = 50/NOMINAL_UPDATE_INTERVAL;
-Ship.prototype.muzzleTimer = 50/NOMINAL_UPDATE_INTERVAL;
+Ship.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
+Ship.prototype.muzzleTimer = 50 / NOMINAL_UPDATE_INTERVAL;
 Ship.prototype.muzzle = false;
 
 Ship.prototype.update = function (du) {
@@ -83,28 +83,27 @@ Ship.prototype.update = function (du) {
     return entityManager.KILL_ME_NOW;
 
   } else if (this.isExploding) {
-    if(this.eInterval < 0){
-        this.nextExplodingSprite();
-        this.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
-        }
+    if (this.eInterval < 0) {
+      this.nextExplodingSprite();
+      this.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
+    }
   } else {
 
-	if(eatKey(this.KEY_COLOUR)){
-		if(g_baseShipCel === 22){
-			g_baseShipCel = 2;
-			this.cel = g_baseShipCel;
-			this.sprite = g_sprites.ship[this.cel];
-		}
-		else{
-		g_baseShipCel += 5;
-		this.cel = g_baseShipCel;
-		this.sprite = g_sprites.ship[this.cel];
-		}
-	}
+    if (eatKey(this.KEY_COLOUR)) {
+      if (g_baseShipCel === 22) {
+        g_baseShipCel = 2;
+        this.cel = g_baseShipCel;
+        this.sprite = g_sprites.ship[this.cel];
+      } else {
+        g_baseShipCel += 5;
+        this.cel = g_baseShipCel;
+        this.sprite = g_sprites.ship[this.cel];
+      }
+    }
 
     if (keys[this.KEY_UP] && this.cy > this.sprite.height / 2) {
       this.cy -= 4 * du;
-      if (this.cel < g_baseShipCel+2) {
+      if (this.cel < g_baseShipCel + 2) {
         this.interval -= du;
         if (this.interval < 0) {
           this.cel++;
@@ -116,7 +115,7 @@ Ship.prototype.update = function (du) {
 
     if (keys[this.KEY_DOWN] && this.cy < g_canvas.height - this.sprite.height / 2) {
       this.cy += 4 * du;
-      if (this.cel > g_baseShipCel-2) {
+      if (this.cel > g_baseShipCel - 2) {
         this.interval -= du;
         if (this.interval < 0) {
           this.cel--;
@@ -168,23 +167,22 @@ Ship.prototype.update = function (du) {
     if (charge > 7) {
       charge = 0;
     }
-    
+
     //Decreas power up time
-    if(this.multiGun) {
+    if (this.multiGun) {
       this.powerUpTime -= du;
     }
-    
+
     //Check if power up is over and reset
-    if(this.powerUpTime < 0) {
-      this.multiGun = false;
-      this.powerUpTime = 10000 / NOMINAL_UPDATE_INTERVAL;
+    if (this.powerUpTime < 0) {
+      this.disableMultiGun();
     }
-    
-    if(this.muzzle){
+
+    if (this.muzzle) {
       this.muzzleTimer -= du;
-      if(this.muzzleTimer < 0){
+      if (this.muzzleTimer < 0) {
         this.muzzle = false;
-        this.muzzleTimer = 50/NOMINAL_UPDATE_INTERVAL;
+        this.muzzleTimer = 50 / NOMINAL_UPDATE_INTERVAL;
       }
     }
 
@@ -200,7 +198,7 @@ Ship.prototype.update = function (du) {
         this.evaporateSound.pause();
         this.evaporateSound.currentTime = 0;
         this.evaporateSound.play();
-      } else if (hitEntity.typeOf == 'powerup'){
+      } else if (hitEntity.typeOf == 'powerup') {
         hitEntity.collideWithShip();
         this.multiGun = true;
         this.powerUpTime = 10000 / NOMINAL_UPDATE_INTERVAL;
@@ -211,6 +209,11 @@ Ship.prototype.update = function (du) {
     }
   }
 
+};
+
+Ship.prototype.disableMultiGun = function () {
+  this.multiGun = false;
+  this.powerUpTime = 10000 / NOMINAL_UPDATE_INTERVAL;
 };
 
 Ship.prototype.maybeFireBullet = function () {
@@ -229,7 +232,7 @@ Ship.prototype.maybeFireBullet = function () {
     this.chargeSound.currentTime = 0;
     this.chargeSound.pause();
     var bulletType = [0, 0, 0, 0];
-    
+
 
     if (hud.charge < 50) {
       entityManager.fireBullet(this.cx + 70,
@@ -257,41 +260,37 @@ Ship.prototype.maybeFireBullet = function () {
 
 };
 
-Ship.prototype.handleMultiGun = function(bulletType) { 
-    // Handle multiGun
-    if (this.multiGun) {
-        if (bulletType[0]){
-			entityManager.fireBullet(this.cx + 70,
-				this.cy + 7, 8, 15, 10, 120, bulletType);
-				entityManager.fireBullet(this.cx + 70,
-				this.cy + 7, 8, 15, -10, -120, bulletType);
-        }
-        else if (bulletType[1]) {
-			entityManager.fireBullet(this.cx + 70,
-				this.cy + 7, 12, 15, 10, 120, bulletType);
-				entityManager.fireBullet(this.cx + 70,
-				this.cy + 7, 12, 15, -10, -120, bulletType);
-		
-        }
-        else if (bulletType[2]) {
-            entityManager.fireBullet(this.cx + 70,
-                this.cy + 7, 15, 15, 10, 120, bulletType);
-                entityManager.fireBullet(this.cx + 70,
-                this.cy + 7, 15, 15, -10, -120, bulletType);
-        }
-        else if (bulletType[3]) {
-            entityManager.fireBullet(this.cx + 70,
-                this.cy + 7, 22, 15, 10, 120, bulletType);
-                entityManager.fireBullet(this.cx + 70,
-                this.cy + 7, 22, 15, -10, -120, bulletType);
-		}
-		else {
-			entityManager.fireBullet(this.cx + 70,
-				this.cy + 7, 4, 15, 10, 120, bulletType);
-				entityManager.fireBullet(this.cx + 70,
-				this.cy + 7, 4, 15, -10, -120, bulletType);
-		}
+Ship.prototype.handleMultiGun = function (bulletType) {
+  // Handle multiGun
+  if (this.multiGun) {
+    if (bulletType[0]) {
+      entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 8, 15, 10, 120, bulletType);
+      entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 8, 15, -10, -120, bulletType);
+    } else if (bulletType[1]) {
+      entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 12, 15, 10, 120, bulletType);
+      entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 12, 15, -10, -120, bulletType);
+
+    } else if (bulletType[2]) {
+      entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 15, 15, 10, 120, bulletType);
+      entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 15, 15, -10, -120, bulletType);
+    } else if (bulletType[3]) {
+      entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 22, 15, 10, 120, bulletType);
+      entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 22, 15, -10, -120, bulletType);
+    } else {
+      entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 4, 15, 10, 120, bulletType);
+      entityManager.fireBullet(this.cx + 70,
+        this.cy + 7, 4, 15, -10, -120, bulletType);
     }
+  }
 }
 
 Ship.prototype.evaporateSound = new Audio("sounds/explosion.mp3");
@@ -305,12 +304,12 @@ Ship.prototype.takeBulletHit = function () {
   this.isExploding = true;
 };
 
-Ship.prototype.getPosX = function(){
-    return this.cx;
+Ship.prototype.getPosX = function () {
+  return this.cx;
 }
 
-Ship.prototype.getPosY = function(){
-    return this.cy;
+Ship.prototype.getPosY = function () {
+  return this.cy;
 }
 
 Ship.prototype.reset = function () {
@@ -332,8 +331,8 @@ Ship.prototype.render = function (ctx) {
     g_sprites.charge[charge].scale = 2;
     g_sprites.charge[charge].drawCentredAt(ctx, this.cx + 78, this.cy + 7, this.rotation);
   }
-  if(this.muzzle){
-    g_sprites.muzzleFlash.drawCentredAt(ctx, this.cx+61, this.cy+8)
+  if (this.muzzle) {
+    g_sprites.muzzleFlash.drawCentredAt(ctx, this.cx + 61, this.cy + 8)
   }
   this.sprite.drawCentredAt(
     ctx, this.cx, this.cy, this.rotation

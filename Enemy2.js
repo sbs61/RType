@@ -108,7 +108,6 @@ Enemy2.prototype.takeBulletHit = function () {
   
   //Check if we should generate powerup
   if(entityManager._hud[0].killCount % 2 == 0) {
-    console.log('power2');
     entityManager.generatePowerup(this.cx, this.cy);
   }
   this.isExploding = true;

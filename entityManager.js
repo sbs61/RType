@@ -175,6 +175,8 @@ var entityManager = {
       //remove all enemies and enemy bullets
       this._enemies.splice(0,this._enemies.length);
       this._enemy1bullets.splice(0,this._enemy1bullets.length);
+      this._powerups.splice(0,this._powerups.length);
+      this._hud[0].killCount = 0;
 
       //reset next wave of enemy 1 to start in 3 seconds
       g_enemy1WaveInterval = 3000/NOMINAL_UPDATE_INTERVAL;
