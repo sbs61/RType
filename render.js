@@ -7,7 +7,7 @@ var g_doFlipFlop = false;
 var g_doRender = true;
 var g_showXTime = false;
 var g_showMouseCrd = false;
-var g_unPixelate = true;
+var g_unPixelate = false;
 
 var g_frameCounter = 1;
 
