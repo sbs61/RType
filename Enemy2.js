@@ -107,7 +107,7 @@ Enemy2.prototype.takeBulletHit = function () {
   entityManager._hud[0].incrementScore(50);
   
   //Check if we should generate powerup
-  if(entityManager._hud[0].killCount % 2 == 0) {
+  if(entityManager._hud[0].killCount % 50 == 0) {
     entityManager.generatePowerup(this.cx, this.cy, 'multiGun');
   }
   this.isExploding = true;

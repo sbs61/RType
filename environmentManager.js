@@ -124,8 +124,8 @@ _timeline : function() {
 
    if (g_XTime >= chk3 + 750) {
        g_XTime = 0;
-       for (var i = 0; i < _wallCmbs.length; i++) {
-        _wallCmbs[i].hasSpawned = false;
+       for (var i = 0; i < this._wallCmbs.length; i++) {
+           this._wallCmbs[i].hasSpawned = false;
        };
    };
 },
