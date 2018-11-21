@@ -234,7 +234,6 @@ Ship.prototype.maybeFireBullet = function () {
 				this.cy + 7, 4, 15, 10, 120, bulletType);
 			entityManager.fireBullet(this.cx + 70,
 				this.cy + 7, 4, 15, -10, -120, bulletType);
-			this.handleMultiGun(bulletType);
 		}
 		hud.resetBeam();
 	}
