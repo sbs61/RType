@@ -108,7 +108,7 @@ Enemy1.prototype.evaporateSound = new Audio("sounds/explosion.mp3");
 Enemy1.prototype.takeBulletHit = function () {
   entityManager._hud[0].incrementScore(25);
   //Check if we should generate powerup
-  if(entityManager._hud[0].killCount % 2 == 0) {
+  if(entityManager._hud[0].killCount % 50 == 0) {
     entityManager.generatePowerup(this.cx, this.cy, 'superGun');
   }
   this.isExploding = true;
