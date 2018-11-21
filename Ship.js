@@ -189,7 +189,7 @@ Ship.prototype.update = function (du) {
 
 
     // Handle firing
-    this.maybeFireBullet();
+    this.maybeFireBullet(du);
     var hitEntity = this.isColliding();
     if (hitEntity) {
       //Check if ship collides with normal entity or powerup
@@ -223,11 +223,11 @@ Ship.prototype.disablePowerUp = function () {
   this.powerUpTime = 10000 / NOMINAL_UPDATE_INTERVAL;
 };
 
-Ship.prototype.maybeFireBullet = function () {
+Ship.prototype.maybeFireBullet = function (du) {
   var hud = entityManager._hud[0];
   if (keys[this.KEY_FIRE]) {
     this.fire = true;
-    hud.incrementBeam();
+    hud.incrementBeam(du);
   }
 
   if (!keys[this.KEY_FIRE] && this.fire) {

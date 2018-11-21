@@ -95,10 +95,10 @@ Hud.prototype.update = function () {
 
 }
 
-Hud.prototype.incrementBeam = function () {
+Hud.prototype.incrementBeam = function (du) {
 	// Gets called in Ship when the player holds down the space bar
 	if (this.charge < 250) // Max charge 
-		this.charge += 2;
+		this.charge += 2*du;
 }
 
 Hud.prototype.resetBeam = function () {
