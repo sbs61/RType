@@ -132,8 +132,8 @@ var entityManager = {
     this._ships.push(new Ship(descr));
   },
 
-  generatePowerup: function (cx, cy) {
-    this._powerups.push(new Powerup(cx, cy));
+  generatePowerup: function (cx, cy, typeOf) {
+    this._powerups.push(new Powerup(cx, cy, typeOf));
   },
   
   displayHud: function (descr) {
