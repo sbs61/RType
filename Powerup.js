@@ -17,7 +17,7 @@ function Powerup(cx, cy, typeOf) {
 
   // Common inherited setup logic from Entity
   this.setup();
-  this.sprite = g_sprites.multiPower;
+  this.sprite = typeOf == 'multiGun' ? g_sprites.multiPower : g_sprites.superGun;
   this.cx = cx;
   this.cy = cy;
   this.typeOf = typeOf;

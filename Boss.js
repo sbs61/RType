@@ -40,6 +40,9 @@ Boss.prototype.cel = 8; //sprite cells
 Boss.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL; //explosion animation interval
 Boss.prototype.cx = 700;
 Boss.prototype.cy = 360;
+Boss.prototype.xVel = 0;
+Boss.prototype.yVel = 0;
+Boss.prototype.health = g_bossHealth;
 
 
 Boss.prototype.update = function (du) {
@@ -63,11 +66,23 @@ Boss.prototype.update = function (du) {
   } else {
 
     //update the enemy 2 velocity and make it move in a wave like motion
-    if(this.cx < 750)
+    if(this.cx < 750){
         this.xVel = 0;
+        if(entityManager._ships[0].cy < this.cy){
+            if(this.yVel > -1)
+                this.yVel-=0.1*du;
+            this.sprite = g_sprites.boss[0];
+        }
+        else{
+            if(this.yVel < 1)
+                this.yVel+=0.1*du;
+            if(entityManager._ships[0].cy > this.cy+30)
+                this.sprite = g_sprites.boss[1];
+        }
+    }
     else   
         this.xVel = -2;
-    this.yVel = 0;
+
 
     //get previous position
     var prevX = this.cx;
@@ -95,6 +110,9 @@ Boss.prototype.evaporateSound = new Audio("sounds/explosion.mp3");
 
 //function for taking a bullet hit, increment the score and trigger the explosion
 Boss.prototype.takeBulletHit = function () {
+  this.health--;
+  console.log(this.health);
+  if(this.health < 0){
   entityManager._hud[0].incrementScore(50);
   
   //Check if we should generate powerup
@@ -107,6 +125,7 @@ Boss.prototype.takeBulletHit = function () {
   this.evaporateSound.pause();
   this.evaporateSound.currentTime = 0;
   this.evaporateSound.play();
+}
 };
 
 //render enemy 2
