@@ -250,6 +250,9 @@ function preloadDone() {
     g_sprites.multiPower = new Sprite(g_images.miscSprites, 39, 12, 57-39, 30-12);
     g_sprites.multiPower.scale = 1.5;
   
+    g_sprites.superGun = new Sprite(g_images.miscSprites, 12, 12, 29-12, 30-12);
+    g_sprites.superGun.scale = 1.5;
+  
     entityManager.init();
     environmentManager.init();
     entityManager.displayHud();
