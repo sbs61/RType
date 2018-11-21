@@ -7,6 +7,7 @@ var g_doFlipFlop = false;
 var g_doRender = true;
 var g_showXTime = false;
 var g_showMouseCrd = false;
+var g_unPixelate = true;
 
 var g_frameCounter = 1;
 
@@ -17,6 +18,7 @@ var TOGGLE_FLIPFLOP = 'F'.charCodeAt(0);
 var TOGGLE_RENDER = 'R'.charCodeAt(0);
 var TOGGLE_XTIME = 'N'.charCodeAt(0);
 var TOGGLE_MouseCRD = 'M'.charCodeAt(0);
+var TOGGLE_GRX = '9'.charCodeAt(0);
 
 function render(ctx) {
     ctx.save();
@@ -30,6 +32,7 @@ function render(ctx) {
     if (eatKey(TOGGLE_RENDER)) g_doRender = !g_doRender;
     if (eatKey(TOGGLE_XTIME)) g_showXTime = !g_showXTime;
     if (eatKey(TOGGLE_MouseCRD)) g_showMouseCrd = !g_showMouseCrd;
+    if (eatKey(TOGGLE_GRX)) g_pixelate = !g_pixelate;
     
     // I've pulled the clear out of `renderSimulation()` and into
     // here, so that it becomes part of our "diagnostic" wrappers
@@ -84,9 +87,13 @@ function render(ctx) {
                                     Math.floor(g_mouseY), 10, 80);
 
     if (g_showXTime) ctx.fillText('XTime : ' + Math.floor(g_XTime), 10, 50);
-    
-    
+
     ctx.restore();
+
+    // Disable smooth scaling
+    g_ctx.mozImageSmoothingEnabled = g_unPixelate;
+    g_ctx.webkitImageSmoothingEnabled = g_unPixelate;
+    g_ctx.imageSmoothingEnabled = g_unPixelate;
 
     ++g_frameCounter;
 }
