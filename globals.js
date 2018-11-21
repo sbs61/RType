@@ -36,4 +36,6 @@ var g_increaseDifficultyInterval = 15000 / NOMINAL_UPDATE_INTERVAL;
 
 var g_bossInterval = 60000/NOMINAL_UPDATE_INTERVAL;
 
+var g_bossHealth = 50;
+
 var g_baseShipCel = 2;
