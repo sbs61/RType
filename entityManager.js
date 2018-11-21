@@ -171,7 +171,7 @@ var entityManager = {
       for(var k = 0; k < this._enemy1bullets.length; k++){
         spatialManager.unregister(this._enemy1bullets[k]);
       }
-
+      spatialManager._entitiesSq = [];
       //remove all enemies and enemy bullets
       this._enemies.splice(0,this._enemies.length);
       this._enemy1bullets.splice(0,this._enemy1bullets.length);

@@ -37,7 +37,7 @@ function Sprite(image, sx, sy, width, height) {
 Sprite.prototype.drawAt = function (ctx, x, y) {
     ctx.drawImage(this.image, 
                   this.sx, this.sy, this.width, this.height,
-                  x, y, this.width, this.height);
+                  x, y, this.width*this.scale, this.height*this.scale);
 };
 
 Sprite.prototype.drawCentredAt = function (ctx, cx, cy, rotation) {

@@ -133,6 +133,7 @@ function requestPreloads() {
         explode : "images/explode.png",
         beamBar : "images/UI_Beam_bar.png",
         muzzleFlash : "images/muzzleflash.png",
+        miscSprites : "images/miscSprites.png",
         gameOver : "images/gameOver.png"
     };
 
@@ -235,7 +236,10 @@ function preloadDone() {
     g_sprites.muzzleFlash = new Sprite(g_images.muzzleFlash, 0, 0,
         g_images.muzzleFlash.width, g_images.muzzleFlash.height);
     g_sprites.muzzleFlash.scale = 2;
-
+    
+    g_sprites.multiPower = new Sprite(g_images.miscSprites, 39, 12, 57-39, 30-12);
+    g_sprites.multiPower.scale = 1.5;
+  
     entityManager.init();
     environmentManager.init();
     entityManager.displayHud();
