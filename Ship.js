@@ -170,7 +170,7 @@ Ship.prototype.update = function (du) {
     }
 
     //Decreas power up time
-    if (this.multiGun) {
+    if (this.multiGun || this.superGun) {
       this.powerUpTime -= du;
     }
 

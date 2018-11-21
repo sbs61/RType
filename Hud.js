@@ -69,6 +69,10 @@ Hud.prototype.render = function () {
 			g_ctx.fillText("Multigun", 100, 20)
 			g_ctx.fillText(powerUpTime, 190, 20);
 		}
+		else if (entityManager._ships[0].superGun) {
+			g_ctx.fillText("Supergun", 100, 20)
+			g_ctx.fillText(powerUpTime, 190, 20);
+		}
 	}
 	g_ctx.restore();
 
