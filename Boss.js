@@ -22,7 +22,7 @@ function Boss(descr) {
   // Default sprite and scale, if not otherwise specified
   this.sprite = g_sprites.boss[0];
   this.scale = this.scale || 2;
-  this.cx = 1000;
+  this.cx = 2000;
   this.cy = 360;
 
   /*
