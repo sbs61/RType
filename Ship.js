@@ -178,15 +178,17 @@ Ship.prototype.update = function (du) {
     this.maybeFireBullet();
     var hitEntity = this.isColliding();
     if (hitEntity) {
+      //Check if ship collides with normal entity or powerup
       if (hitEntity.typeOf == 'entity') {
         this.isExploding = true;
 
         this.evaporateSound.pause();
         this.evaporateSound.currentTime = 0;
         this.evaporateSound.play();
-      } else {
+      } else if (hitEntity.typeOf == 'powerup'){
         hitEntity.collideWithShip();
         this.multiGun = true;
+        this.powerUpTime = 10000 / NOMINAL_UPDATE_INTERVAL;
         spatialManager.register(this);
       }
     } else {
