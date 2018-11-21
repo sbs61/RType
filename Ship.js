@@ -296,30 +296,30 @@ Ship.prototype.handleMultiGun = function (bulletType) {
   if (this.multiGun) {
     if (bulletType[0]) {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 8, 15, 10, 120, bulletType);
+        this.cy + 10, 8, 15, 10, 120, bulletType);
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 8, 15, -10, -120, bulletType);
+        this.cy + 4, 8, 15, -10, -120, bulletType);
     } else if (bulletType[1]) {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 12, 15, 10, 120, bulletType);
+        this.cy + 10, 12, 15, 10, 120, bulletType);
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 12, 15, -10, -120, bulletType);
+        this.cy + 4, 12, 15, -10, -120, bulletType);
 
     } else if (bulletType[2]) {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 15, 15, 10, 120, bulletType);
+        this.cy + 20, 15, 15, 10, 120, bulletType);
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 15, 15, -10, -120, bulletType);
+        this.cy - 6, 15, 15, -10, -120, bulletType);
     } else if (bulletType[3]) {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 22, 15, 10, 120, bulletType);
+        this.cy + 40, 22, 15, 10, 120, bulletType);
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 22, 15, -10, -120, bulletType);
+        this.cy - 26, 22, 15, -10, -120, bulletType);
     } else {
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 4, 15, 10, 120, bulletType);
+        this.cy + 10, 4, 15, 10, 120, bulletType);
       entityManager.fireBullet(this.cx + 70,
-        this.cy + 7, 4, 15, -10, -120, bulletType);
+        this.cy + 4, 4, 15, -10, -120, bulletType);
     }
   }
 }
