@@ -43,55 +43,55 @@ Boss.prototype.cx = 700;
 Boss.prototype.cy = 360;
 Boss.prototype.xVel = 0;
 Boss.prototype.yVel = 0;
-Boss.prototype.fireInterval = 11000/NOMINAL_UPDATE_INTERVAL;
+Boss.prototype.fireInterval = 11000 / NOMINAL_UPDATE_INTERVAL;
 Boss.prototype.health = g_bossHealth;
 
 
 Boss.prototype.update = function (du) {
-  
+
   spatialManager.unregister(this);
 
   //check if the enemy is dead
   if (this._isDeadNow || this.cx < 0) {
     return entityManager.KILL_ME_NOW;
 
-  //trigger explosion
-  //when the interval for the explosion animation goes below zero then change the sprite and reset the interval  
+    //trigger explosion
+    //when the interval for the explosion animation goes below zero then change the sprite and reset the interval  
   } else if (this.isExploding) {
     this.eInterval -= du;
-    if(this.eInterval < 0){
+    if (this.eInterval < 0) {
       this.nextExplodingBossSprite();
       this.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
-      }
+    }
 
-  //enemy is alive
+    //enemy is alive
   } else {
 
     //update the enemy 2 velocity and make it move in a wave like motion
-    if(this.cx < 750){
-        this.xVel = 0;
-        if(entityManager._ships[0].cy < this.cy){
-            if(this.yVel > -1)
-                this.yVel-=0.1*du;
-            this.cel = 0;
-            this.sprite = g_sprites.boss[this.cel];
+    if (this.cx < 750) {
+      this.xVel = 0;
+      if (entityManager._ships[0].cy < this.cy) {
+        if (this.yVel > -1)
+          this.yVel -= 0.1 * du;
+        this.cel = 0;
+        this.sprite = g_sprites.boss[this.cel];
+      }
+      else {
+        if (this.yVel < 1)
+          this.yVel += 0.1 * du;
+        if (entityManager._ships[0].cy > this.cy + 30) {
+          this.cel = 1;
+          this.sprite = g_sprites.boss[this.cel];
         }
-        else{
-            if(this.yVel < 1)
-                this.yVel+=0.1*du;
-            if(entityManager._ships[0].cy > this.cy+30){
-              this.cel = 1;
-              this.sprite = g_sprites.boss[this.cel];
-            }
-        }
+      }
     }
-    else   
-        this.xVel = -2;
+    else
+      this.xVel = -2;
 
     this.fireInterval -= du;
-    if(this.fireInterval < 0){
-      entityManager.fireBossBullet(this.cx-65, this.cy-18);
-      this.fireInterval = 800/NOMINAL_UPDATE_INTERVAL;
+    if (this.fireInterval < 0) {
+      entityManager.fireBossBullet(this.cx - 65, this.cy - 18);
+      this.fireInterval = 800 / NOMINAL_UPDATE_INTERVAL;
     }
 
 
@@ -115,15 +115,15 @@ Boss.prototype.takeBulletHit = function () {
   this.health--;
   this.sprite = g_sprites.bossHit[this.cel];
   console.log(this.health);
-  if(this.health < 0){
-  entityManager._hud[0].incrementScore(1000);
-  
-  this.isExploding = true;
+  if (this.health < 0) {
+    entityManager._hud[0].incrementScore(1000);
 
-  this.evaporateSound.play();
+    this.isExploding = true;
 
-  g_bossHealth += 100;
-}
+    this.evaporateSound.play();
+
+    g_bossHealth += 100;
+  }
 };
 
 //render enemy 2

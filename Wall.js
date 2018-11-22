@@ -13,17 +13,17 @@
 
 
 // A rectangle collision object for walls
-function Wall(x,y,w,h) {
+function Wall(x, y, w, h) {
 
-  // Common inherited setup logic from Entity
-  this.setup();
+	// Common inherited setup logic from Entity
+	this.setup();
 
-  this.cx = x;
-  this.cy = y;
-  this.width = w;
-  this.height = h;
-
-  this.halt = false;
+	this.cx = x;
+	this.cy = y;
+	this.width = w;
+	this.height = h;
+	this.halt = false;
+	this.typeOf = 'wall';
 };
 
 Wall.prototype = new Entity();
@@ -34,29 +34,29 @@ Wall.prototype.width = 100;
 Wall.prototype.height = 75;
 Wall.prototype.velX = g_XVel;
 
-Wall.prototype.getRadius = function() {
-    return {
-        width: this.width,
-        height: this.height
-    };
+Wall.prototype.getRadius = function () {
+	return {
+		width: this.width,
+		height: this.height
+	};
 };
 
-Wall.prototype.update = function(du) {
-    spatialManager.unregisterSq(this);
-    
-    if(this.cx + this.width <= 0) {
-        return environmentManager.KILL_ME_NOW;
-    };
+Wall.prototype.update = function (du) {
+	spatialManager.unregisterSq(this);
 
-    if (!this.halt) {
-        this.cx -= this.velX * du;
-    };
+	if (this.cx + this.width <= 0) {
+		return environmentManager.KILL_ME_NOW;
+	};
 
-    spatialManager.registerSq(this);
+	if (!this.halt) {
+		this.cx -= this.velX * du;
+	};
+
+	spatialManager.registerSq(this);
 };
 
-Wall.prototype.render = function(ctx) {
-    // Do nothing
-    // The wall render is tied to the backgrounds
-    // This is only the collission object
+Wall.prototype.render = function (ctx) {
+	// Do nothing
+	// The wall render is tied to the backgrounds
+	// This is only the collission object
 };

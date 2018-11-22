@@ -41,9 +41,6 @@ Hud.prototype.updateHighscore = function () {
 	this.highscore = localStorage.getItem("highscore");
 }
 
-
-
-
 Hud.prototype.render = function () {
 
 	g_ctx.font = "30px Courier New";
@@ -65,7 +62,7 @@ Hud.prototype.render = function () {
 	if (entityManager._ships[0] !== undefined) { // Check if ship exists
 		var powerUpTime = entityManager._ships[0].powerUpTime;
 		powerUpTime = Math.ceil(powerUpTime / 100)
-		if (entityManager._ships[0].multiGun && entityManager._ships[0].superGun){
+		if (entityManager._ships[0].multiGun && entityManager._ships[0].superGun) {
 			g_ctx.fillText("Super Multigun", 155, 20)
 			g_ctx.fillText(powerUpTime, 305, 20);
 		}
@@ -102,14 +99,13 @@ Hud.prototype.update = function () {
 Hud.prototype.incrementBeam = function (du) {
 	// Gets called in Ship when the player holds down the space bar
 	if (this.charge < 250) // Max charge 
-		this.charge += 2*du;
+		this.charge += 2 * du;
 }
 
 Hud.prototype.resetBeam = function () {
 	// When the player releases the space bar the charge gets reset (or if the player dies)
 	this.charge = 0;
 }
-
 
 Hud.prototype.drawLives = function (ctx) {
 	if (g_lives > 0)

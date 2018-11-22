@@ -48,7 +48,7 @@ var entityManager = {
       this.generateEnemy1();
     }
   },
-   //generate enemies of type 2
+  //generate enemies of type 2
   _generateEnemies2: function () {
     var i,
       //generate random number of 2-7 enemies plus a global amount that is incremented every 15 seconds to increase difficulty
@@ -56,25 +56,25 @@ var entityManager = {
 
     //base coords of the first enemy in the wave
     var base_cx = util.randRange(900, 1400);
-    var base_cy = util.randRange(300,500);
+    var base_cy = util.randRange(300, 500);
 
     //space between each enemy
     var space_x = 0, space_y = 0;
 
     //generate the number of enemies, put a space between them so they move as a unit in a wave formation
     for (i = 0; i < NUM_ENEMIES; ++i) {
-      this.generateEnemy2(base_cx+space_x, base_cy+space_y);
+      this.generateEnemy2(base_cx + space_x, base_cy + space_y);
       space_x += 30;
       space_y += 10;
     }
   },
 
   _generateBoss: function () {
-      this.generateBoss();
+    this.generateBoss();
   },
 
   //generate new ship
-  _generateShip: function(){
+  _generateShip: function () {
     this.generateShip();
   },
 
@@ -123,7 +123,7 @@ var entityManager = {
   },
 
 
-  fireBossBullet: function(cx, cy){
+  fireBossBullet: function (cx, cy) {
     this._bossBullets.push(new BossBullet({
       cx: cx,
       cy: cy
@@ -137,8 +137,8 @@ var entityManager = {
 
   generateEnemy2: function (cx, cy) {
     this._enemies.push(new Enemy2({
-      cx : cx,
-      cy : cy
+      cx: cx,
+      cy: cy
     }));
   },
 
@@ -153,7 +153,7 @@ var entityManager = {
   generatePowerup: function (cx, cy, typeOf) {
     this._powerups.push(new Powerup(cx, cy, typeOf));
   },
-  
+
   displayHud: function (descr) {
     this._hud.push(new Hud(descr));
   },
@@ -180,77 +180,75 @@ var entityManager = {
     }
 
     //if your ship dies but you still have lives left
-    if(g_lives !== 0 && this._ships.length === 0) {
+    if (g_lives !== 0 && this._ships.length === 0) {
       //unregister all enemies from spatial manager
-      for(var k = 0; k < this._enemies.length; k++){
+      for (var k = 0; k < this._enemies.length; k++) {
         spatialManager.unregister(this._enemies[k]);
       }
       //unregister all enemy1 bullets from spatial manager
-      for(var k = 0; k < this._enemy1bullets.length; k++){
+      for (var k = 0; k < this._enemy1bullets.length; k++) {
         spatialManager.unregister(this._enemy1bullets[k]);
       }
       //unregister all enemy1 bullets from spatial manager
-      for(var k = 0; k < this._bossBullets.length; k++){
+      for (var k = 0; k < this._bossBullets.length; k++) {
         spatialManager.unregister(this._bossBullets[k]);
       }
       spatialManager._entitiesSq = [];
       //remove all enemies and enemy bullets
-      this._enemies.splice(0,this._enemies.length);
-      this._enemy1bullets.splice(0,this._enemy1bullets.length);
-      this._bossBullets.splice(0,this._bossBullets.length);
-      this._powerups.splice(0,this._powerups.length);
+      this._enemies.splice(0, this._enemies.length);
+      this._enemy1bullets.splice(0, this._enemy1bullets.length);
+      this._bossBullets.splice(0, this._bossBullets.length);
+      this._powerups.splice(0, this._powerups.length);
       this._hud[0].killCount = 0;
 
       //reset next wave of enemy 1 to start in 3 seconds
-      g_enemy1WaveInterval = 3000/NOMINAL_UPDATE_INTERVAL;
+      g_enemy1WaveInterval = 3000 / NOMINAL_UPDATE_INTERVAL;
 
       //generate a new ship
       this._generateShip();
     }
 
     //if you lose all your lives pause the game
-    if(g_lives === 0){
+    if (g_lives === 0) {
       g_isUpdatePaused = true;
     }
-    
+
     //------------GENERATE ENEMIES ----------------
 
     //lower the enemy1 wave interval
     g_enemy1WaveInterval -= du;
-    
+
     //when the interval reaches 0 then generate a new wave of enemy 1 and reset the interval
-    if(g_enemy1WaveInterval < 0 && this._boss.length === 0){
+    if (g_enemy1WaveInterval < 0 && this._boss.length === 0) {
       this._generateEnemies1();
-      g_enemy1WaveInterval = 3000/NOMINAL_UPDATE_INTERVAL;
+      g_enemy1WaveInterval = 3000 / NOMINAL_UPDATE_INTERVAL;
     }
 
     //lower the enemy2 wave interval
     g_enemy2WaveInterval -= du;
 
     //when the interval reaches 0 generate a new wave of enemies 2 and reset the interval
-    if(g_enemy2WaveInterval < 0 && this._boss.length === 0){
+    if (g_enemy2WaveInterval < 0 && this._boss.length === 0) {
       this._generateEnemies2();
-      g_enemy2WaveInterval = 5000/NOMINAL_UPDATE_INTERVAL;
+      g_enemy2WaveInterval = 5000 / NOMINAL_UPDATE_INTERVAL;
       console.log(this._boss.length);
     }
 
     g_bossInterval -= du;
-    if(g_bossInterval < 0){
+    if (g_bossInterval < 0) {
       this._generateBoss();
-      g_bossInterval = 60000/NOMINAL_UPDATE_INTERVAL;
+      g_bossInterval = 60000 / NOMINAL_UPDATE_INTERVAL;
     }
 
     //lower the difficulty interval
     g_increaseDifficultyInterval -= du;
 
     //when it reaches zero add raise the random range of enemies generated by 1 and reset the interval
-    if(g_increaseDifficultyInterval < 0){
+    if (g_increaseDifficultyInterval < 0) {
       g_increaseDifficultyInterval = 15000 / NOMINAL_UPDATE_INTERVAL;
       g_enemy1amount++;
       g_enemy2amount++;
     }
-
-
   },
 
   render: function (ctx) {
@@ -270,7 +268,6 @@ var entityManager = {
       debugY += 10;
     }
   }
-
 }
 
 // Some deferred setup which needs the object to have been created first
