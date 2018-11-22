@@ -65,7 +65,11 @@ Hud.prototype.render = function () {
 	if (entityManager._ships[0] !== undefined) { // Check if ship exists
 		var powerUpTime = entityManager._ships[0].powerUpTime;
 		powerUpTime = Math.ceil(powerUpTime / 100)
-		if (entityManager._ships[0].multiGun) {
+		if (entityManager._ships[0].multiGun && entityManager._ships[0].superGun){
+			g_ctx.fillText("Super Multigun", 155, 20)
+			g_ctx.fillText(powerUpTime, 305, 20);
+		}
+		else if (entityManager._ships[0].multiGun) {
 			g_ctx.fillText("Multigun", 100, 20)
 			g_ctx.fillText(powerUpTime, 190, 20);
 		}
