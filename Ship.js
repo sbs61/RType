@@ -223,6 +223,9 @@ Ship.prototype.disablePowerUp = function () {
 	this.powerUpTime = 10000 / NOMINAL_UPDATE_INTERVAL;
 };
 
+
+var normalBulletRadius = 4;
+
 Ship.prototype.maybeFireBullet = function (du) {
 	var hud = entityManager._hud[0];
 	if (keys[this.KEY_FIRE]) {
@@ -239,12 +242,13 @@ Ship.prototype.maybeFireBullet = function (du) {
 		this.chargeSound.currentTime = 0;
 		this.chargeSound.pause();
 		var bulletType = [0, 0, 0, 0];
+		
 
 		// Normal bullet
 		if (hud.charge < 50) { 
 			bulletType = this.calculateBulletType(4);
 			entityManager.fireBullet(this.cx + 70,
-				this.cy + 7, 4, 25, 0, 0, bulletType);
+				this.cy + 7, normalBulletRadius, 25, 0, 0, bulletType);
 
 		// charge 1
 		} else if (hud.charge < 100) { 
@@ -284,8 +288,10 @@ Ship.prototype.calculateBulletType = function (type) {
 	var bulletType = [0, 0, 0, 0];
 	if (this.superGun) { // If supergun is enabled all shots are the biggest type
 		bulletType[3] = 1;
+		normalBulletRadius = 22;
 	}
 	else {
+		normalBulletRadius = 4;
 		if (type === 0) {
 			bulletType[0] = 1;
 		}
