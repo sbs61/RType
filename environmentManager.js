@@ -40,10 +40,10 @@ _generateWalls : function() {
 
     var Bckgr1 = this._createWallBckgr(1);
     var collisionSet1 = [];
-    collisionSet1.push(new Wall(300+cw,0,181,199));
-    collisionSet1.push(new Wall(300+cw,521,181,199));
-    collisionSet1.push(new Wall(842+cw,0,118,58));
-    collisionSet1.push(new Wall(842+cw,662,118,58));
+    collisionSet1.push(new Wall(300+cw,0,181,199,'wall'));
+    collisionSet1.push(new Wall(300+cw,521,181,199,'wall'));
+    collisionSet1.push(new Wall(842+cw,0,118,58,'wall'));
+    collisionSet1.push(new Wall(842+cw,662,118,58,'wall'));
     this._wallCmbs.push({
         Background : Bckgr1,
         Walls : collisionSet1,
@@ -52,13 +52,13 @@ _generateWalls : function() {
 
     var Bckgr2 = this._createWallBckgr(2);
     var collisionSet2 = [];
-    collisionSet2.push(new Wall(148+cw,0,475,56));
-    collisionSet2.push(new Wall(360+cw,523,179,197));
-    collisionSet2.push(new Wall(940+cw,0,671,135));
-    collisionSet2.push(new Wall(940+cw,135,176,59));
-    collisionSet2.push(new Wall(1493+cw,135,118,59));
-    collisionSet2.push(new Wall(1012+cw,621,120,99));
-    collisionSet2.push(new Wall(1448+cw,661,474,59));
+    collisionSet2.push(new Wall(148+cw,0,475,56,'wall'));
+    collisionSet2.push(new Wall(360+cw,523,179,197,'wall'));
+    collisionSet2.push(new Wall(940+cw,0,671,135,'wall'));
+    collisionSet2.push(new Wall(940+cw,135,176,59,'wall'));
+    collisionSet2.push(new Wall(1493+cw,135,118,59,'wall'));
+    collisionSet2.push(new Wall(1012+cw,621,120,99,'wall'));
+    collisionSet2.push(new Wall(1448+cw,661,474,59,'wall'));
     this._wallCmbs.push({
         Background : Bckgr2,
         Walls : collisionSet2,
@@ -67,16 +67,16 @@ _generateWalls : function() {
 
     var Bckgr3 = this._createWallBckgr(3);
     var collisionSet3 = [];
-    collisionSet3.push(new Wall(416+cw,0,441,77));
-    collisionSet3.push(new Wall(416+cw,643,441,77));
-    collisionSet3.push(new Wall(857+cw,0,124,152));
-    collisionSet3.push(new Wall(857+cw,568,124,152));
-    collisionSet3.push(new Wall(981+cw,0,25,120));
-    collisionSet3.push(new Wall(981+cw,600,25,120));
-    collisionSet3.push(new Wall(1006+cw,0,25,98));
-    collisionSet3.push(new Wall(1006+cw,622,25,98));
-    collisionSet3.push(new Wall(1031+cw,0,23,75));
-    collisionSet3.push(new Wall(1031+cw,645,23,75));
+    collisionSet3.push(new Wall(416+cw,0,441,77,'wall'));
+    collisionSet3.push(new Wall(416+cw,643,441,77,'wall'));
+    collisionSet3.push(new Wall(857+cw,0,124,152,'wall'));
+    collisionSet3.push(new Wall(857+cw,568,124,152,'wall'));
+    collisionSet3.push(new Wall(981+cw,0,25,120,'wall'));
+    collisionSet3.push(new Wall(981+cw,600,25,120,'wall'));
+    collisionSet3.push(new Wall(1006+cw,0,25,98,'wall'));
+    collisionSet3.push(new Wall(1006+cw,622,25,98,'wall'));
+    collisionSet3.push(new Wall(1031+cw,0,23,75,'wall'));
+    collisionSet3.push(new Wall(1031+cw,645,23,75,'wall'));
     this._wallCmbs.push({
         Background : Bckgr3,
         Walls : collisionSet3,

@@ -193,7 +193,7 @@ Ship.prototype.update = function (du) {
 		var hitEntity = this.isColliding();
 		if (hitEntity) {
 			//Check if ship collides with normal entity or powerup
-			if (hitEntity.typeOf == 'entity') {
+			if (hitEntity.typeOf === 'entity' || hitEntity.typeOf === 'wall') {
 				this.isExploding = true;
 
 				this.evaporateSound.pause();

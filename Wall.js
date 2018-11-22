@@ -24,6 +24,7 @@ function Wall(x, y, w, h) {
 	this.height = h;
 	this.halt = false;
 	this.typeOf = 'wall';
+
 };
 
 Wall.prototype = new Entity();
