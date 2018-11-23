@@ -107,10 +107,9 @@ fillBox: function (ctx, x, y, w, h, style) {
     ctx.fillStyle = oldStyle;
 },
 
+// draw the game over screen
 gameOverScreen: function(ctx){
     g_sprites.gameOver.drawCentredAt(ctx, 450, 360, this.rotation);
-    
-
   }
 
 };

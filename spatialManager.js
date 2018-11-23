@@ -1,3 +1,7 @@
+// ==========
+// SPATIAL MANAGER
+// ==========
+
 /*
 
 spatialManager.js

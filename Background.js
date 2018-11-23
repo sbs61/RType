@@ -39,6 +39,7 @@ Background.prototype.reset = function () {
     this.halt = false;
 };
     
+//update function for the background, move it from right to left.
 Background.prototype.update = function (du) {
     
     if (!this.halt) {
@@ -50,6 +51,8 @@ Background.prototype.update = function (du) {
     }
 };
 
+
+//function to draw the background
 Background.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
 

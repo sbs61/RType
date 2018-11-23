@@ -18,12 +18,15 @@ function Bullet(descr) {
 	// Common inherited setup logic from Entity
 	this.setup(descr);
 
-	// Make a noise when I am created (i.e. fired)
-	this.fireSound.pause();
-	this.fireSound.currentTime = 0;
-	this.fireSound.play();
+	// Make a noise when I am created (i.e. fired) if this.playSound is true so we dont get an error for playing 3 sounds at once when using the multigun powerup.
+	if(this.playSound && !this.big[3]){
+		this.fireSound.pause();
+		this.fireSound.currentTime = 0;
+		this.fireSound.play();
+	}
 
-	if (this.big4) {
+	//play this sound if the bullet is of type big4
+	if (this.big[3] && this.playSound) {
 		this.bigBulletSound.pause();
 		this.bigBulletSound.currentTime = 0;
 		this.bigBulletSound.play();
@@ -53,6 +56,7 @@ Bullet.prototype.velY = 1;
 Bullet.prototype.big;
 Bullet.prototype.radius = 4;
 
+// update the bullet
 Bullet.prototype.update = function (du) {
 
 	//unregister the bullet from spatial manager
@@ -67,10 +71,8 @@ Bullet.prototype.update = function (du) {
 	this.cx += this.velX * du;
 	this.cy += this.velY * du;
 
-	//this.wrapPosition();
-
 	// Handle collisions
-	//
+	// find the hit entity
 	var hitEntity = this.findHitEntity();
 	if (hitEntity) {
 		var canTakeHit = hitEntity.takeBulletHit;
@@ -93,10 +95,12 @@ Bullet.prototype.update = function (du) {
 
 };
 
+// returns the radius of the bullet
 Bullet.prototype.getRadius = function () {
 	return this.radius;
 };
 
+// render the bullet
 Bullet.prototype.render = function (ctx) {
 
 	//Check if the bullet is big, if it is then push in the sprite for big bullet nr 1
@@ -127,6 +131,4 @@ Bullet.prototype.render = function (ctx) {
 
 	//draw the bullet
 	g_sprites.bullet.drawCentredAt(ctx, this.cx, this.cy, this.rotation);
-
-	ctx.globalAlpha = 1;
 };

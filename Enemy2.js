@@ -1,5 +1,5 @@
 // ====
-// Enemy1
+// ENEMY2
 // ====
 
 "use strict";
@@ -40,6 +40,7 @@ Enemy2.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL; //explosion animation
 
 Enemy2.prototype.update = function (du) {
   
+  // unregister enemy2 from spatial manager
   spatialManager.unregister(this);
 
   //check if the enemy is dead
@@ -91,6 +92,7 @@ Enemy2.prototype.update = function (du) {
     this.cx += this.xVel * du;
     this.cy += this.yVel * du;
 
+    // register enemy 2 in the spatial manager
     spatialManager.register(this);
   }
 };
@@ -112,6 +114,7 @@ Enemy2.prototype.takeBulletHit = function () {
   }
   this.isExploding = true;
 
+  // play the sound of enemy exploding
   this.evaporateSound.pause();
   this.evaporateSound.currentTime = 0;
   this.evaporateSound.play();

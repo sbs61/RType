@@ -1,3 +1,7 @@
+// ==========
+// SPACE DUST
+// ==========
+
 "use strict";
 
 /* jshint browser: true, devel: true, globalstrict: true */
