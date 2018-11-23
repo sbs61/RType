@@ -36,6 +36,10 @@ _generateBackground : function() {
 },
 
 _generateWalls : function() {
+    // Wall sets created, each sprite loaded in as a background
+    // And hitboxes created for appropriate locations
+    // Finished set is put in an array
+
     var cw = g_canvas.width;
 
     var Bckgr1 = this._createWallBckgr(1);
@@ -86,6 +90,8 @@ _generateWalls : function() {
 },
 
 _timeline : function() {
+    // Spawn walls after certain length threshold has been reached
+    // Reset in the end
     if (g_XTime >= 0 && !this._wallCmbs[0].hasSpawned) {
         var eWall = this._wallCmbs[0];
         this._backgrounds.push(eWall.Background);
@@ -125,12 +131,18 @@ _timeline : function() {
    if (g_XTime >= chk3 + 750) {
        g_XTime = 0;
        for (var i = 0; i < this._wallCmbs.length; i++) {
+           this._wallCmbs[i].Background.reset();
+           for (var j; j < this._wallCmbs[i].Walls.length; i++) {
+               this._wallCmbs[i].Walls[j].reset();
+           }
            this._wallCmbs[i].hasSpawned = false;
        };
    };
 },
 
 _createWallBckgr : function(wallNumber) {
+    // A function to create a custom Background for "inner backgrounds", 
+    // ie. walls.. WallNumber dictates the sprite used
     var wallUpdate = function (du) {
         if (!this.halt) {
             this.x -= this.velX * du;

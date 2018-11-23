@@ -20,6 +20,9 @@ function Background(descr) {
     
     // Default sprite, if not otherwise specified
     this.sprite = this.sprite || g_sprites.background;
+
+    // Create reset values
+    this.rX = this.x;
 };
 
 // Initial, inheritable, default values
@@ -28,6 +31,13 @@ Background.prototype.y = 0;
 Background.prototype.velX = 0.25;
 Background.prototype.scale = 1;
 Background.prototype.halt = false;
+
+Background.prototype.reset = function () {
+    this.x = this.rX;
+    this.y = this.rY;
+    this.scale = this.rS;
+    this.halt = false;
+};
     
 Background.prototype.update = function (du) {
     

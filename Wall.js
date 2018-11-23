@@ -25,6 +25,10 @@ function Wall(x, y, w, h) {
 	this.halt = false;
 	this.typeOf = 'wall';
 
+    // Create reset values
+    this.rX = x;
+    this.rY = y;
+
 };
 
 Wall.prototype = new Entity();
@@ -41,6 +45,11 @@ Wall.prototype.getRadius = function () {
 		height: this.height
 	};
 };
+
+Wall.prototype.reset = function () {
+	this.cx = this.rX;
+	this.cy = this.rY;
+}
 
 Wall.prototype.update = function (du) {
 	spatialManager.unregisterSq(this);
