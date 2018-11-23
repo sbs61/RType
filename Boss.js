@@ -25,6 +25,7 @@ function Boss(descr) {
   this.cx = 2000;
   this.cy = 360;
   this.radius = 6;
+  this.health = g_bossHealth;
 
   /*
       // Diagnostics to check inheritance stuff
