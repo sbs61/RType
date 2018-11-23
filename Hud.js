@@ -11,6 +11,7 @@ Hud.prototype.gameOver = false;
 Hud.prototype.KEY_FIRE = ' '.charCodeAt(0);
 Hud.prototype.charge = 0;
 Hud.prototype.highscore = localStorage.getItem("highscore");
+Hud.prototype.godModeEnabled = false;
 
 Hud.prototype.incrementScore = function (scoreIncr) {
 	this.score += scoreIncr;
@@ -26,11 +27,14 @@ Hud.prototype.decrementLife = function () {
 
 Hud.prototype.updateHighscore = function () {
 	// Saves highscore using localStorage
+	if (entityManager._ships[0].godMode)
+		this.godModeEnabled = true;
+
 
 	if (this.highscore !== null) {
 		// If there's a defined highscore and the current score is higher;
 		// set highscore to current score
-		if (this.score > this.highscore) {
+		if (this.score > this.highscore && !this.godModeEnabled) {
 			localStorage.setItem("highscore", this.score);
 		}
 	}
@@ -98,7 +102,7 @@ Hud.prototype.update = function () {
 
 Hud.prototype.incrementBeam = function (du) {
 	// Gets called in Ship when the player holds down the space bar
-	if (this.charge < 250) // Max charge 
+	if (this.charge < 250) // Max charge
 		this.charge += 2 * du;
 }
 

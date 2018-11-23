@@ -52,7 +52,7 @@ Ship.prototype.KEY_LEFT = 'A'.charCodeAt(0);
 Ship.prototype.KEY_RIGHT = 'D'.charCodeAt(0);
 Ship.prototype.KEY_FIRE = ' '.charCodeAt(0);
 Ship.prototype.KEY_COLOUR = '1'.charCodeAt(0);
-
+Ship.prototype.KEY_GODMODE = 'G'.charCodeAt(0);
 // Initial, inheritable, default values
 Ship.prototype.rotation = 0;
 Ship.prototype.cx = 200;
@@ -72,6 +72,7 @@ var charge = 0;
 Ship.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
 Ship.prototype.muzzleTimer = 50 / NOMINAL_UPDATE_INTERVAL;
 Ship.prototype.muzzle = false;
+Ship.prototype.godMode = false;
 
 Ship.prototype.update = function (du) {
 	spatialManager.unregister(this);
@@ -100,6 +101,17 @@ Ship.prototype.update = function (du) {
 				this.cel = g_baseShipCel;
 				this.sprite = g_sprites.ship[this.cel];
 			}
+		}
+
+		if (eatKey(this.KEY_GODMODE)){
+			// Enables godmode which removes hit detection on ship (except powerups)
+			// enabling godmode also disabled highscores
+			this.godMode = !this.godMode;
+			if (this.godMode){
+				console.log("Godmode enabled. Highscores have been disabled");
+			}
+			else console.log("Godmode disabled");
+
 		}
 
 		if (keys[this.KEY_UP] && this.cy > this.sprite.height / 2) {
@@ -193,9 +205,8 @@ Ship.prototype.update = function (du) {
 		var hitEntity = this.isColliding();
 		if (hitEntity) {
 			//Check if ship collides with normal entity or powerup
-			if (hitEntity.typeOf === 'entity' || hitEntity.typeOf === 'wall') {
+			if ((hitEntity.typeOf === 'entity' || hitEntity.typeOf === 'wall') && (!this.godMode)) {
 				this.isExploding = true;
-
 				this.evaporateSound.pause();
 				this.evaporateSound.currentTime = 0;
 				this.evaporateSound.play();
@@ -242,35 +253,35 @@ Ship.prototype.maybeFireBullet = function (du) {
 		this.chargeSound.currentTime = 0;
 		this.chargeSound.pause();
 		var bulletType = [0, 0, 0, 0];
-		
+
 
 		// Normal bullet
-		if (hud.charge < 50) { 
+		if (hud.charge < 50) {
 			bulletType = this.calculateBulletType(4);
 			entityManager.fireBullet(this.cx + 70,
 				this.cy + 7, normalBulletRadius, 25, 0, 0, bulletType);
 
 		// charge 1
-		} else if (hud.charge < 100) { 
+		} else if (hud.charge < 100) {
 			bulletType = this.calculateBulletType(0);
 			entityManager.fireBullet(this.cx + 70,
 				this.cy + 7, 8, 15, 0, 0, bulletType);
-		} 
-		
+		}
+
 		// Charge 2
-		else if (hud.charge < 150) { 
+		else if (hud.charge < 150) {
 			bulletType = this.calculateBulletType(1);
 			entityManager.fireBullet(this.cx + 70,
 				this.cy + 7, 12, 15, 0, 0, bulletType);
-		} 
-		
+		}
+
 		// Charge 3
 		else if (hud.charge < 240) {
 			bulletType = this.calculateBulletType(2);
 			entityManager.fireBullet(this.cx + 70,
 				this.cy + 7, 15, 15, 0, 0, bulletType);
-		} 
-		
+		}
+
 		// Charge 4
 		else {
 			bulletType = this.calculateBulletType(3);
