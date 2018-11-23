@@ -27,8 +27,10 @@ Hud.prototype.decrementLife = function () {
 
 Hud.prototype.updateHighscore = function () {
 	// Saves highscore using localStorage
-	if (entityManager._ships[0].godMode)
-		this.godModeEnabled = true;
+	if (entityManager._ships[0] !== undefined){
+		if (entityManager._ships[0].godMode)
+			this.godModeEnabled = true;
+	}
 
 
 	if (this.highscore !== null) {
