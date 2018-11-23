@@ -53,6 +53,7 @@ Ship.prototype.KEY_RIGHT = 'D'.charCodeAt(0);
 Ship.prototype.KEY_FIRE = ' '.charCodeAt(0);
 Ship.prototype.KEY_COLOUR = '1'.charCodeAt(0);
 Ship.prototype.KEY_GODMODE = 'G'.charCodeAt(0);
+
 // Initial, inheritable, default values
 Ship.prototype.rotation = 0;
 Ship.prototype.cx = 200;
@@ -67,21 +68,12 @@ Ship.prototype.interval = interval;
 Ship.prototype.startCharge = false;
 Ship.prototype.chargeTimer = 300 / NOMINAL_UPDATE_INTERVAL;
 
-<<<<<<< HEAD
-var chargeInterval = 70 / NOMINAL_UPDATE_INTERVAL;
-var charge = 0;
-Ship.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
-Ship.prototype.muzzleTimer = 50 / NOMINAL_UPDATE_INTERVAL;
-Ship.prototype.muzzle = false;
-Ship.prototype.godMode = false;
-=======
 Ship.prototype.chargeInterval = 70 / NOMINAL_UPDATE_INTERVAL; // interval between each charge animation
 Ship.prototype.chargeCel = 0; //base charge sprite cell
 Ship.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL; // interval between each explosion animation
 Ship.prototype.muzzleTimer = 50 / NOMINAL_UPDATE_INTERVAL; // how long to render the ship muzzle
 Ship.prototype.muzzle = false; // keep track of when to render the ships fire muzzle
->>>>>>> 086dfd7eb11e2045ba0378801422744a1e2fe17e
-
+Ship.prototype.godMode = false;
 //update the ships
 Ship.prototype.update = function (du) {
 
@@ -126,7 +118,6 @@ Ship.prototype.update = function (du) {
 				console.log("Godmode enabled. Highscores have been disabled");
 			}
 			else console.log("Godmode disabled");
-
 		}
 
 		//if you press up then move the ship up and do the "move up" sprite animation
@@ -235,6 +226,7 @@ Ship.prototype.update = function (du) {
 			//Check if ship collides with normal entity or powerup
 			if ((hitEntity.typeOf === 'entity' || hitEntity.typeOf === 'wall') && (!this.godMode)) {
 				this.isExploding = true;
+
 				this.evaporateSound.pause();
 				this.evaporateSound.currentTime = 0;
 				this.evaporateSound.play();
@@ -293,41 +285,23 @@ Ship.prototype.maybeFireBullet = function (du) {
 		} else if (hud.charge < 100) {
 			bulletType = this.calculateBulletType(0);
 			entityManager.fireBullet(this.cx + 70,
-<<<<<<< HEAD
-				this.cy + 7, 8, 15, 0, 0, bulletType);
-		}
-
-=======
 				this.cy + 7, 8, 15, 0, 0, bulletType, true);
 		}
 
->>>>>>> 086dfd7eb11e2045ba0378801422744a1e2fe17e
 		// Charge 2
 		else if (hud.charge < 150) {
 			bulletType = this.calculateBulletType(1);
 			entityManager.fireBullet(this.cx + 70,
-<<<<<<< HEAD
-				this.cy + 7, 12, 15, 0, 0, bulletType);
-		}
-
-=======
 				this.cy + 7, 12, 15, 0, 0, bulletType, true);
 		}
 
->>>>>>> 086dfd7eb11e2045ba0378801422744a1e2fe17e
 		// Charge 3
 		else if (hud.charge < 240) {
 			bulletType = this.calculateBulletType(2);
 			entityManager.fireBullet(this.cx + 70,
-<<<<<<< HEAD
-				this.cy + 7, 15, 15, 0, 0, bulletType);
-		}
-
-=======
 				this.cy + 7, 15, 15, 0, 0, bulletType, true);
 		}
 
->>>>>>> 086dfd7eb11e2045ba0378801422744a1e2fe17e
 		// Charge 4
 		else {
 			bulletType = this.calculateBulletType(3);
