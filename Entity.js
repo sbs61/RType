@@ -81,6 +81,7 @@ Entity.prototype.findHitEntity = function () {
   );
 };
 
+//Change to next exploding sprite to get exploding effect
 Entity.prototype.nextExplodingSprite = function () {
   if (this.explodingSpriteIdx == g_sprites.explode.length) {
     this.kill();
@@ -89,6 +90,7 @@ Entity.prototype.nextExplodingSprite = function () {
   }
 }
 
+//Change to next exploding sprite to get exploding effect
 Entity.prototype.nextExplodingBossSprite = function () {
   if (this.explodingSpriteIdx == g_sprites.bossExplode.length) {
     this.kill();

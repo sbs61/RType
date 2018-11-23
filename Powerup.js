@@ -44,6 +44,7 @@ Powerup.prototype.update = function (du) {
     this.cx -= this.velX * du;
   }
   
+  //Kill powerup if it is off the screen
   if (this.cx < 0) {
     return entityManager.KILL_ME_NOW;
   }
