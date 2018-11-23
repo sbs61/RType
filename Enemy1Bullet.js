@@ -1,5 +1,5 @@
 // ======
-// BULLET
+// ENEMY1 BULLET
 // ======
 
 "use strict";

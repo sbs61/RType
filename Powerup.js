@@ -1,5 +1,5 @@
 // ==========
-// Wall
+// POWERUP
 // ==========
 
 "use strict";

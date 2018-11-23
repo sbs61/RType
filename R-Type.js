@@ -58,9 +58,6 @@ function updateSimulation(du) {
     environmentManager.update(du);
 
     entityManager.update(du);
-
-    // Prevent perpetual firing!
-    //eatKey(Ship.prototype.KEY_FIRE);
 }
 
 // GAME-SPECIFIC DIAGNOSTICS
@@ -80,14 +77,6 @@ function processDiagnostics() {
 // =================
 // RENDER SIMULATION
 // =================
-
-// We take a very layered approach here...
-//
-// The primary `render` routine handles generic stuff such as
-// the diagnostic toggles (including screen-clearing).
-//
-// It then delegates the game-specific logic to `gameRender`
-
 
 // GAME-SPECIFIC RENDERING
 
@@ -147,6 +136,8 @@ function requestPreloads() {
 
 var g_sprites = {};
 function preloadDone() {
+
+    //generate sprites for each object with for loops and appropriate coordinates from the sprite sheets
 
     g_sprites.ship  = [];
     for (var row = 0; row < 5; ++row) {

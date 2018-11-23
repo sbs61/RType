@@ -1,5 +1,5 @@
 // ====
-// Enemy1
+// ENEMY1
 // ====
 
 "use strict";
@@ -29,6 +29,7 @@ function Enemy1(descr) {
 
 Enemy1.prototype = new Entity();
 
+// spawn enemy at random position
 Enemy1.prototype.randomisePosition = function () {
   // Enemy1 randomisation defaults (if nothing otherwise specified)
   this.cx = util.randRange(900,1400); //Spawn the enemy outside the canvas between 900 and 1400 px
@@ -42,7 +43,8 @@ Enemy1.prototype.explode = false; //check if the enemy is exploding
 Enemy1.prototype.fireInterval = 1000 / NOMINAL_UPDATE_INTERVAL; //interval for firing the enemy bullets
 
 Enemy1.prototype.update = function (du) {
-  // TODO: YOUR STUFF HERE! --- Unregister and check for death
+
+  // unregister Enemy1
   spatialManager.unregister(this);
 
   //check if the enemy is dead
@@ -51,7 +53,7 @@ Enemy1.prototype.update = function (du) {
 
     //check if the enemy is exploding
   } else if (this.isExploding) {
-    //trigger the interval for the explosion animation, when it goes below zero then change the sprite and reset the interval
+    // enemy is exploding, trigger the interval for the explosion animation, when it goes below zero then change the sprite and reset the interval
     this.eInterval -= du;
     if(this.eInterval < 0){
     this.nextExplodingSprite();

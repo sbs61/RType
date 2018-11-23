@@ -1,5 +1,5 @@
 // ======
-// BULLET
+// BOSS BULLET
 // ======
 
 "use strict";
@@ -41,9 +41,10 @@ BossBullet.prototype.velY = 0;
 BossBullet.prototype.animationInterval = 0;
 BossBullet.prototype.cel = 0;
 
-//update the enemy bullet
+//update the boss bullet
 BossBullet.prototype.update = function (du) {
 
+    // unregister the bullet to the spatial manager
     spatialManager.unregister(this);
 
     //Check if the bullet is dead or outside the canvas, if so return the KILL_ME_NOW to the entity manager
@@ -51,10 +52,11 @@ BossBullet.prototype.update = function (du) {
         return entityManager.KILL_ME_NOW;
     }
 
-    //update the enemy bullet position
+    //update the boss bullet position
     this.cx += this.velX* du;
     this.cy += this.velY* du;
 
+    //register bullet to spatial manager
     spatialManager.register(this);
 };
 

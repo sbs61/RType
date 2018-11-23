@@ -1,5 +1,5 @@
 // ====
-// Enemy1
+// BOSS
 // ====
 
 "use strict";
@@ -36,6 +36,7 @@ function Boss(descr) {
 
 Boss.prototype = new Entity();
 
+// Initial, inheritable, default values
 Boss.prototype.interval = 70 / NOMINAL_UPDATE_INTERVAL; //interval for the animation 
 Boss.prototype.cel = 0; //sprite cells
 Boss.prototype.eInterval = 50 / NOMINAL_UPDATE_INTERVAL; //explosion animation interval
@@ -46,12 +47,13 @@ Boss.prototype.yVel = 0;
 Boss.prototype.fireInterval = 11000 / NOMINAL_UPDATE_INTERVAL;
 Boss.prototype.health = g_bossHealth;
 
-
+//Update function for the boss
 Boss.prototype.update = function (du) {
 
+  // unregister the boss in the spatial manager
   spatialManager.unregister(this);
 
-  //check if the enemy is dead
+  //check if the boss is dead
   if (this._isDeadNow || this.cx < 0) {
     return entityManager.KILL_ME_NOW;
 
@@ -64,13 +66,15 @@ Boss.prototype.update = function (du) {
       this.eInterval = 50 / NOMINAL_UPDATE_INTERVAL;
     }
 
-    //enemy is alive
+    //When the boss is alive
   } else {
 
-    //update the enemy 2 velocity and make it move in a wave like motion
+    //When the boss reaches x coords 750 then he should stop and do this
     if (this.cx < 750) {
-      this.xVel = 0;
-      if (entityManager._ships[0].cy < this.cy) {
+        this.xVel = 0;
+
+    // Make the boss follow the players ship position, if the spaceship is higher than the boss then move the boss up, else move him down
+    if (entityManager._ships[0].cy < this.cy) {
         if (this.yVel > -1)
           this.yVel -= 0.1 * du;
         this.cel = 0;
@@ -85,24 +89,32 @@ Boss.prototype.update = function (du) {
         }
       }
     }
-    else
-      this.xVel = -2;
 
+    //move the boss into the screen until x coords are 750
+    else
+        this.xVel = -2;
+
+
+    // subtract du from the fire interval
     this.fireInterval -= du;
+
+    // make the boss shoot when the fireInterval is less than zero and reset the interval
     if (this.fireInterval < 0) {
       entityManager.fireBossBullet(this.cx - 65, this.cy - 18);
       this.fireInterval = 800 / NOMINAL_UPDATE_INTERVAL;
     }
 
 
-    //actually move enemy 2 according to the velocity
+    //actually move the boss according to the velocity
     this.cx += this.xVel * du;
     this.cy += this.yVel * du;
 
+    //register him from the spatial manager
     spatialManager.register(this);
   }
 };
 
+//get the radius of the boss
 Boss.prototype.getRadius = function () {
   return this.scale * (this.sprite.width / 2) * 0.9;
 };
@@ -110,7 +122,7 @@ Boss.prototype.getRadius = function () {
 // HACKED-IN AUDIO (no preloading)
 Boss.prototype.evaporateSound = new Audio("sounds/bossExplode.mp3");
 
-//function for taking a bullet hit, increment the score and trigger the explosion
+//function for taking a bullet hit, increment the score and trigger the explosion. Also increment the boss's health for next round.
 Boss.prototype.takeBulletHit = function () {
   this.health--;
   this.sprite = g_sprites.bossHit[this.cel];
