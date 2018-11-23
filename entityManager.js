@@ -242,7 +242,6 @@ var entityManager = {
     if (g_enemy2WaveInterval < 0 && this._boss.length === 0) {
       this._generateEnemies2();
       g_enemy2WaveInterval = 5000 / NOMINAL_UPDATE_INTERVAL;
-      console.log(this._boss.length);
     }
 
     //generate a boss roughly every 40 seconds

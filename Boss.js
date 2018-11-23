@@ -127,7 +127,6 @@ Boss.prototype.evaporateSound = new Audio("sounds/bossExplode.mp3");
 Boss.prototype.takeBulletHit = function () {
   this.health--;
   this.sprite = g_sprites.bossHit[this.cel];
-  console.log(this.health);
   if (this.health < 0) {
     entityManager._hud[0].incrementScore(1000);
 
